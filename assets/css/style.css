@@ -1,0 +1,26 @@
+/* ── devjourney · Global Styles ── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap');
+
+:root {
+  --purple:     #9B6DFF;
+  --purple-lt:  #C4A0FF;
+  --purple-dk:  #6D28D9;
+  --white:      #FFFFFF;
+  --off-white:  #E8E4F0;
+  --grey:       #B0A8C4;
+  --dim:        #6B6480;
+  --bg:         #07071A;
+  --bg2:        #0D0D25;
+  --border:     #ffffff0F;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--white); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+
+a { color: var(--purple-lt); text-decoration: none; }
+a:hover { color: var(--purple); }
+
+.syne { font-family: 'Syne', sans-serif; }
+.purple { color: var(--purple-lt); }
+.dim { color: var(--dim); }

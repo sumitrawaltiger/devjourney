@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day XXX · TOPIC · Sumit Rawal</title>
+<!-- 
+  HOW TO USE THIS TEMPLATE:
+  1. Duplicate this file and rename to day-XXX.html (e.g. day-002.html)
+  2. Replace all PLACEHOLDER text below
+  3. Update index.html to add a card linking to your new day
+  4. git add . && git commit -m "Day XXX: TOPIC" && git push
+  5. Netlify auto-deploys in ~30 seconds!
+-->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:#07071A;color:#fff;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;}
+:root{--c:#D97706;} /* ← CHANGE THIS COLOR PER BLOCK:
+  DevOps = #D97706 (orange)
+  Frontend = #0EA5E9 (blue)
+  Python = #16A34A (green)
+  Java = #D97706 (amber) */
+.glow{position:fixed;width:600px;height:600px;background:radial-gradient(circle,#4C1D9540,transparent 70%);border-radius:50%;top:-150px;left:-150px;pointer-events:none;z-index:0;}
+nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(12px);border-bottom:1px solid #ffffff0A;padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:60px;}
+.nav-name{font-family:'Syne',sans-serif;font-weight:800;font-size:14px;}
+.back-btn{background:#ffffff08;border:1px solid #ffffff12;border-radius:8px;padding:6px 14px;font-size:11px;font-weight:500;color:#B0A8C4;text-decoration:none;}
+.wrap{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:36px 32px 60px;}
+.day-nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;}
+.day-nav a{background:#0D0D25;border:1px solid #ffffff0D;border-radius:10px;padding:10px 18px;font-size:12px;color:#B0A8C4;text-decoration:none;}
+.day-badge{display:inline-flex;align-items:center;gap:8px;background:#D9770618;border:1px solid #D9770640;border-radius:100px;padding:5px 14px;font-size:11px;font-weight:600;color:var(--c);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:16px;width:fit-content;}
+.day-num{font-family:'Syne',sans-serif;font-weight:800;font-size:88px;line-height:0.85;letter-spacing:-0.05em;margin-bottom:4px;}
+.day-num .d{color:#fff;} .day-num .n{color:var(--c);}
+.big-title{font-family:'Syne',sans-serif;font-size:46px;font-weight:800;line-height:0.92;letter-spacing:-0.03em;color:var(--c);text-transform:uppercase;margin-bottom:3px;}
+.purple-rule{width:100%;height:2px;background:linear-gradient(90deg,var(--c),transparent);margin:16px 0;border-radius:2px;}
+.summary{font-size:14px;line-height:1.75;color:#B0A8C4;}
+.card{background:#0D0D25;border:1px solid #ffffff0D;border-radius:16px;padding:22px;margin-bottom:20px;}
+.card-title{font-size:10px;font-weight:700;color:var(--c);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:16px;}
+.check-item{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px;}
+.check-icon{width:24px;height:24px;border-radius:7px;background:var(--c);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;color:#fff;}
+.check-text{font-size:14px;color:#D4CDE8;line-height:1.6;}
+.hashtags{border-top:1px solid #ffffff08;padding-top:20px;display:flex;flex-wrap:wrap;gap:6px 14px;}
+.hashtag{font-size:11px;color:var(--c);font-weight:500;}
+</style>
+</head>
+<body>
+<div class="glow"></div>
+
+<nav>
+  <div class="nav-name">Sumit Rawal</div>
+  <a href="../index.html" class="back-btn">← All Days</a>
+</nav>
+
+<div class="wrap">
+  <div class="day-nav">
+    <a href="day-XXX.html">← Day XXX</a>
+    <span style="font-size:11px;color:#6B6480;">📅 DATE · 5:30 AM · Bangkok</span>
+    <a href="day-XXX.html">Day XXX →</a>
+  </div>
+
+  <div class="day-badge">BLOCK NAME · Month X</div>
+  <div class="day-num"><span class="d">DAY </span><span class="n">XXX 🚀</span></div>
+  <div class="big-title">TOPIC</div>
+  <div class="big-title">HERE</div>
+  <div class="purple-rule"></div>
+  <p class="summary" style="margin-bottom:28px;">
+    WRITE 2-3 sentences about what you focused on today and why it matters.
+    Connect it to your FPO Cloud work where possible.
+  </p>
+
+  <div class="card">
+    <div class="card-title">What I learnt today</div>
+    <div class="check-item"><div class="check-icon">✓</div><div class="check-text">LEARNING 1 — explain what you understood</div></div>
+    <div class="check-item"><div class="check-icon">✓</div><div class="check-text">LEARNING 2 — explain what you understood</div></div>
+    <div class="check-item"><div class="check-icon">✓</div><div class="check-text">LEARNING 3 — explain what you understood</div></div>
+    <div class="check-item"><div class="check-icon">✓</div><div class="check-text">LEARNING 4 — explain what you understood</div></div>
+  </div>
+
+  <!-- ADD CODE SNIPPET, CONCEPT CARDS, QUOTE etc — copy from day-001.html -->
+
+  <div class="hashtags">
+    <span class="hashtag">#100DaysOfCode</span>
+    <span class="hashtag">#487DaysOfCode</span>
+    <span class="hashtag">#16MonthsOfCode</span>
+    <span class="hashtag">#AWS</span>
+    <span class="hashtag">#LearnInPublic</span>
+    <!-- ADD topic-specific hashtags -->
+  </div>
+</div>
+</body>
+</html>
