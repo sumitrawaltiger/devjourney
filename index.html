@@ -1,388 +1,738 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Sumit Rawal's 16-Month coding journey — 487 days of AWS, React Native, Python, Java and more. Building in public from Bangkok.">
-<title>Sumit Rawal · 16 Months of Code</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-<style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body { background: #07071A; color: #fff; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Sumit Rawal's 16-Month coding journey — 487 days of AWS, React Native, Python, Java and more. Building in public from Bangkok."
+    />
+    <title>Sumit Rawal · 16 Months of Code</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: #07071a;
+        color: #fff;
+        font-family: 'Inter', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        min-height: 100vh;
+      }
 
-:root {
-  --purple: #9B6DFF; --purple-lt: #C4A0FF; --purple-dk: #6D28D9;
-  --grey: #B0A8C4; --dim: #6B6480; --bg2: #0D0D25;
-}
+      :root {
+        --purple: #9b6dff;
+        --purple-lt: #c4a0ff;
+        --purple-dk: #6d28d9;
+        --grey: #b0a8c4;
+        --dim: #6b6480;
+        --bg2: #0d0d25;
+      }
 
-/* GLOWS */
-.glow-tl { position:fixed;width:600px;height:600px;background:radial-gradient(circle,#4C1D9540,transparent 70%);border-radius:50%;top:-150px;left:-150px;pointer-events:none;z-index:0; }
-.glow-br { position:fixed;width:400px;height:400px;background:radial-gradient(circle,#6D28D925,transparent 70%);border-radius:50%;bottom:-80px;right:-80px;pointer-events:none;z-index:0; }
+      /* GLOWS */
+      .glow-tl {
+        position: fixed;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, #4c1d9540, transparent 70%);
+        border-radius: 50%;
+        top: -150px;
+        left: -150px;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .glow-br {
+        position: fixed;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, #6d28d925, transparent 70%);
+        border-radius: 50%;
+        bottom: -80px;
+        right: -80px;
+        pointer-events: none;
+        z-index: 0;
+      }
 
-/* NAV */
-nav {
-  position: sticky; top: 0; z-index: 100;
-  background: #07071Aee; backdrop-filter: blur(12px);
-  border-bottom: 1px solid #ffffff0A;
-  padding: 0 32px; display: flex; align-items: center;
-  justify-content: space-between; height: 64px;
-}
-.nav-logo { display:flex;align-items:center;gap:10px; }
-.nav-logo img { width:36px;height:36px;border-radius:50%;border:2px solid var(--purple); object-fit:cover; object-position:top; }
-.nav-name { font-family:'Syne',sans-serif;font-weight:800;font-size:15px;color:#fff; }
-.nav-sub { font-size:10px;color:var(--dim);letter-spacing:0.08em; }
-.nav-links { display:flex;gap:28px; }
-.nav-links a { font-size:12px;font-weight:500;color:var(--dim);letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;transition:color 0.2s; }
-.nav-links a:hover, .nav-links a.active { color:var(--purple-lt); }
-.nav-badge {
-  background:var(--purple);color:#fff;
-  border-radius:100px;padding:6px 14px;
-  font-size:11px;font-weight:600;letter-spacing:0.06em;
-  text-decoration:none;transition:background 0.2s;
-}
-.nav-badge:hover { background:#8B5CF6; color:#fff; }
+      /* NAV */
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: #07071aee;
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid #ffffff0a;
+        padding: 0 32px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 64px;
+      }
+      .nav-logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .nav-logo img {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 2px solid var(--purple);
+        object-fit: cover;
+        object-position: top;
+      }
+      .nav-name {
+        font-family: 'Syne', sans-serif;
+        font-weight: 800;
+        font-size: 15px;
+        color: #fff;
+      }
+      .nav-sub {
+        font-size: 10px;
+        color: var(--dim);
+        letter-spacing: 0.08em;
+      }
+      .nav-links {
+        display: flex;
+        gap: 28px;
+      }
+      .nav-links a {
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--dim);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: var(--purple-lt);
+      }
+      .nav-badge {
+        background: var(--purple);
+        color: #fff;
+        border-radius: 100px;
+        padding: 6px 14px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-decoration: none;
+        transition: background 0.2s;
+      }
+      .nav-badge:hover {
+        background: #8b5cf6;
+        color: #fff;
+      }
 
-/* HERO */
-.hero {
-  position:relative;z-index:1;
-  max-width:900px;margin:0 auto;
-  padding:80px 32px 60px;
-  text-align:center;
-}
-.hero-eyebrow {
-  display:inline-flex;align-items:center;gap:8px;
-  background:#9B6DFF18;border:1px solid #9B6DFF40;
-  border-radius:100px;padding:6px 16px;
-  font-size:11px;font-weight:600;color:var(--purple-lt);
-  letter-spacing:0.14em;text-transform:uppercase;margin-bottom:24px;
-}
-.pulse { width:7px;height:7px;background:var(--purple);border-radius:50%;animation:pulse 2s infinite; }
-@keyframes pulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.5;transform:scale(1.4);} }
-.hero h1 {
-  font-family:'Syne',sans-serif;font-weight:800;
-  font-size:clamp(44px,8vw,72px);line-height:0.95;
-  letter-spacing:-0.04em;margin-bottom:12px;
-}
-.hero h1 .outline { color:transparent;-webkit-text-stroke:2px var(--purple-lt); }
-.hero-sub { font-size:16px;color:var(--grey);line-height:1.7;max-width:520px;margin:0 auto 32px; }
+      /* HERO */
+      .hero {
+        position: relative;
+        z-index: 1;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 80px 32px 60px;
+        text-align: center;
+      }
+      .hero-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #9b6dff18;
+        border: 1px solid #9b6dff40;
+        border-radius: 100px;
+        padding: 6px 16px;
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--purple-lt);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        margin-bottom: 24px;
+      }
+      .pulse {
+        width: 7px;
+        height: 7px;
+        background: var(--purple);
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.5;
+          transform: scale(1.4);
+        }
+      }
+      .hero h1 {
+        font-family: 'Syne', sans-serif;
+        font-weight: 800;
+        font-size: clamp(44px, 8vw, 72px);
+        line-height: 0.95;
+        letter-spacing: -0.04em;
+        margin-bottom: 12px;
+      }
+      .hero h1 .outline {
+        color: transparent;
+        -webkit-text-stroke: 2px var(--purple-lt);
+      }
+      .hero-sub {
+        font-size: 16px;
+        color: var(--grey);
+        line-height: 1.7;
+        max-width: 520px;
+        margin: 0 auto 32px;
+      }
 
-/* PROGRESS BAR */
-.progress-wrap { max-width:600px;margin:0 auto 16px; }
-.progress-label { display:flex;justify-content:space-between;font-size:11px;color:var(--dim);margin-bottom:8px;letter-spacing:0.06em; }
-.progress-track { height:6px;background:#ffffff0D;border-radius:100px;overflow:hidden; }
-.progress-fill {
-  height:100%;width:0.2%;
-  background:linear-gradient(90deg,var(--purple-dk),var(--purple-lt));
-  border-radius:100px;transition:width 1.2s ease;
-}
-.progress-nums { display:flex;justify-content:center;gap:32px;margin-top:16px; }
-.pnum { text-align:center; }
-.pnum-val { font-family:'Syne',sans-serif;font-weight:800;font-size:28px;color:var(--purple-lt); }
-.pnum-val sup { font-size:16px; }
-.pnum-lbl { font-size:10px;color:var(--dim);letter-spacing:0.1em;text-transform:uppercase;margin-top:2px; }
+      /* PROGRESS BAR */
+      .progress-wrap {
+        max-width: 600px;
+        margin: 0 auto 16px;
+      }
+      .progress-label {
+        display: flex;
+        justify-content: space-between;
+        font-size: 11px;
+        color: var(--dim);
+        margin-bottom: 8px;
+        letter-spacing: 0.06em;
+      }
+      .progress-track {
+        height: 6px;
+        background: #ffffff0d;
+        border-radius: 100px;
+        overflow: hidden;
+      }
+      .progress-fill {
+        height: 100%;
+        width: 0.2%;
+        background: linear-gradient(90deg, var(--purple-dk), var(--purple-lt));
+        border-radius: 100px;
+        transition: width 1.2s ease;
+      }
+      .progress-nums {
+        display: flex;
+        justify-content: center;
+        gap: 32px;
+        margin-top: 16px;
+      }
+      .pnum {
+        text-align: center;
+      }
+      .pnum-val {
+        font-family: 'Syne', sans-serif;
+        font-weight: 800;
+        font-size: 28px;
+        color: var(--purple-lt);
+      }
+      .pnum-val sup {
+        font-size: 16px;
+      }
+      .pnum-lbl {
+        font-size: 10px;
+        color: var(--dim);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 2px;
+      }
 
-/* TIMELINE */
-.section { max-width:900px;margin:0 auto;padding:0 32px 60px; }
-.section-header {
-  display:flex;align-items:center;gap:12px;margin-bottom:28px;
-}
-.section-line { flex:1;height:1px;background:linear-gradient(90deg,#9B6DFF40,transparent); }
-.section-title { font-size:11px;font-weight:700;color:var(--purple);letter-spacing:0.18em;text-transform:uppercase;white-space:nowrap; }
+      /* TIMELINE */
+      .section {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 32px 60px;
+      }
+      .section-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 28px;
+      }
+      .section-line {
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(90deg, #9b6dff40, transparent);
+      }
+      .section-title {
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--purple);
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
 
-/* BLOCK LABELS */
-.block-label {
-  display:flex;align-items:center;gap:10px;
-  margin-bottom:16px;margin-top:32px;
-}
-.block-dot { width:10px;height:10px;border-radius:50%; }
-.block-name { font-family:'Syne',sans-serif;font-size:13px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase; }
-.block-range { font-size:11px;color:var(--dim);margin-left:auto; }
+      /* BLOCK LABELS */
+      .block-label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 16px;
+        margin-top: 32px;
+      }
+      .block-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+      }
+      .block-name {
+        font-family: 'Syne', sans-serif;
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      .block-range {
+        font-size: 11px;
+        color: var(--dim);
+        margin-left: auto;
+      }
 
-/* DAY CARDS GRID */
-.days-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px; }
+      /* DAY CARDS GRID */
+      .days-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 16px;
+      }
 
-/* DAY CARD */
-.day-card {
-  background:var(--bg2);
-  border:1px solid #ffffff0D;
-  border-radius:16px;overflow:hidden;
-  text-decoration:none;color:inherit;
-  transition:border-color 0.2s,transform 0.2s,box-shadow 0.2s;
-  display:block;
-}
-.day-card:hover {
-  border-color:#9B6DFF50;
-  transform:translateY(-3px);
-  box-shadow:0 12px 40px #9B6DFF18;
-}
-.day-card-top {
-  position:relative;
-  background:linear-gradient(135deg,#12122A,#0A0A1F);
-  padding:20px 20px 16px;
-  border-bottom:1px solid #ffffff08;
-}
-.day-card-top::before {
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--c,#9B6DFF),transparent);
-}
-.day-num-badge {
-  font-family:'Syne',sans-serif;font-weight:800;
-  font-size:36px;color:var(--c,#9B6DFF);
-  line-height:1;margin-bottom:6px;
-  opacity:0.15;position:absolute;right:16px;top:12px;
-}
-.day-tag {
-  font-size:10px;font-weight:600;color:var(--c,#9B6DFF);
-  letter-spacing:0.12em;text-transform:uppercase;margin-bottom:6px;
-}
-.day-title { font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:#fff;line-height:1.3; }
-.day-card-body { padding:14px 20px 16px; }
-.day-date { font-size:10px;color:var(--dim);letter-spacing:0.06em;margin-bottom:8px; }
-.day-topics { display:flex;flex-wrap:wrap;gap:5px; }
-.day-topic {
-  font-size:10px;padding:3px 9px;border-radius:6px;
-  background:#ffffff08;color:var(--grey);
-  border:1px solid #ffffff0A;
-}
-.day-topic.hot { background:var(--c,#9B6DFF)18;color:var(--c,#9B6DFF);border-color:var(--c,#9B6DFF)35; }
-.day-card-footer {
-  padding:10px 20px;border-top:1px solid #ffffff06;
-  display:flex;align-items:center;justify-content:space-between;
-}
-.day-status { font-size:10px;color:#28C840;display:flex;align-items:center;gap:5px; }
-.day-status::before { content:'';width:6px;height:6px;background:#28C840;border-radius:50%; }
-.day-arrow { color:var(--dim);font-size:14px; }
+      /* DAY CARD */
+      .day-card {
+        background: var(--bg2);
+        border: 1px solid #ffffff0d;
+        border-radius: 16px;
+        overflow: hidden;
+        text-decoration: none;
+        color: inherit;
+        transition:
+          border-color 0.2s,
+          transform 0.2s,
+          box-shadow 0.2s;
+        display: block;
+      }
+      .day-card:hover {
+        border-color: #9b6dff50;
+        transform: translateY(-3px);
+        box-shadow: 0 12px 40px #9b6dff18;
+      }
+      .day-card-top {
+        position: relative;
+        background: linear-gradient(135deg, #12122a, #0a0a1f);
+        padding: 20px 20px 16px;
+        border-bottom: 1px solid #ffffff08;
+      }
+      .day-card-top::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, var(--c, #9b6dff), transparent);
+      }
+      .day-num-badge {
+        font-family: 'Syne', sans-serif;
+        font-weight: 800;
+        font-size: 36px;
+        color: var(--c, #9b6dff);
+        line-height: 1;
+        margin-bottom: 6px;
+        opacity: 0.15;
+        position: absolute;
+        right: 16px;
+        top: 12px;
+      }
+      .day-tag {
+        font-size: 10px;
+        font-weight: 600;
+        color: var(--c, #9b6dff);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+      }
+      .day-title {
+        font-family: 'Syne', sans-serif;
+        font-weight: 700;
+        font-size: 15px;
+        color: #fff;
+        line-height: 1.3;
+      }
+      .day-card-body {
+        padding: 14px 20px 16px;
+      }
+      .day-date {
+        font-size: 10px;
+        color: var(--dim);
+        letter-spacing: 0.06em;
+        margin-bottom: 8px;
+      }
+      .day-topics {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+      }
+      .day-topic {
+        font-size: 10px;
+        padding: 3px 9px;
+        border-radius: 6px;
+        background: #ffffff08;
+        color: var(--grey);
+        border: 1px solid #ffffff0a;
+      }
+      .day-topic.hot {
+        background: var(--c, #9b6dff) 18;
+        color: var(--c, #9b6dff);
+        border-color: var(--c, #9b6dff) 35;
+      }
+      .day-card-footer {
+        padding: 10px 20px;
+        border-top: 1px solid #ffffff06;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .day-status {
+        font-size: 10px;
+        color: #28c840;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .day-status::before {
+        content: '';
+        width: 6px;
+        height: 6px;
+        background: #28c840;
+        border-radius: 50%;
+      }
+      .day-arrow {
+        color: var(--dim);
+        font-size: 14px;
+      }
 
-/* LOCKED CARD */
-.day-card.locked { opacity:0.4;pointer-events:none; }
-.day-card.locked .day-status { color:var(--dim); }
-.day-card.locked .day-status::before { background:var(--dim); }
+      /* LOCKED CARD */
+      .day-card.locked {
+        opacity: 0.4;
+        pointer-events: none;
+      }
+      .day-card.locked .day-status {
+        color: var(--dim);
+      }
+      .day-card.locked .day-status::before {
+        background: var(--dim);
+      }
 
-/* COMING SOON PLACEHOLDER */
-.day-card.soon {
-  border:1px dashed #ffffff0F;
-  background:transparent;
-  opacity:0.5;pointer-events:none;
-}
-.day-card.soon .day-card-top { background:transparent; }
-.day-card.soon .day-title { color:var(--dim); }
+      /* COMING SOON PLACEHOLDER */
+      .day-card.soon {
+        border: 1px dashed #ffffff0f;
+        background: transparent;
+        opacity: 0.5;
+        pointer-events: none;
+      }
+      .day-card.soon .day-card-top {
+        background: transparent;
+      }
+      .day-card.soon .day-title {
+        color: var(--dim);
+      }
 
-/* FOOTER */
-footer {
-  border-top:1px solid #ffffff08;
-  padding:32px;
-  text-align:center;
-  font-size:12px;color:var(--dim);
-}
-footer strong { color:var(--purple-lt); }
+      /* FOOTER */
+      footer {
+        border-top: 1px solid #ffffff08;
+        padding: 32px;
+        text-align: center;
+        font-size: 12px;
+        color: var(--dim);
+      }
+      footer strong {
+        color: var(--purple-lt);
+      }
 
-/* TAGS ROW */
-.hashtags { display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;margin-top:20px; }
-.hashtag { font-size:11px;color:var(--purple);font-weight:500; }
-</style>
-</head>
-<body>
-<div class="glow-tl"></div>
-<div class="glow-br"></div>
+      /* TAGS ROW */
+      .hashtags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 14px;
+        justify-content: center;
+        margin-top: 20px;
+      }
+      .hashtag {
+        font-size: 11px;
+        color: var(--purple);
+        font-weight: 500;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="glow-tl"></div>
+    <div class="glow-br"></div>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">
-    <img src="assets/images/sumit.jpg" alt="Sumit Rawal" onerror="this.style.display='none'">
-    <div>
-      <div class="nav-name">Sumit Rawal</div>
-      <div class="nav-sub">Senior Associate L2 · NextStep Bangkok</div>
-    </div>
-  </div>
-  <div class="nav-links">
-    <a href="index.html" class="active">Journal</a>
-    <a href="#devops">DevOps</a>
-    <a href="#frontend">Frontend</a>
-    <a href="#python">Python</a>
-    <a href="#java">Java</a>
-  </div>
-  <a href="days/day-001.html" class="nav-badge">Day 1 →</a>
-</nav>
-
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-eyebrow">
-    <div class="pulse"></div>
-    Live from Bangkok · Started Jun 20, 2026
-  </div>
-  <h1>
-    16 Months<br>
-    <span class="outline">of Code</span>
-  </h1>
-  <p class="hero-sub">
-    487 days. 16 skills. 1 commitment — 5:30 AM to 8:30 AM every single day.
-    Building in public from Bangkok while architecting FPO Cloud at NextStep.
-  </p>
-
-  <div class="progress-wrap">
-    <div class="progress-label">
-      <span>DAY 1</span>
-      <span>2 / 487 days completed</span>
-      <span>DAY 487</span>
-    </div>
-    <div class="progress-track">
-      <div class="progress-fill" style="width:0.4%"></div>
-    </div>
-    <div class="progress-nums">
-      <div class="pnum"><div class="pnum-val">2</div><div class="pnum-lbl">Days Done</div></div>
-      <div class="pnum"><div class="pnum-val">485</div><div class="pnum-lbl">Days Left</div></div>
-      <div class="pnum"><div class="pnum-val">16</div><div class="pnum-lbl">Skills</div></div>
-      <div class="pnum"><div class="pnum-val">0.4<sup>%</sup></div><div class="pnum-lbl">Complete</div></div>
-    </div>
-  </div>
-</div>
-
-<!-- DEVOPS BLOCK -->
-<div class="section">
-  <div class="section-header">
-    <div class="section-line"></div>
-    <div class="section-title">🔧 Block 1 · DevOps with AWS · Months 1-3</div>
-    <div class="section-line" style="background:linear-gradient(90deg,transparent,#9B6DFF40)"></div>
-  </div>
-
-  <div id="devops">
-    <div class="block-label">
-      <div class="block-dot" style="background:#D97706"></div>
-      <div class="block-name" style="color:#D97706">DevOps with AWS</div>
-      <div class="block-range">Jun 20 – Jul 20, 2026 · Month 1</div>
-    </div>
-    <div class="days-grid">
-
-      <!-- DAY 1 — LIVE -->
-      <a href="days/day-001.html" class="day-card" style="--c:#D97706">
-        <div class="day-card-top">
-          <div class="day-num-badge">01</div>
-          <div class="day-tag">DevOps with AWS</div>
-          <div class="day-title">AWS Fundamentals — IaaS, PaaS, SaaS, EC2, CDN &amp; Edge Locations</div>
+    <!-- NAV -->
+    <nav>
+      <div class="nav-logo">
+        <img
+          src="assets/images/sumit.jpg"
+          alt="Sumit Rawal"
+          onerror="this.style.display = 'none'"
+        />
+        <div>
+          <div class="nav-name">Sumit Rawal</div>
+          <div class="nav-sub">Senior Associate L2 · NextStep Bangkok</div>
         </div>
-        <div class="day-card-body">
-          <div class="day-date">Jun 20, 2026 · 5:30 AM</div>
-          <div class="day-topics">
-            <span class="day-topic hot">IaaS/PaaS/SaaS</span>
-            <span class="day-topic hot">EC2</span>
-            <span class="day-topic hot">CloudFront</span>
-            <span class="day-topic">Edge Locations</span>
-            <span class="day-topic">CDN</span>
+      </div>
+      <div class="nav-links">
+        <a href="index.html" class="active">Journal</a>
+        <a href="#devops">DevOps</a>
+        <a href="#frontend">Frontend</a>
+        <a href="#python">Python</a>
+        <a href="#java">Java</a>
+      </div>
+      <div style="display: flex; gap: 8px; align-items: center">
+        <a href="days/day-001.html" class="nav-badge">Day 1 →</a>
+        <a
+          href="days/day-002.html"
+          class="nav-badge"
+          style="background: #d97706; border-color: #d97706"
+          >Day 2 →</a
+        >
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-eyebrow">
+        <div class="pulse"></div>
+        Live from Bangkok · Started Jun 20, 2026
+      </div>
+      <h1>
+        16 Months<br />
+        <span class="outline">of Code</span>
+      </h1>
+      <p class="hero-sub">
+        487 days. 16 skills. 1 commitment — 5:30 AM to 8:30 AM every single day.
+        Building in public from Bangkok while architecting FPO Cloud at
+        NextStep.
+      </p>
+
+      <div class="progress-wrap">
+        <div class="progress-label">
+          <span>DAY 1</span>
+          <span>2 / 487 days completed</span>
+          <span>DAY 487</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" style="width: 0.4%"></div>
+        </div>
+        <div class="progress-nums">
+          <div class="pnum">
+            <div class="pnum-val">2</div>
+            <div class="pnum-lbl">Days Done</div>
+          </div>
+          <div class="pnum">
+            <div class="pnum-val">485</div>
+            <div class="pnum-lbl">Days Left</div>
+          </div>
+          <div class="pnum">
+            <div class="pnum-val">16</div>
+            <div class="pnum-lbl">Skills</div>
+          </div>
+          <div class="pnum">
+            <div class="pnum-val">0.4<sup>%</sup></div>
+            <div class="pnum-lbl">Complete</div>
           </div>
         </div>
-        <div class="day-card-footer">
-          <div class="day-status">Published</div>
-          <div class="day-arrow">→</div>
-        </div>
-      </a>
+      </div>
+    </div>
 
-      <!-- DAY 2 — LIVE -->
-      <a href="days/day-002.html" class="day-card" style="--c:#D97706">
-        <div class="day-card-top">
-          <div class="day-num-badge">02</div>
-          <div class="day-tag">DevOps with AWS</div>
-          <div class="day-title">EC2 Instance Types, Pricing, Placement Groups, Tenancy + Storage Fundamentals</div>
+    <!-- DEVOPS BLOCK -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-line"></div>
+        <div class="section-title">
+          🔧 Block 1 · DevOps with AWS · Months 1-3
         </div>
-        <div class="day-card-body">
-          <div class="day-date">Jun 21, 2026 · 5:30 AM</div>
-          <div class="day-topics">
-            <span class="day-topic hot">On-Demand</span>
-            <span class="day-topic hot">Spot</span>
-            <span class="day-topic hot">Reserved</span>
-            <span class="day-topic hot">Placement Groups</span>
-            <span class="day-topic">Tenancy</span>
-            <span class="day-topic">S3</span>
-            <span class="day-topic">EBS</span>
-            <span class="day-topic">EFS</span>
+        <div
+          class="section-line"
+          style="background: linear-gradient(90deg, transparent, #9b6dff40)"
+        ></div>
+      </div>
+
+      <div id="devops">
+        <div class="block-label">
+          <div class="block-dot" style="background: #d97706"></div>
+          <div class="block-name" style="color: #d97706">DevOps with AWS</div>
+          <div class="block-range">Jun 20 – Jul 20, 2026 · Month 1</div>
+        </div>
+        <div class="days-grid">
+          <!-- DAY 1 — LIVE -->
+          <a href="days/day-001.html" class="day-card" style="--c: #d97706">
+            <div class="day-card-top">
+              <div class="day-num-badge">01</div>
+              <div class="day-tag">DevOps with AWS</div>
+              <div class="day-title">
+                AWS Fundamentals — IaaS, PaaS, SaaS, EC2, CDN &amp; Edge
+                Locations
+              </div>
+            </div>
+            <div class="day-card-body">
+              <div class="day-date">Jun 20, 2026 · 5:30 AM</div>
+              <div class="day-topics">
+                <span class="day-topic hot">IaaS/PaaS/SaaS</span>
+                <span class="day-topic hot">EC2</span>
+                <span class="day-topic hot">CloudFront</span>
+                <span class="day-topic">Edge Locations</span>
+                <span class="day-topic">CDN</span>
+              </div>
+            </div>
+            <div class="day-card-footer">
+              <div class="day-status">Published</div>
+              <div class="day-arrow">→</div>
+            </div>
+          </a>
+
+          <!-- DAY 2 — LIVE -->
+          <a href="days/day-002.html" class="day-card" style="--c: #d97706">
+            <div class="day-card-top">
+              <div class="day-num-badge">02</div>
+              <div class="day-tag">DevOps with AWS</div>
+              <div class="day-title">
+                EC2 Instance Types, Pricing, Placement Groups, Tenancy + Storage
+                Fundamentals
+              </div>
+            </div>
+            <div class="day-card-body">
+              <div class="day-date">Jun 21, 2026 · 5:30 AM</div>
+              <div class="day-topics">
+                <span class="day-topic hot">On-Demand</span>
+                <span class="day-topic hot">Spot</span>
+                <span class="day-topic hot">Reserved</span>
+                <span class="day-topic hot">Placement Groups</span>
+                <span class="day-topic">Tenancy</span>
+                <span class="day-topic">S3</span>
+                <span class="day-topic">EBS</span>
+                <span class="day-topic">EFS</span>
+              </div>
+            </div>
+            <div class="day-card-footer">
+              <div class="day-status">Published</div>
+              <div class="day-arrow">→</div>
+            </div>
+          </a>
+
+          <div class="day-card soon" style="--c: #d97706">
+            <div class="day-card-top">
+              <div class="day-num-badge">03</div>
+              <div class="day-tag">DevOps with AWS</div>
+              <div class="day-title">Coming Jun 22, 2026</div>
+            </div>
+            <div class="day-card-body">
+              <div class="day-date">Jun 22, 2026</div>
+            </div>
+            <div class="day-card-footer">
+              <div class="day-status">Upcoming</div>
+            </div>
           </div>
         </div>
-        <div class="day-card-footer">
-          <div class="day-status">Published</div>
-          <div class="day-arrow">→</div>
+      </div>
+
+      <!-- FRONTEND TEASER -->
+      <div id="frontend" style="margin-top: 40px">
+        <div class="block-label">
+          <div class="block-dot" style="background: #0ea5e9"></div>
+          <div class="block-name" style="color: #0ea5e9">
+            Frontend · JS · TS · React · Next.js · React Native
+          </div>
+          <div class="block-range">
+            Sep 21, 2026 – Feb 21, 2027 · Months 4-8
+          </div>
         </div>
-      </a>
-
-      <div class="day-card soon" style="--c:#D97706">
-        <div class="day-card-top">
-          <div class="day-num-badge">03</div>
-          <div class="day-tag">DevOps with AWS</div>
-          <div class="day-title">Coming Jun 22, 2026</div>
+        <div class="day-card soon" style="--c: #0ea5e9; max-width: 300px">
+          <div class="day-card-top">
+            <div class="day-tag">JavaScript</div>
+            <div class="day-title">Starts Day 94 · Sep 21, 2026</div>
+          </div>
+          <div class="day-card-body">
+            <div class="day-date">After completing DevOps block</div>
+          </div>
+          <div class="day-card-footer">
+            <div class="day-status">Locked</div>
+          </div>
         </div>
-        <div class="day-card-body"><div class="day-date">Jun 22, 2026</div></div>
-        <div class="day-card-footer"><div class="day-status">Upcoming</div></div>
       </div>
 
-    </div>
-  </div>
-
-  <!-- FRONTEND TEASER -->
-  <div id="frontend" style="margin-top:40px">
-    <div class="block-label">
-      <div class="block-dot" style="background:#0EA5E9"></div>
-      <div class="block-name" style="color:#0EA5E9">Frontend · JS · TS · React · Next.js · React Native</div>
-      <div class="block-range">Sep 21, 2026 – Feb 21, 2027 · Months 4-8</div>
-    </div>
-    <div class="day-card soon" style="--c:#0EA5E9;max-width:300px">
-      <div class="day-card-top">
-        <div class="day-tag">JavaScript</div>
-        <div class="day-title">Starts Day 94 · Sep 21, 2026</div>
+      <!-- PYTHON TEASER -->
+      <div id="python" style="margin-top: 40px">
+        <div class="block-label">
+          <div class="block-dot" style="background: #16a34a"></div>
+          <div class="block-name" style="color: #16a34a">
+            Python · Agentic AI · Django
+          </div>
+          <div class="block-range">Feb 22 – May 22, 2027 · Months 9-11</div>
+        </div>
+        <div class="day-card soon" style="--c: #16a34a; max-width: 300px">
+          <div class="day-card-top">
+            <div class="day-tag">Python</div>
+            <div class="day-title">Starts Day 248 · Feb 22, 2027</div>
+          </div>
+          <div class="day-card-body">
+            <div class="day-date">After completing Frontend block</div>
+          </div>
+          <div class="day-card-footer">
+            <div class="day-status">Locked</div>
+          </div>
+        </div>
       </div>
-      <div class="day-card-body"><div class="day-date">After completing DevOps block</div></div>
-      <div class="day-card-footer"><div class="day-status">Locked</div></div>
-    </div>
-  </div>
 
-  <!-- PYTHON TEASER -->
-  <div id="python" style="margin-top:40px">
-    <div class="block-label">
-      <div class="block-dot" style="background:#16A34A"></div>
-      <div class="block-name" style="color:#16A34A">Python · Agentic AI · Django</div>
-      <div class="block-range">Feb 22 – May 22, 2027 · Months 9-11</div>
-    </div>
-    <div class="day-card soon" style="--c:#16A34A;max-width:300px">
-      <div class="day-card-top">
-        <div class="day-tag">Python</div>
-        <div class="day-title">Starts Day 248 · Feb 22, 2027</div>
+      <!-- JAVA TEASER -->
+      <div id="java" style="margin-top: 40px">
+        <div class="block-label">
+          <div class="block-dot" style="background: #d97706"></div>
+          <div class="block-name" style="color: #d97706">
+            Java · J2SE · J2EE · JPA · Spring Boot · Microservices
+          </div>
+          <div class="block-range">May 23 – Oct 19, 2027 · Months 12-16</div>
+        </div>
+        <div class="day-card soon" style="--c: #d97706; max-width: 300px">
+          <div class="day-card-top">
+            <div class="day-tag">Java</div>
+            <div class="day-title">Starts Day 338 · May 23, 2027</div>
+          </div>
+          <div class="day-card-body">
+            <div class="day-date">After completing Python block</div>
+          </div>
+          <div class="day-card-footer">
+            <div class="day-status">Locked</div>
+          </div>
+        </div>
       </div>
-      <div class="day-card-body"><div class="day-date">After completing Frontend block</div></div>
-      <div class="day-card-footer"><div class="day-status">Locked</div></div>
     </div>
-  </div>
 
-  <!-- JAVA TEASER -->
-  <div id="java" style="margin-top:40px">
-    <div class="block-label">
-      <div class="block-dot" style="background:#D97706"></div>
-      <div class="block-name" style="color:#D97706">Java · J2SE · J2EE · JPA · Spring Boot · Microservices</div>
-      <div class="block-range">May 23 – Oct 19, 2027 · Months 12-16</div>
-    </div>
-    <div class="day-card soon" style="--c:#D97706;max-width:300px">
-      <div class="day-card-top">
-        <div class="day-tag">Java</div>
-        <div class="day-title">Starts Day 338 · May 23, 2027</div>
+    <!-- FOOTER -->
+    <footer>
+      <strong>Sumit Rawal</strong> · 16 Months of Code · 487 Days · Jun 20, 2026
+      – Oct 19, 2027<br />
+      Senior Associate L2 @ NextStep · FPO Cloud · Bangkok, Thailand<br />
+      <div class="hashtags">
+        <span class="hashtag">#16MonthsOfCode</span>
+        <span class="hashtag">#487DaysOfCode</span>
+        <span class="hashtag">#100DaysOfCode</span>
+        <span class="hashtag">#AWS</span>
+        <span class="hashtag">#DevOps</span>
+        <span class="hashtag">#LearnInPublic</span>
+        <span class="hashtag">#BuildInPublic</span>
       </div>
-      <div class="day-card-body"><div class="day-date">After completing Python block</div></div>
-      <div class="day-card-footer"><div class="day-status">Locked</div></div>
-    </div>
-  </div>
-
-</div>
-
-<!-- FOOTER -->
-<footer>
-  <strong>Sumit Rawal</strong> · 16 Months of Code · 487 Days · Jun 20, 2026 – Oct 19, 2027<br>
-  Senior Associate L2 @ NextStep · FPO Cloud · Bangkok, Thailand<br>
-  <div class="hashtags">
-    <span class="hashtag">#16MonthsOfCode</span>
-    <span class="hashtag">#487DaysOfCode</span>
-    <span class="hashtag">#100DaysOfCode</span>
-    <span class="hashtag">#AWS</span>
-    <span class="hashtag">#DevOps</span>
-    <span class="hashtag">#LearnInPublic</span>
-    <span class="hashtag">#BuildInPublic</span>
-  </div>
-</footer>
-
-</body>
+    </footer>
+  </body>
 </html>
