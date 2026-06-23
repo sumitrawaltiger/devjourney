@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Day 3 of 1064 — Sumit Rawal learns EC2 purchasing options, EBS volume types, Instance Store vs EBS, and snapshot automation.">
-<title>Day 3 · EC2 Pricing + EBS Deep Dive · Sumit Rawal</title>
+<meta name="description" content="Day 4 of 1064 — Sumit Rawal learns EFS, Amazon FSx (ONTAP, OpenZFS, Windows), NAS vs SAN, SMB, and Active Directory.">
+<title>Day 4 · EFS + Amazon FSx · Sumit Rawal</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -157,7 +157,7 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
   </div>
   <div class="nav-right">
     <a href="../index.html" class="back-btn">← All Days</a>
-    <span style="font-size:11px;color:var(--dim);">Day 3 of 1064</span>
+    <span style="font-size:11px;color:var(--dim);">Day 4 of 1064</span>
   </div>
 </nav>
 
@@ -165,25 +165,25 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
 
   <!-- TOP NAV -->
   <div class="day-nav">
-    <a href="day-002.html">← Day 2: EC2 + Storage Intro</a>
-    <div class="day-counter">📅 Jun 22, 2026 · 5:30 AM · Bangkok</div>
-    <a href="day-004.html" class="next">Day 4 →</a>
+    <a href="day-003.html">← Day 3: EBS + Snapshots</a>
+    <div class="day-counter">📅 Jun 23, 2026 · 5:30 AM · Bangkok</div>
+    <a href="#" class="next">Day 5 → <span style="opacity:0.6;font-size:10px;">(tomorrow)</span></a>
   </div>
 
   <!-- HERO -->
   <div class="hero-grid">
     <div>
       <div class="day-badge"><div class="pulse"></div>DevOps with AWS · Month 1</div>
-      <div class="day-num"><span class="d">DAY</span> <span class="n">3</span><span class="rocket">🚀</span></div>
+      <div class="day-num"><span class="d">DAY</span> <span class="n">4</span><span class="rocket">🚀</span></div>
       <div class="of-text">Of Becoming a</div>
       <div class="big-title">SOFTWARE</div>
       <div class="big-title">DEVELOPER</div>
       <div class="rule"></div>
       <p class="summary">
-        Today I locked in EC2 purchasing models — on-demand, reserved, savings plans,
-        and interruption behavior. Then went deep on AWS storage: DAS (instance store
-        vs EBS), file systems (NFS, CIFS, EFS, FSx), object storage with S3, every EBS
-        volume type, Nitro sub-millisecond latency, and snapshot automation with DLM.
+        Today I went deep on shared file storage — EFS as the managed NFS alternative
+        for Linux, the full Amazon FSx family (NetApp ONTAP, OpenZFS, Windows Server),
+        NAS vs SAN fundamentals, and how SMB plus Active Directory power Windows file
+        shares in the cloud.
       </p>
     </div>
     <div class="photo-card">
@@ -205,298 +205,340 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
     <div class="check-list">
       <div class="check-item">
         <div class="check-icon">✓</div>
-        <div class="check-text"><strong>EC2 Purchasing Options</strong> — On-Demand (no commitment), Reserved Instances (1–3 yr, up to 72% off), Savings Plans (flexible compute commitment, up to 66% off), Spot (up to 90% off with interruption behavior — 2-minute warning)</div>
+        <div class="check-text"><strong>Elastic Block Storage (EBS)</strong> — network-attached block volumes for a single EC2 instance. Persistent, snapshot-able. Foundation before moving to shared file systems</div>
       </div>
       <div class="check-item">
         <div class="check-icon">✓</div>
-        <div class="check-text"><strong>AWS Pricing Calculator</strong> — estimate monthly costs before provisioning. Compare On-Demand vs Reserved vs Savings Plans for FPO Cloud workloads</div>
+        <div class="check-text"><strong>Elastic File System (EFS)</strong> — fully managed NFS alternative. <strong>Linux only</strong>. Multiple EC2s mount the same directory tree. Performance mode + throughput mode control cost and speed</div>
       </div>
       <div class="check-item">
         <div class="check-icon">✓</div>
-        <div class="check-text"><strong>Storage Categories</strong> — DAS (Direct Attached: Instance Store + EBS), File Storage (NFS/CIFS via EFS &amp; FSx), Object Storage (S3 — cloud only, HTTP API)</div>
+        <div class="check-text"><strong>NAS vs SAN</strong> — NAS (Network Attached Storage) shares files over NFS/SMB. SAN (Storage Area Network) delivers raw block storage over Fibre Channel/iSCSI. EFS/FSx = NAS. EBS = block (SAN-like)</div>
       </div>
       <div class="check-item">
         <div class="check-icon">✓</div>
-        <div class="check-text"><strong>Instance Store vs EBS</strong> — Instance Store: physically attached, ephemeral, ultra-fast. EBS: network-attached, persistent, survives stop. Root vs data volume combos matter for boot and durability</div>
+        <div class="check-text"><strong>Amazon FSx</strong> — managed third-party file systems: NetApp ONTAP, OpenZFS, Windows Server, Lustre. Enterprise features without managing hardware</div>
       </div>
       <div class="check-item">
         <div class="check-icon">✓</div>
-        <div class="check-text"><strong>EBS Volume Types</strong> — SSD: gp2, gp3 (general), io1/io2 (provisioned IOPS). HDD: st1 (throughput), sc1 (cold HDD). Legacy magnetic. Nitro instances deliver sub-millisecond EBS latency</div>
+        <div class="check-text"><strong>FSx for Windows Server</strong> — native SMB (Server Message Block) file shares. Integrates with Microsoft Active Directory, NTDS, and Domain Controllers for enterprise auth</div>
       </div>
       <div class="check-item">
         <div class="check-icon">✓</div>
-        <div class="check-text"><strong>Snapshots &amp; Automation</strong> — 3 use cases: backup, AMI creation, cross-region/AZ copy. Fast Snapshot Restore (FSR), Data Lifecycle Manager (DLM) for snapshot automation</div>
+        <div class="check-text"><strong>OpenZFS vs NetApp ONTAP</strong> — OpenZFS: open-source, data health checks, corruption prevention, portability. ONTAP: enterprise NetApp features, Cloud Volumes ONTAP, multi-protocol, dedup/compression</div>
       </div>
     </div>
   </div>
 
-  <!-- EC2 PURCHASING -->
+  <!-- NAS VS SAN -->
   <div class="sec-label">
-    <div class="sec-title">💳 EC2 Purchasing Options</div>
+    <div class="sec-title">🌐 NAS vs SAN — Storage Architectures</div>
     <div class="sec-line"></div>
   </div>
 
-  <div class="it-grid">
-    <div class="it-card" style="--bord:#F59E0B">
-      <span class="it-icon">💳</span>
-      <div class="it-name">On-Demand</div>
-      <span class="it-tag">Pay per second</span>
-      <div class="it-desc">No upfront cost, no commitment. Billed per second (Linux) or per hour (Windows). Most flexible — never interrupted by AWS.</div>
-      <div class="it-use">✦ Unpredictable workloads, dev/test, short-term spikes</div>
+  <div class="three-grid">
+    <div class="three-card" style="--tc:#16A34A">
+      <span class="three-icon">📂</span>
+      <div class="three-name">NAS</div>
+      <div class="three-desc"><strong>Network Attached Storage</strong> — file-level access over the network. Clients mount a shared folder via <strong>NFS</strong> (Linux) or <strong>SMB/CIFS</strong> (Windows). AWS: <strong>EFS</strong>, <strong>FSx</strong>.</div>
+      <div class="three-use">✦ Shared configs, content repos, home directories</div>
     </div>
-    <div class="it-card" style="--bord:#16A34A">
-      <span class="it-icon">📅</span>
-      <div class="it-name">Reserved Instances</div>
-      <span class="it-tag">Up to 72% cheaper</span>
-      <div class="it-desc">1-year or 3-year commitment for a specific instance type, region, and tenancy. Standard or Convertible. No interruption.</div>
-      <div class="it-use">✦ Steady-state production — FPO Cloud DB servers</div>
+    <div class="three-card" style="--tc:#0EA5E9">
+      <span class="three-icon">🧱</span>
+      <div class="three-name">SAN</div>
+      <div class="three-desc"><strong>Storage Area Network</strong> — block-level access. Raw volumes presented to one host at a time (usually). Low-level disk operations. AWS equivalent: <strong>EBS</strong> over the network.</div>
+      <div class="three-use">✦ Databases, OS boot disks, single-host apps</div>
     </div>
-    <div class="it-card" style="--bord:#0EA5E9">
-      <span class="it-icon">📊</span>
-      <div class="it-name">Savings Plans</div>
-      <span class="it-tag">Up to 66% cheaper</span>
-      <div class="it-desc">Commit to $/hr spend for 1 or 3 years. Compute SP (EC2, Lambda, Fargate) or EC2 Instance SP. Flexible across instance families and regions.</div>
-      <div class="it-use">✦ Mixed workloads where instance type changes over time</div>
-    </div>
-    <div class="it-card" style="--bord:#E11D48">
-      <span class="it-icon">⚡</span>
-      <div class="it-name">Spot + Interruption</div>
-      <span class="it-tag">Up to 90% cheaper</span>
-      <div class="it-desc"><strong>Interruption behavior:</strong> AWS reclaims capacity with a 2-minute warning. Instance stops or hibernates. Price fluctuates with demand. Not for critical always-on apps.</div>
-      <div class="it-use">✦ Batch jobs, ML training, fault-tolerant stateless work</div>
+    <div class="three-card" style="--tc:#9B6DFF">
+      <span class="three-icon">☁️</span>
+      <div class="three-name">AWS Mapping</div>
+      <div class="three-desc">Block → <strong>EBS</strong>. File/NAS → <strong>EFS</strong> (NFS), <strong>FSx</strong> (ONTAP/OpenZFS/Windows/Lustre). Object → <strong>S3</strong>. Pick by access pattern, not brand names.</div>
+      <div class="three-use">✦ FPO Cloud: EBS for DB, EFS for shared OFP configs</div>
     </div>
   </div>
 
+  <!-- EFS -->
+  <div class="sec-label">
+    <div class="sec-title">📁 Amazon EFS — Managed NFS for Linux</div>
+    <div class="sec-line"></div>
+  </div>
+
   <div class="card">
-    <div class="card-title">🧮 AWS Pricing Calculator</div>
+    <div class="card-title">EFS — Elastic File System</div>
     <div class="check-list">
       <div class="check-item">
         <div class="check-icon">→</div>
-        <div class="check-text">Free web tool at <strong>calculator.aws</strong> — model EC2, EBS, S3, and 200+ services before you deploy</div>
+        <div class="check-text"><strong>NFS alternative</strong> — fully managed, elastic file system. Mount with standard NFSv4.1. Scales automatically — no capacity planning</div>
       </div>
       <div class="check-item">
         <div class="check-icon">→</div>
-        <div class="check-text">Compare <strong>On-Demand vs Reserved vs Savings Plans</strong> side by side for the same workload</div>
+        <div class="check-text"><strong>Linux only</strong> — supported clients: Amazon Linux, Ubuntu, RHEL, etc. Not for Windows (use FSx for Windows Server + SMB instead)</div>
       </div>
       <div class="check-item">
         <div class="check-icon">→</div>
-        <div class="check-text">Export estimates as CSV or share a link with your team — essential for FPO Cloud cost planning</div>
+        <div class="check-text"><strong>Real-world scenario:</strong> 10 EC2 instances in an auto-scaling group all read/write the same <code>/shared/config</code> mount — no sync scripts, no duplication</div>
       </div>
     </div>
   </div>
 
-  <!-- STORAGE CATEGORIES -->
-  <div class="sec-label">
-    <div class="sec-title">🗄 Storage — DAS, File &amp; Object</div>
-    <div class="sec-line"></div>
-  </div>
-
-  <div class="st-grid">
-    <div class="st-card" style="--sc:#F59E0B">
-      <span class="st-icon">💾</span>
-      <div class="st-name">DAS</div>
-      <div class="st-abbr">Direct Attached Storage</div>
-      <div class="st-desc">Storage on the EC2 host. <strong>Two types:</strong> Instance Store (ephemeral NVMe) and EBS (persistent block volume). Both attach directly to one instance.</div>
-      <span class="st-tag">Instance Store · EBS</span>
+  <div class="it-grid">
+    <div class="it-card" style="--bord:#16A34A">
+      <span class="it-icon">⚡</span>
+      <div class="it-name">Performance Mode</div>
+      <span class="it-tag">Latency vs throughput</span>
+      <div class="it-desc"><strong>General Purpose</strong> — low latency, default for most apps. <strong>Max I/O</strong> — higher throughput + IOPS for parallel workloads (big data, media processing).</div>
+      <div class="it-use">✦ General Purpose for FPO app configs</div>
     </div>
-    <div class="st-card" style="--sc:#16A34A">
-      <span class="st-icon">📂</span>
-      <div class="st-name">File Storage</div>
-      <div class="st-abbr">Shared File Systems</div>
-      <div class="st-desc"><strong>NFS</strong> (Linux) → EFS. <strong>CIFS/SMB</strong> (Windows) → FSx for Windows. <strong>FSx for Lustre</strong> for HPC. Multiple EC2s mount the same files.</div>
-      <span class="st-tag">EFS · FSx · NFS · SMB</span>
-    </div>
-    <div class="st-card" style="--sc:#9B6DFF">
-      <span class="st-icon">☁️</span>
-      <div class="st-name">Object Storage</div>
-      <div class="st-abbr">Cloud Only — S3</div>
-      <div class="st-desc">Flat namespace, unlimited scale. Objects accessed via HTTP API — not a mounted drive. <strong>Only exists in the cloud.</strong> Powers FPO archives.</div>
-      <span class="st-tag">S3</span>
-    </div>
-    <div class="st-card" style="--sc:#0EA5E9">
-      <span class="st-icon">🧱</span>
-      <div class="st-name">Block (EBS)</div>
-      <div class="st-abbr">Network Block Volume</div>
-      <div class="st-desc">Raw block device — like plugging a hard drive into EC2. Persistent, snapshot-able, encryptable. One volume → usually one instance.</div>
-      <span class="st-tag">gp3 · io2 · st1</span>
+    <div class="it-card" style="--bord:#0EA5E9">
+      <span class="it-icon">📊</span>
+      <div class="it-name">Throughput Mode</div>
+      <span class="it-tag">Billing + speed</span>
+      <div class="it-desc"><strong>Bursting</strong> — scales with storage size, free baseline. <strong>Provisioned</strong> — set throughput independent of size. <strong>Elastic</strong> — auto scales up/down with usage.</div>
+      <div class="it-use">✦ Bursting for dev; Provisioned for steady heavy I/O</div>
     </div>
   </div>
 
-  <!-- INSTANCE STORE VS EBS -->
+  <!-- FSx INTRO -->
   <div class="sec-label">
-    <div class="sec-title">⚔ Instance Store vs EBS</div>
+    <div class="sec-title">🏢 Amazon FSx — Introduction</div>
     <div class="sec-line"></div>
   </div>
 
   <div class="card">
-    <div class="card-title">Key Differences</div>
+    <div class="card-title">Amazon FSx Benefits</div>
+    <div class="check-list">
+      <div class="check-item">
+        <div class="check-icon">✓</div>
+        <div class="check-text"><strong>Fully managed</strong> — AWS handles patching, backups, hardware, and failover. You get enterprise file system features without racks of storage</div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon">✓</div>
+        <div class="check-text"><strong>Native compatibility</strong> — run NetApp ONTAP, OpenZFS, Windows Server, or Lustre as if on-premises — lift-and-shift friendly</div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon">✓</div>
+        <div class="check-text"><strong>High performance</strong> — sub-millisecond latency options, SSD tiers, multi-AZ durability, integration with VPC, KMS encryption, and AWS Backup</div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon">✓</div>
+        <div class="check-text"><strong>Multi-protocol</strong> — NFS, SMB, iSCSI depending on FSx type — one platform for mixed Linux + Windows estates</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="st-grid">
+    <div class="st-card" style="--sc:#0067C5">
+      <span class="st-icon">🔷</span>
+      <div class="st-name">FSx for ONTAP</div>
+      <div class="st-abbr">NetApp ONTAP on AWS</div>
+      <div class="st-desc">Full NetApp ONTAP feature set. NFS, SMB, iSCSI. Snapshots, cloning, dedup, compression. <strong>Cloud Volumes ONTAP</strong> is the NetApp-branded equivalent.</div>
+      <span class="st-tag">Enterprise NAS/SAN</span>
+    </div>
+    <div class="st-card" style="--sc:#16A34A">
+      <span class="st-icon">🐧</span>
+      <div class="st-name">FSx for OpenZFS</div>
+      <div class="st-abbr">Open-source ZFS</div>
+      <div class="st-desc">Managed OpenZFS. Data health, checksums, corruption prevention, large dataset management, portability across ZFS systems.</div>
+      <span class="st-tag">Linux · ZFS</span>
+    </div>
+    <div class="st-card" style="--sc:#0078D4">
+      <span class="st-icon">🪟</span>
+      <div class="st-name">FSx for Windows</div>
+      <div class="st-abbr">SMB + Active Directory</div>
+      <div class="st-desc">Native Windows file server. <strong>SMB</strong> shares. Joins <strong>Active Directory</strong> domain. Supports DFS, quotas, shadow copies.</div>
+      <span class="st-tag">SMB · AD</span>
+    </div>
+    <div class="st-card" style="--sc:#F59E0B">
+      <span class="st-icon">🔥</span>
+      <div class="st-name">FSx for Lustre</div>
+      <div class="st-abbr">High-performance computing</div>
+      <div class="st-desc">Parallel file system for ML, HPC, and financial modelling. Integrates with S3 as backing store.</div>
+      <span class="st-tag">HPC · ML</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Amazon FSx — Use Cases</div>
     <table class="compare">
       <tr>
-        <th>Feature</th><th>Instance Store</th><th>EBS Volume</th>
+        <th>FSx Type</th><th>Best For</th><th>Protocol</th><th>FPO Cloud Example</th>
       </tr>
       <tr>
-        <td><strong>Attachment</strong></td>
-        <td>Physically on host (DAS)</td>
-        <td>Network-attached block storage</td>
+        <td><strong>ONTAP</strong></td>
+        <td>Enterprise migration, multi-protocol, NetApp shops</td>
+        <td>NFS, SMB, iSCSI</td>
+        <td>Lift on-prem NetApp filer to AWS</td>
       </tr>
       <tr>
-        <td><strong>Persistence</strong></td>
-        <td><span class="tag tag-red">Ephemeral — lost on stop/terminate</span></td>
-        <td><span class="tag tag-green">Persistent — survives stop</span></td>
+        <td><strong>OpenZFS</strong></td>
+        <td>Linux workloads needing ZFS data integrity</td>
+        <td>NFS</td>
+        <td>Large dataset with checksum validation</td>
       </tr>
       <tr>
-        <td><strong>Performance</strong></td>
-        <td>Ultra-low latency NVMe SSD</td>
-        <td>Sub-ms on Nitro; depends on type</td>
+        <td><strong>Windows Server</strong></td>
+        <td>Windows apps, .NET, legacy SMB shares</td>
+        <td>SMB</td>
+        <td>Shared drive for Windows-based ops tools</td>
       </tr>
       <tr>
-        <td><strong>Resize</strong></td>
-        <td>Fixed at launch — tied to instance type</td>
-        <td>Resize, change type, detach/reattach</td>
-      </tr>
-      <tr>
-        <td><strong>Snapshots</strong></td>
-        <td>Cannot snapshot</td>
-        <td><span class="tag tag-green">Full snapshot + DLM support</span></td>
-      </tr>
-      <tr>
-        <td><strong>Cost</strong></td>
-        <td>Included with instance</td>
-        <td>Pay per GB/month + IOPS (io types)</td>
+        <td><strong>Lustre</strong></td>
+        <td>ML training, seismic processing, HPC</td>
+        <td>Lustre client</td>
+        <td>Weather model batch processing</td>
       </tr>
     </table>
   </div>
 
-  <!-- ROOT VS DATA COMBOS -->
+  <!-- ONTAP -->
   <div class="sec-label">
-    <div class="sec-title">🔀 Root vs Data Volume Combinations</div>
+    <div class="sec-title">🔷 FSx for NetApp ONTAP &amp; Cloud Volumes ONTAP</div>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="card">
+    <div class="check-list">
+      <div class="check-item">
+        <div class="check-icon">→</div>
+        <div class="check-text"><strong>NetApp ONTAP on AWS</strong> — industry-standard enterprise storage OS. SnapMirror replication, FlexClone instant copies, storage efficiency (dedup + compression)</div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon">→</div>
+        <div class="check-text"><strong>Cloud Volumes ONTAP</strong> — NetApp's own cloud deployment of ONTAP (can run on EC2 or as FSx). Same ONTAP features, NetApp-managed option alongside AWS FSx for ONTAP</div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon">→</div>
+        <div class="check-text">Supports block (iSCSI) + file (NFS/SMB) on the same platform — bridges NAS and SAN in one appliance</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OpenZFS -->
+  <div class="sec-label">
+    <div class="sec-title">🐧 FSx for OpenZFS — Features</div>
     <div class="sec-line"></div>
   </div>
 
   <div class="three-grid">
     <div class="three-card" style="--tc:#16A34A">
-      <span class="three-icon">✅</span>
-      <div class="three-name">EBS Root + EBS Data</div>
-      <div class="three-desc"><strong>Most common.</strong> OS on gp3 EBS root. Additional EBS data volumes for DB, logs, app data. Everything persistent and snapshot-able.</div>
-      <div class="three-use">✦ Production FPO Cloud servers</div>
+      <span class="three-icon">🩺</span>
+      <div class="three-name">Data Health</div>
+      <div class="three-desc">Continuous <strong>checksums</strong> on every read/write. Detects silent bit rot and hardware errors automatically — not just on backup day.</div>
+      <div class="three-use">✦ Aviation data integrity requirements</div>
     </div>
-    <div class="three-card" style="--tc:#F59E0B">
-      <span class="three-icon">⚡</span>
-      <div class="three-name">EBS Root + Instance Store Data</div>
-      <div class="three-desc">OS on persistent EBS. <strong>Instance store as data volume</strong> for temp cache, scratch, or high-IOPS workloads. Data lost on stop — by design.</div>
-      <div class="three-use">✦ Caching layer, temp processing, analytics</div>
+    <div class="three-card" style="--tc:#0EA5E9">
+      <span class="three-icon">📦</span>
+      <div class="three-name">Large Data Capacity</div>
+      <div class="three-desc">Manages <strong>petabyte-scale datasets</strong> with copy-on-write snapshots, thin provisioning, and efficient clones — no full copy for every snapshot.</div>
+      <div class="three-use">✦ Historical flight data archives</div>
     </div>
-    <div class="three-card" style="--tc:#E11D48">
-      <span class="three-icon">⚠️</span>
-      <div class="three-name">Instance Store Root</div>
-      <div class="three-desc"><strong>Instance store as root volume</strong> — OS lives on ephemeral disk. Entire instance lost on hardware failure or stop. Rare — only for disposable workloads.</div>
-      <div class="three-use">✦ Stateless fleet nodes, auto-scaling scratch</div>
-    </div>
-  </div>
-
-  <div class="card" style="margin-bottom:20px;">
-    <div class="check-item" style="padding:4px 0;">
-      <div class="check-icon">→</div>
-      <div class="check-text"><strong>Instance Store root + EBS data</strong> — risky combo: OS is ephemeral but data persists on EBS. Rebuild OS from AMI; data volume reattaches. Use only when you understand the trade-off.</div>
-    </div>
-  </div>
-
-  <!-- EBS VOLUME TYPES -->
-  <div class="sec-label">
-    <div class="sec-title">📀 EBS Volume Types</div>
-    <div class="sec-line"></div>
-  </div>
-
-  <div class="it-grid">
-    <div class="it-card" style="--bord:#16A34A">
-      <span class="it-icon">💚</span>
-      <div class="it-name">gp3 / gp2</div>
-      <span class="it-tag">General Purpose SSD</span>
-      <div class="it-desc"><strong>gp3</strong> — baseline 3,000 IOPS, 125 MB/s (independent scaling). <strong>gp2</strong> — older, IOPS tied to size. Default for most workloads.</div>
-      <div class="it-use">✦ Boot volumes, dev, small DBs</div>
-    </div>
-    <div class="it-card" style="--bord:#6366F1">
-      <span class="it-icon">🚀</span>
-      <div class="it-name">io1 / io2</div>
-      <span class="it-tag">Provisioned IOPS SSD</span>
-      <div class="it-desc">Guaranteed IOPS up to 64,000 (io1) or 256,000 (io2 Block Express). <strong>io2</strong> has 99.999% durability. Highest performance SSD.</div>
-      <div class="it-use">✦ Mission-critical DBs, SAP, Oracle</div>
-    </div>
-    <div class="it-card" style="--bord:#F59E0B">
-      <span class="it-icon">📼</span>
-      <div class="it-name">st1</div>
-      <span class="it-tag">Throughput Optimized HDD</span>
-      <div class="it-desc">Low-cost HDD optimized for <strong>sequential reads/writes</strong>. Cannot be boot volume. Max 500 MB/s throughput.</div>
-      <div class="it-use">✦ Big data, log processing, data warehouses</div>
-    </div>
-    <div class="it-card" style="--bord:#6B6480">
-      <span class="it-icon">🧊</span>
-      <div class="it-name">sc1 / Magnetic</div>
-      <span class="it-tag">Cold HDD · Legacy</span>
-      <div class="it-desc"><strong>sc1</strong> — lowest cost HDD for infrequent access (cold data). <strong>Magnetic (standard)</strong> — legacy, previous generation. Avoid for new workloads.</div>
-      <div class="it-use">✦ Infrequent access archives on block storage</div>
+    <div class="three-card" style="--tc:#6366F1">
+      <span class="three-icon">🛡️</span>
+      <div class="three-name">Corruption Prevention</div>
+      <div class="three-desc">End-to-end data integrity via checksums + self-healing RAID-Z. <strong>Prevents data corruption</strong> from propagating silently through the stack.</div>
+      <div class="three-use">✦ Mission-critical log storage</div>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-title">⚡ Nitro Instances — Sub-Millisecond Latency</div>
-    <div class="check-list">
-      <div class="check-item">
-        <div class="check-icon">→</div>
-        <div class="check-text"><strong>AWS Nitro System</strong> offloads virtualization to dedicated hardware — EBS volumes get <strong>sub-millisecond latency</strong> on Nitro-based instance types (M5, C5, R5, T3, etc.)</div>
-      </div>
-      <div class="check-item">
-        <div class="check-icon">→</div>
-        <div class="check-text">Nitro enables higher network bandwidth, more EBS bandwidth per instance, and enhanced security with bare-metal-like isolation</div>
-      </div>
-      <div class="check-item">
-        <div class="check-icon">→</div>
-        <div class="check-text">Always choose Nitro instances for production — older Xen-based types are being phased out</div>
-      </div>
+    <div class="card-title">Compatibility &amp; Portability</div>
+    <div class="check-item" style="padding:4px 0;">
+      <div class="check-icon">→</div>
+      <div class="check-text">OpenZFS datasets can be <strong>exported and imported</strong> across any ZFS-compatible system — on-prem Linux server, another cloud, or FSx. No vendor lock-in on the file system format.</div>
     </div>
   </div>
 
-  <!-- SNAPSHOTS -->
+  <div class="card">
+    <div class="card-title">OpenZFS vs NetApp ONTAP in FSx</div>
+    <table class="compare">
+      <tr>
+        <th>Feature</th><th>FSx for OpenZFS</th><th>FSx for NetApp ONTAP</th>
+      </tr>
+      <tr>
+        <td><strong>License</strong></td>
+        <td>Open-source ZFS</td>
+        <td>Proprietary NetApp ONTAP</td>
+      </tr>
+      <tr>
+        <td><strong>Protocols</strong></td>
+        <td>NFS</td>
+        <td>NFS, SMB, iSCSI</td>
+      </tr>
+      <tr>
+        <td><strong>Data integrity</strong></td>
+        <td><span class="tag tag-green">Checksums + self-healing</span></td>
+        <td><span class="tag tag-green">SnapMirror + WAFL</span></td>
+      </tr>
+      <tr>
+        <td><strong>Enterprise features</strong></td>
+        <td>Snapshots, clones, compression</td>
+        <td>Dedup, FlexClone, SnapMirror, multi-protocol</td>
+      </tr>
+      <tr>
+        <td><strong>Portability</strong></td>
+        <td><span class="tag tag-blue">High — standard ZFS</span></td>
+        <td><span class="tag tag-orange">ONTAP ecosystem</span></td>
+      </tr>
+      <tr>
+        <td><strong>Best for</strong></td>
+        <td>Linux ZFS shops, data integrity focus</td>
+        <td>Enterprise NetApp migrations, mixed OS</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- WINDOWS FSx + AD -->
   <div class="sec-label">
-    <div class="sec-title">📸 EBS Snapshots &amp; Automation</div>
+    <div class="sec-title">🪟 FSx for Windows Server — SMB &amp; Active Directory</div>
     <div class="sec-line"></div>
   </div>
 
-  <div class="three-grid">
-    <div class="three-card" style="--tc:#16A34A">
-      <span class="three-icon">💾</span>
-      <div class="three-name">Use Case 1 — Backup</div>
-      <div class="three-desc">Point-in-time copy of an EBS volume stored incrementally in S3. Restore to a new volume in any AZ. Foundation of disaster recovery.</div>
-      <div class="three-use">✦ Daily DB backups for FPO Cloud</div>
+  <div class="it-grid">
+    <div class="it-card" style="--bord:#0078D4">
+      <span class="it-icon">📁</span>
+      <div class="it-name">SMB (Server Message Block)</div>
+      <span class="it-tag">Windows file sharing</span>
+      <div class="it-desc">Protocol Windows uses to share files and printers over a network. FSx for Windows Server is a <strong>fully managed SMB file server</strong> in AWS — map drives like <code>\\fsx\share</code>.</div>
+      <div class="it-use">✦ Shared drives for Windows-based airline ops tools</div>
     </div>
-    <div class="three-card" style="--tc:#0EA5E9">
-      <span class="three-icon">🖼️</span>
-      <div class="three-name">Use Case 2 — AMI Creation</div>
-      <div class="three-desc">Snapshot the root EBS volume → register as an <strong>AMI</strong>. Launch identical instances from that golden image across regions.</div>
-      <div class="three-use">✦ Golden images for auto-scaling fleets</div>
+    <div class="it-card" style="--bord:#6366F1">
+      <span class="it-icon">🏛️</span>
+      <div class="it-name">Active Directory Service</div>
+      <span class="it-tag">Identity &amp; access</span>
+      <div class="it-desc">Microsoft's directory service for users, groups, computers, and policies. FSx for Windows joins your AD domain so SMB shares respect <strong>NTFS permissions and group policies</strong>.</div>
+      <div class="it-use">✦ Single sign-on for file access across the org</div>
     </div>
-    <div class="three-card" style="--tc:#9B6DFF">
-      <span class="three-icon">🌍</span>
-      <div class="three-name">Use Case 3 — Cross-Region Copy</div>
-      <div class="three-desc">Copy snapshot to another region or AZ for <strong>DR and migration</strong>. Launch volumes in the target region from the copied snapshot.</div>
-      <div class="three-use">✦ Multi-region FPO Cloud resilience</div>
+    <div class="it-card" style="--bord:#16A34A">
+      <span class="it-icon">🗄️</span>
+      <div class="it-name">NTDS (NT Directory Service)</div>
+      <span class="it-tag">AD database engine</span>
+      <div class="it-desc"><strong>New Technology Directory Service</strong> — the database engine behind Active Directory. Stores all directory objects. Runs on every <strong>Domain Controller</strong>.</div>
+      <div class="it-use">✦ Foundation of AD — users, OUs, GPOs live here</div>
+    </div>
+    <div class="it-card" style="--bord:#F59E0B">
+      <span class="it-icon">🎛️</span>
+      <div class="it-name">Domain Controller</div>
+      <span class="it-tag">AD server role</span>
+      <div class="it-desc">Windows Server running AD DS. Authenticates users, enforces policies, replicates NTDS database to other DCs. FSx for Windows integrates with <strong>AWS Managed Microsoft AD</strong> or on-prem DCs.</div>
+      <div class="it-use">✦ Central auth for SMB shares in the cloud</div>
     </div>
   </div>
 
-  <div class="it-grid">
-    <div class="it-card" style="--bord:#F59E0B">
-      <span class="it-icon">⚡</span>
-      <div class="it-name">Fast Snapshot Restore (FSR)</div>
-      <span class="it-tag">Instant restore</span>
-      <div class="it-desc">Pre-warms a snapshot in an AZ so first volume creation is <strong>instant</strong> — no lazy-loading delay. Costs per snapshot per AZ per hour.</div>
-      <div class="it-use">✦ Critical DR — restore DB in seconds</div>
-    </div>
-    <div class="it-card" style="--bord:#6366F1">
-      <span class="it-icon">🔄</span>
-      <div class="it-name">Data Lifecycle Manager (DLM)</div>
-      <span class="it-tag">Snapshot automation</span>
-      <div class="it-desc">Automate snapshot creation, retention, and deletion on a schedule. Tag-based policies — no Lambda needed. <strong>Snapshot automation</strong> built into AWS.</div>
-      <div class="it-use">✦ Daily snapshots, 7-day retention, auto-cleanup</div>
+  <div class="card">
+    <div class="card-title">Real-World: FSx for Windows + Active Directory</div>
+    <div class="check-list">
+      <div class="check-item">
+        <div class="check-icon">1</div>
+        <div class="check-text">Deploy <strong>AWS Managed Microsoft AD</strong> (or extend on-prem AD via VPN/Direct Connect)</div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon">2</div>
+        <div class="check-text">Create <strong>FSx for Windows Server</strong> file system and join it to the AD domain</div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon">3</div>
+        <div class="check-text">EC2 Windows instances map SMB shares — users authenticate via AD credentials, permissions enforced by NTFS + AD groups</div>
+      </div>
     </div>
   </div>
 
@@ -504,40 +546,32 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
   <div class="code-card">
     <div class="code-hdr">
       <div class="dr"></div><div class="dy"></div><div class="dg"></div>
-      <span class="fname">day-003-aws-notes.sh</span>
+      <span class="fname">day-004-aws-notes.sh</span>
     </div>
     <div class="code-body">
-<span class="cl"># ─── Day 3 AWS Notes · Sumit Rawal · Jun 22, 2026 ────────────────</span><br>
+<span class="cl"># ─── Day 4 AWS Notes · Sumit Rawal · Jun 23, 2026 ────────────────</span><br>
 <br>
-<span class="cl"># EC2 Purchasing — compare options</span><br>
-<span class="cm">On-Demand</span>     <span class="cw">=</span> <span class="cs">"pay per second, no interruption, most flexible"</span><br>
-<span class="cm">Reserved</span>      <span class="cw">=</span> <span class="cs">"1-3yr commit, up to 72% off, fixed instance type"</span><br>
-<span class="cm">Savings Plans</span> <span class="cw">=</span> <span class="cs">"$/hr commit, up to 66% off, flexible family/region"</span><br>
-<span class="cm">Spot</span>          <span class="cw">=</span> <span class="cs">"up to 90% off — INTERRUPTION: 2-min warning then reclaim"</span><br>
+<span class="cl"># Storage architectures</span><br>
+<span class="cm">NAS</span> <span class="cw">=</span> <span class="cs">"file-level — NFS/SMB — EFS, FSx"</span><br>
+<span class="cm">SAN</span> <span class="cw">=</span> <span class="cs">"block-level — raw volumes — EBS"</span><br>
 <br>
-<span class="cl"># AWS Pricing Calculator → calculator.aws</span><br>
+<span class="cl"># EFS — managed NFS (Linux only)</span><br>
+<span class="cv">sudo mount</span> <span class="cp">-t nfs4</span> <span class="cp">-o nfsvers=4.1</span> <span class="cp">fs-0abc.efs.ap-southeast-1.amazonaws.com:/</span> <span class="cp">/mnt/efs</span><br>
+<span class="cm">Performance Mode</span> <span class="cw">=</span> <span class="cs">"General Purpose (low latency) | Max I/O (high throughput)"</span><br>
+<span class="cm">Throughput Mode</span>  <span class="cw">=</span> <span class="cs">"Bursting | Provisioned | Elastic"</span><br>
 <br>
-<span class="cl"># DAS — two types</span><br>
-<span class="cm">Instance Store</span> <span class="cw">=</span> <span class="cs">"ephemeral NVMe on host — lost on stop"</span><br>
-<span class="cm">EBS</span>            <span class="cw">=</span> <span class="cs">"persistent network block — survives stop"</span><br>
+<span class="cl"># FSx types</span><br>
+<span class="cm">FSx ONTAP</span>   <span class="cw">=</span> <span class="cs">"NetApp ONTAP — NFS/SMB/iSCSI — Cloud Volumes ONTAP"</span><br>
+<span class="cm">FSx OpenZFS</span> <span class="cw">=</span> <span class="cs">"checksums, corruption prevention, large data, portability"</span><br>
+<span class="cm">FSx Windows</span> <span class="cw">=</span> <span class="cs">"SMB shares + Active Directory + Domain Controller"</span><br>
 <br>
-<span class="cl"># Root / Data volume combos</span><br>
-<span class="cm">EBS root + EBS data</span>           <span class="cw">=</span> <span class="cs">"production default"</span><br>
-<span class="cm">EBS root + Instance Store data</span> <span class="cw">=</span> <span class="cs">"persistent OS + fast temp cache"</span><br>
-<span class="cm">Instance Store root + EBS data</span>  <span class="cw">=</span> <span class="cs">"disposable OS, persistent data — risky"</span><br>
+<span class="cl"># Active Directory stack</span><br>
+<span class="cm">SMB</span>  <span class="cw">=</span> <span class="cs">"Server Message Block — Windows file sharing protocol"</span><br>
+<span class="cm">AD</span>   <span class="cw">=</span> <span class="cs">"Active Directory — users, groups, policies"</span><br>
+<span class="cm">NTDS</span> <span class="cw">=</span> <span class="cs">"NT Directory Service — AD database on Domain Controller"</span><br>
 <br>
-<span class="cl"># EBS volume types</span><br>
-<span class="cv">aws ec2</span> <span class="cg">create-volume</span> <span class="ck">--volume-type</span> <span class="cm">gp3</span>  <span class="ck">--size</span> <span class="cw">100</span>  <span class="cl"># general SSD</span><br>
-<span class="cv">aws ec2</span> <span class="cg">create-volume</span> <span class="ck">--volume-type</span> <span class="cm">io2</span>  <span class="ck">--iops</span> <span class="cw">10000</span> <span class="cl"># provisioned IOPS</span><br>
-<span class="cv">aws ec2</span> <span class="cg">create-volume</span> <span class="ck">--volume-type</span> <span class="cm">st1</span>  <span class="ck">--size</span> <span class="cw">500</span>  <span class="cl"># throughput HDD</span><br>
-<span class="cv">aws ec2</span> <span class="cg">create-volume</span> <span class="ck">--volume-type</span> <span class="cm">sc1</span>  <span class="ck">--size</span> <span class="cw">500</span>  <span class="cl"># cold HDD</span><br>
-<br>
-<span class="cl"># Snapshots — backup, AMI, cross-region DR</span><br>
-<span class="cv">aws ec2</span> <span class="cg">create-snapshot</span> <span class="ck">--volume-id</span> <span class="cp">vol-0abc</span> <span class="ck">--description</span> <span class="cs">"daily backup"</span><br>
-<span class="cv">aws ec2</span> <span class="cg">enable-fast-snapshot-restore</span> <span class="ck">--snapshot-id</span> <span class="cp">snap-0abc</span> <span class="ck">--availability-zone</span> <span class="cp">ap-southeast-1a</span><br>
-<br>
-<span class="cl"># DLM — snapshot automation (no Lambda needed)</span><br>
-<span class="cv">aws dlm</span> <span class="cg">create-lifecycle-policy</span> <span class="ck">--execution-role-arn</span> <span class="cp">arn:aws:iam::...</span> <span class="ck">--policy-details</span> <span class="cs">'...'</span>
+<span class="cl"># Create FSx for Windows (joins AD domain)</span><br>
+<span class="cv">aws fsx</span> <span class="cg">create-file-system</span> <span class="ck">--file-system-type</span> <span class="cm">WINDOWS</span> <span class="ck">--storage-capacity</span> <span class="cw">300</span> <span class="ck">--subnet-ids</span> <span class="cp">subnet-0abc</span>
     </div>
   </div>
 
@@ -547,7 +581,7 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
       <div class="glf-icon">📚</div>
       <div>
         <div class="glf-label">Learning</div>
-        <div class="glf-val">EC2 Pricing + EBS Types + Snapshots + DLM</div>
+        <div class="glf-val">EFS + FSx (ONTAP, OpenZFS, Windows) + NAS/SAN</div>
       </div>
     </div>
     <div class="glf-card">
@@ -561,7 +595,7 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
       <div class="glf-icon">⚡</div>
       <div>
         <div class="glf-label">Streak</div>
-        <div class="glf-val">Day 3 ✅ · 1061 days remaining · 5:30 AM daily</div>
+        <div class="glf-val">Day 4 ✅ · 1060 days remaining · 5:30 AM daily</div>
       </div>
     </div>
   </div>
@@ -571,9 +605,9 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
     <div>
       <span class="qmark">"</span>
       <div class="qtext">
-        Instance Store is fast but ephemeral.<br>
-        <em>EBS snapshots are how<br>
-        FPO Cloud survives failures.</em>
+        Linux mounts EFS.<br>
+        Windows needs <em>FSx + SMB +<br>
+        Active Directory.</em> Know your OS.
       </div>
     </div>
     <div class="qvisual">
@@ -589,9 +623,12 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
     <span class="hashtag">#1064DaysOfCode</span><span class="ht-sep">|</span>
     <span class="hashtag">#16MonthsOfCode</span><span class="ht-sep">|</span>
     <span class="hashtag">#AWS</span><span class="ht-sep">|</span>
-    <span class="hashtag">#EBS</span><span class="ht-sep">|</span>
-    <span class="hashtag">#Snapshots</span><span class="ht-sep">|</span>
-    <span class="hashtag">#InstanceStore</span><span class="ht-sep">|</span>
+    <span class="hashtag">#EFS</span><span class="ht-sep">|</span>
+    <span class="hashtag">#FSx</span><span class="ht-sep">|</span>
+    <span class="hashtag">#OpenZFS</span><span class="ht-sep">|</span>
+    <span class="hashtag">#NetAppONTAP</span><span class="ht-sep">|</span>
+    <span class="hashtag">#ActiveDirectory</span><span class="ht-sep">|</span>
+    <span class="hashtag">#SMB</span><span class="ht-sep">|</span>
     <span class="hashtag">#DevOps</span><span class="ht-sep">|</span>
     <span class="hashtag">#LearnInPublic</span><span class="ht-sep">|</span>
     <span class="hashtag">#BuildInPublic</span>
