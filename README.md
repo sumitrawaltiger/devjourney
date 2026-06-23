@@ -1,6 +1,6 @@
-# 🚀 Sumit Rawal — 16 Months of Code
+# 🚀 Sumit Rawal — 36 Months of Code
 
-**487 days · Jun 20, 2026 → Oct 19, 2027 · 5:30 AM – 8:30 AM daily**
+**1000 days · 3 years · 96 rest days built in · Jun 20, 2026 → Jun 19, 2029 · Tuesday · 5:30 AM – 8:30 AM daily**
 
 Building in public from Bangkok while architecting FPO Cloud at NextStep.
 
@@ -23,14 +23,14 @@ devjourney/
 └── README.md
 ```
 
-## 🗺 16-Month Roadmap
+## 🗺 36-Month Roadmap
 
 | Block | Skills | Months | Days |
 |-------|--------|--------|------|
 | 🔧 DevOps | DevOps with AWS · SRE with AWS · QE with AWS | M01–M03 | D1–D93 |
 | ⚡ Frontend | JavaScript · TypeScript · React · Next.js · React Native | M04–M08 | D94–D247 |
 | 🐍 Python | Python · Agentic AI · Django | M09–M11 | D248–D337 |
-| ☕ Java | J2SE · J2EE · JPA · Spring Boot · Microservices | M12–M16 | D338–D487 |
+| ☕ Java | J2SE · J2EE · JPA · Spring Boot · Microservices | M12–M36 | D338–D1000 |
 
 ---
 
@@ -83,7 +83,7 @@ From then on — every `git push` auto-deploys! 🎉
 ---
 
 ## 🏷 Hashtags to use
-`#16MonthsOfCode` `#487DaysOfCode` `#100DaysOfCode` `#365DaysOfCode`
+`#36MonthsOfCode` `#3YearsOfCode` `#1000DaysOfCode` `#100DaysOfCode` `#365DaysOfCode`
 `#AWS` `#DevOps` `#LearnInPublic` `#BuildInPublic` `#SumitrawalDev`
 
 ---
