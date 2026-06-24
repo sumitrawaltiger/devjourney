@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Day 2 of 1000 — Sumit Rawal learns EC2 Instance Types, Pricing, Tenancy and AWS Storage Fundamentals.">
-<title>Day 2 · EC2 Instance Types + Storage · Sumit Rawal</title>
+<meta name="description" content="Day 2 of 1000 — Sumit Rawal learns Python variables, identifiers, keywords, assignment, and indentation.">
+<title>Day 2 · Variables & Identifiers · Sumit Rawal</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 body{background:#07071A;color:#fff;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;}
-:root{--c:#D97706;--purple:#9B6DFF;--grey:#B0A8C4;--dim:#6B6480;--bg2:#0D0D25;}
+:root{--c:#16A34A;--purple:#9B6DFF;--grey:#B0A8C4;--dim:#6B6480;--bg2:#0D0D25;}
 
 .glow-tl{position:fixed;width:600px;height:600px;background:radial-gradient(circle,#4C1D9540,transparent 70%);border-radius:50%;top:-150px;left:-150px;pointer-events:none;z-index:0;}
 .glow-br{position:fixed;width:400px;height:400px;background:radial-gradient(circle,#6D28D925,transparent 70%);border-radius:50%;bottom:-80px;right:-80px;pointer-events:none;z-index:0;}
@@ -26,13 +26,13 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
 
 .day-nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;}
 .day-nav a{background:var(--bg2);border:1px solid #ffffff0D;border-radius:10px;padding:10px 18px;font-size:12px;font-weight:500;color:var(--grey);text-decoration:none;transition:all 0.2s;}
-.day-nav a:hover{border-color:#D9770650;color:#fff;}
-.day-nav .next{background:#D9770618;border-color:#D9770640;color:var(--c);}
+.day-nav a:hover{border-color:#16A34A50;color:#fff;}
+.day-nav .next{background:#16A34A18;border-color:#16A34A40;color:var(--c);}
 .day-counter{font-size:11px;color:var(--dim);letter-spacing:0.06em;}
 
 /* HERO */
 .hero-grid{display:grid;grid-template-columns:1fr 240px;gap:32px;align-items:start;margin-bottom:32px;}
-.day-badge{display:inline-flex;align-items:center;gap:8px;background:#D9770618;border:1px solid #D9770640;border-radius:100px;padding:5px 14px;font-size:11px;font-weight:600;color:var(--c);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:16px;width:fit-content;}
+.day-badge{display:inline-flex;align-items:center;gap:8px;background:#16A34A18;border:1px solid #16A34A40;border-radius:100px;padding:5px 14px;font-size:11px;font-weight:600;color:var(--c);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:16px;width:fit-content;}
 .pulse{width:7px;height:7px;background:var(--c);border-radius:50%;animation:pulse 2s infinite;}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(1.4);}}
 .day-num{font-family:'Syne',sans-serif;font-weight:800;font-size:88px;line-height:0.85;letter-spacing:-0.05em;margin-bottom:4px;}
@@ -45,7 +45,7 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
 .rule::after{content:'';position:absolute;right:55%;top:-2px;width:8px;height:8px;background:var(--c);border-radius:50%;}
 .summary{font-size:14px;line-height:1.75;color:var(--grey);}
 
-.photo-card{background:#0F0F2A;border:1px solid #D9770630;border-radius:20px;overflow:hidden;position:relative;}
+.photo-card{background:#0F0F2A;border:1px solid #16A34A30;border-radius:20px;overflow:hidden;position:relative;}
 .photo-card img{width:100%;aspect-ratio:1/1.1;object-fit:cover;object-position:center top;display:block;}
 .photo-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(0deg,#07071AF5 0%,transparent 60%);padding:18px 16px;}
 .photo-name{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;color:#fff;margin-bottom:2px;}
@@ -72,13 +72,13 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
 /* INSTANCE TYPE GRID */
 .it-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:20px;}
 .it-card{background:var(--bg2);border:1px solid #ffffff0D;border-radius:14px;padding:18px 16px;position:relative;overflow:hidden;transition:border-color 0.2s;}
-.it-card:hover{border-color:#D9770640;}
-.it-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--bord,#D97706),transparent);}
+.it-card:hover{border-color:#16A34A40;}
+.it-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--bord,#16A34A),transparent);}
 .it-icon{font-size:24px;margin-bottom:10px;display:block;}
-.it-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:var(--bord,#D97706);margin-bottom:6px;}
-.it-tag{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:6px;background:var(--bord,#D97706)18;color:var(--bord,#D97706);border:1px solid var(--bord,#D97706)35;margin-bottom:8px;letter-spacing:0.06em;}
+.it-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:var(--bord,#16A34A);margin-bottom:6px;}
+.it-tag{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:6px;background:var(--bord,#16A34A)18;color:var(--bord,#16A34A);border:1px solid var(--bord,#16A34A)35;margin-bottom:8px;letter-spacing:0.06em;}
 .it-desc{font-size:12px;color:#8A8299;line-height:1.6;}
-.it-use{font-size:11px;color:#D97706;margin-top:6px;font-weight:500;}
+.it-use{font-size:11px;color:#16A34A;margin-top:6px;font-weight:500;}
 
 /* STORAGE GRID */
 .st-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
@@ -93,11 +93,11 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
 /* PLACEMENT / TENANCY 3-col */
 .three-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
 .three-card{background:var(--bg2);border:1px solid #ffffff0D;border-radius:14px;padding:18px 16px;position:relative;overflow:hidden;}
-.three-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--tc,#D97706),transparent);}
+.three-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--tc,#16A34A),transparent);}
 .three-icon{font-size:22px;margin-bottom:9px;display:block;}
-.three-name{font-size:13px;font-weight:700;color:var(--tc,#D97706);margin-bottom:6px;}
+.three-name{font-size:13px;font-weight:700;color:var(--tc,#16A34A);margin-bottom:6px;}
 .three-desc{font-size:11.5px;color:#8A8299;line-height:1.6;}
-.three-use{font-size:10px;color:#D97706;margin-top:6px;font-weight:500;font-style:italic;}
+.three-use{font-size:10px;color:#16A34A;margin-top:6px;font-weight:500;font-style:italic;}
 
 /* CODE */
 .code-card{background:#0A0A1F;border:1px solid #ffffff0D;border-radius:16px;overflow:hidden;margin-bottom:20px;}
@@ -107,7 +107,7 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
 .dg{width:10px;height:10px;border-radius:50%;background:#28C840;}
 .fname{font-size:12px;color:#6B6480;margin-left:8px;}
 .code-body{padding:18px 22px;font-family:'Courier New',monospace;font-size:12.5px;line-height:2;overflow-x:auto;}
-.cl{color:#4D4A6E;}.ck{color:#FF79C6;}.cv{color:#8BE9FD;}.cs{color:#F1FA8C;}.cm{color:#D97706;}.cw{color:#fff;}.cg{color:#50FA7B;}.cp{color:#C4A0FF;}
+.cl{color:#4D4A6E;}.ck{color:#FF79C6;}.cv{color:#8BE9FD;}.cs{color:#F1FA8C;}.cm{color:#16A34A;}.cw{color:#fff;}.cg{color:#50FA7B;}.cp{color:#C4A0FF;}
 
 /* COMPARE TABLE */
 .compare{width:100%;border-collapse:separate;border-spacing:0;margin-bottom:20px;font-size:12.5px;}
@@ -119,7 +119,7 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
 .compare .tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:5px;font-weight:600;}
 .tag-green{background:#16A34A18;color:#4ADE80;border:1px solid #16A34A35;}
 .tag-blue{background:#0EA5E918;color:#38BDF8;border:1px solid #0EA5E935;}
-.tag-orange{background:#D9770618;color:#FCD34D;border:1px solid #D9770635;}
+.tag-orange{background:#16A34A18;color:#FCD34D;border:1px solid #16A34A35;}
 .tag-red{background:#E1111818;color:#F87171;border:1px solid #E1111835;}
 
 /* GLF ROW */
@@ -130,14 +130,14 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
 .glf-val{font-size:13px;color:#D4CDE8;font-weight:500;line-height:1.45;}
 
 /* QUOTE */
-.quote{background:linear-gradient(135deg,#13132E,#0F0F26);border:1px solid #D9770630;border-radius:18px;padding:28px;margin-bottom:20px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;position:relative;overflow:hidden;}
-.quote::before{content:'';position:absolute;bottom:-30px;right:-30px;width:160px;height:160px;background:radial-gradient(circle,#D9770630,transparent 70%);border-radius:50%;}
+.quote{background:linear-gradient(135deg,#13132E,#0F0F26);border:1px solid #16A34A30;border-radius:18px;padding:28px;margin-bottom:20px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;position:relative;overflow:hidden;}
+.quote::before{content:'';position:absolute;bottom:-30px;right:-30px;width:160px;height:160px;background:radial-gradient(circle,#16A34A30,transparent 70%);border-radius:50%;}
 .qmark{font-family:'Syne',sans-serif;font-size:72px;line-height:0.6;color:var(--c);margin-bottom:10px;display:block;}
 .qtext{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:#fff;line-height:1.4;}
 .qtext em{font-style:normal;color:var(--c);}
 .qvisual{display:flex;flex-direction:column;align-items:center;gap:10px;}
 .rocket-big{font-size:46px;animation:launch 3s ease-in-out infinite;}
-.code-tag{background:#D9770618;border:1px solid #D9770640;border-radius:10px;padding:10px 14px;font-size:20px;text-align:center;}
+.code-tag{background:#16A34A18;border:1px solid #16A34A40;border-radius:10px;padding:10px 14px;font-size:20px;text-align:center;}
 
 /* HASHTAGS */
 .hashtags{border-top:1px solid #ffffff08;padding-top:20px;display:flex;flex-wrap:wrap;gap:6px 14px;}
@@ -165,7 +165,7 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
 
   <!-- TOP NAV -->
   <div class="day-nav">
-    <a href="day-001.html">← Day 1: AWS Basics</a>
+    <a href="day-001.html">← Day 1: Python Intro</a>
     <div class="day-counter">📅 Jun 21, 2026 · 5:30 AM · Bangkok</div>
     <a href="day-003.html" class="next">Day 3 →</a>
   </div>
@@ -173,17 +173,14 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
   <!-- HERO -->
   <div class="hero-grid">
     <div>
-      <div class="day-badge"><div class="pulse"></div>DevOps with AWS · Month 1</div>
-      <div class="day-num"><span class="d">DAY</span> <span class="n">2</span><span class="rocket">🚀</span></div>
+      <div class="day-badge"><div class="pulse"></div>Python · Month 1</div>
+      <div class="day-num"><span class="d">DAY</span> <span class="n">2</span><span class="rocket">🐍</span></div>
       <div class="of-text">Of Becoming a</div>
       <div class="big-title">SOFTWARE</div>
       <div class="big-title">DEVELOPER</div>
       <div class="rule"></div>
       <p class="summary">
-        Today went deep into EC2 instance types — on-demand, spot, reserved, and
-        the three placement group strategies. Also explored AWS tenancy models and
-        kicked off storage fundamentals: DAS, Block, File, and Object storage.
-        Two major AWS pillars in one session.
+        Today I learned how Python stores data in variables — naming rules, reserved keywords, the = assignment operator, swapping values, and why indentation is not optional in Python.
       </p>
     </div>
     <div class="photo-card">
@@ -194,10 +191,11 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
       </div>
       <div class="photo-overlay">
         <div class="photo-name">Sumit Rawal</div>
-        <div class="photo-role">AWS Engineer · FPO Cloud</div>
+        <div class="photo-role">Python Learner · FPO Cloud</div>
       </div>
     </div>
   </div>
+
 
   <!-- WHAT I LEARNT -->
   <div class="card">
@@ -205,268 +203,128 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
     <div class="check-list">
       <div class="check-item">
         <div class="check-icon">✓</div>
-        <div class="check-text"><strong>EC2 Purchasing Options</strong> — On-Demand (pay per second), Reserved (1-3yr commitment, up to 72% cheaper), Spot (unused capacity, up to 90% off, can be interrupted), Dedicated Host &amp; Instance</div>
+        <div class="check-text"><strong>Variables</strong> — named containers for data. Created with <code>name = value</code>. No need to declare type — Python figures it out at runtime</div>
       </div>
       <div class="check-item">
         <div class="check-icon">✓</div>
-        <div class="check-text"><strong>Placement Groups</strong> — Clustered (low latency, same rack, high risk), Partitioned (groups across partitions, isolates failures), Spread (each instance on separate hardware, max 7 per AZ)</div>
+        <div class="check-text"><strong>Identifiers</strong> — variable names must start with a letter or underscore, then letters, digits, or underscores. Case-sensitive: <code>age</code> and <code>Age</code> are different</div>
       </div>
       <div class="check-item">
         <div class="check-icon">✓</div>
-        <div class="check-text"><strong>AWS Pricing Calculator</strong> — estimate monthly costs before provisioning. Used it to compare On-Demand vs Reserved for FPO Cloud Lambda + EC2 workloads</div>
+        <div class="check-text"><strong>Keywords</strong> — reserved words like <code>if</code>, <code>for</code>, <code>class</code>, <code>def</code> cannot be used as variable names. Check with <code>import keyword; keyword.kwlist</code></div>
       </div>
       <div class="check-item">
         <div class="check-icon">✓</div>
-        <div class="check-text"><strong>Tenancy Models</strong> — Shared (default, multiple customers on same hardware), Dedicated Instance (your VMs on dedicated hardware but AWS manages), Dedicated Host (entire physical server, you control placement, needed for BYOL)</div>
+        <div class="check-text"><strong>Assignment</strong> — <code>=</code> binds a value to a name. Multiple assignment: <code>x, y = 1, 2</code> or swap: <code>a, b = b, a</code></div>
       </div>
       <div class="check-item">
         <div class="check-icon">✓</div>
-        <div class="check-text"><strong>3 Categories of Storage</strong> — DAS (Direct Attached Storage: local disk on EC2), File Storage (shared access via NFS/SMB — EFS, FSx), Block Storage (raw volumes — EBS), Object Storage (only in cloud — S3, flat namespace, unlimited scale)</div>
+        <div class="check-text"><strong>Indentation</strong> — Python uses whitespace (4 spaces standard) to define code blocks. Wrong indentation causes <code>IndentationError</code></div>
       </div>
     </div>
   </div>
 
-  <!-- EC2 INSTANCE TYPES -->
   <div class="sec-label">
-    <div class="sec-title">☁ EC2 Purchasing Options</div>
+    <div class="sec-title">📛 Identifier naming rules</div>
     <div class="sec-line"></div>
   </div>
 
   <div class="it-grid">
-    <div class="it-card" style="--bord:#F59E0B">
-      <span class="it-icon">💳</span>
-      <div class="it-name">On-Demand</div>
-      <span class="it-tag">Pay per second</span>
-      <div class="it-desc">No upfront cost, no commitment. Billed per second (Linux) or per hour (Windows). Most flexible option.</div>
-      <div class="it-use">✦ Best for: unpredictable workloads, dev/test, short-term</div>
-    </div>
     <div class="it-card" style="--bord:#16A34A">
-      <span class="it-icon">📅</span>
-      <div class="it-name">Reserved</div>
-      <span class="it-tag">Up to 72% cheaper</span>
-      <div class="it-desc">1-year or 3-year commitment. Standard Reserved (fixed type) or Convertible Reserved (can change type). Pay upfront, partial, or none.</div>
-      <div class="it-use">✦ Best for: steady-state production workloads, FPO Cloud DB</div>
+      <span class="it-icon">✓</span>
+      <div class="it-name">Valid names</div>
+      <span class="it-tag">identifier</span>
+      <div class="it-desc"><code>name</code>, <code>_private</code>, <code>count2</code>, <code>MAX_SIZE</code>, <code>snake_case</code></div>
     </div>
-    <div class="it-card" style="--bord:#E11D48">
-      <span class="it-icon">⚡</span>
-      <div class="it-name">Spot</div>
-      <span class="it-tag">Up to 90% cheaper</span>
-      <div class="it-desc">AWS's unused capacity at a discount. AWS can reclaim with 2-minute warning. Price fluctuates with demand. Not for critical workloads.</div>
-      <div class="it-use">✦ Best for: batch jobs, ML training, data processing</div>
+    <div class="it-card" style="--bord:#E11118">
+      <span class="it-icon">✗</span>
+      <div class="it-name">Invalid names</div>
+      <span class="it-tag">syntax error</span>
+      <div class="it-desc"><code>2name</code> (starts with digit), <code>my-var</code> (hyphen), <code>class</code> (keyword), <code>my var</code> (space)</div>
     </div>
-    <div class="it-card" style="--bord:#6366F1">
-      <span class="it-icon">🏠</span>
-      <div class="it-name">Dedicated Host</div>
-      <span class="it-tag">Physical server</span>
-      <div class="it-desc">Entire physical server dedicated to you. You control instance placement. Required for BYOL (Bring Your Own License) — Oracle, Windows Server.</div>
-      <div class="it-use">✦ Best for: compliance, BYOL, regulatory requirements</div>
+    <div class="it-card" style="--bord:#0EA5E9">
+      <span class="it-icon">=</span>
+      <div class="it-name">Assignment</div>
+      <span class="it-tag">= operator</span>
+      <div class="it-desc"><code>x = 10</code> stores 10 in x. <code>x = x + 1</code> updates x. <code>x, y = y, x</code> swaps two values in one line.</div>
     </div>
-  </div>
-
-  <!-- PLACEMENT GROUPS -->
-  <div class="sec-label">
-    <div class="sec-title">📌 Placement Groups</div>
-    <div class="sec-line"></div>
-  </div>
-
-  <div class="three-grid">
-    <div class="three-card" style="--tc:#F59E0B">
-      <span class="three-icon">🔗</span>
-      <div class="three-name">Clustered</div>
-      <div class="three-desc">Instances packed together in the <strong>same rack, same AZ</strong>. Ultra-low latency, high network throughput. But if rack fails — ALL fail. High risk, high reward.</div>
-      <div class="three-use">✦ HPC, big data, low-latency apps</div>
-    </div>
-    <div class="three-card" style="--tc:#6366F1">
-      <span class="three-icon">🧱</span>
-      <div class="three-name">Partitioned</div>
-      <div class="three-desc">Instances spread across <strong>logical partitions</strong> (each partition = separate racks). Different partitions don't share hardware. Isolates failures to one partition. Up to 7 partitions per AZ.</div>
-      <div class="three-use">✦ Kafka, Cassandra, HDFS, distributed DBs</div>
-    </div>
-    <div class="three-card" style="--tc:#16A34A">
-      <span class="three-icon">🌿</span>
-      <div class="three-name">Spread</div>
-      <div class="three-desc">Each instance on a <strong>completely separate rack</strong> with independent network and power. Max <strong>7 instances per AZ</strong> per group. Highest isolation — one failure never affects another.</div>
-      <div class="three-use">✦ Critical apps: max 7 instances that must never fail together</div>
+    <div class="it-card" style="--bord:#9B6DFF">
+      <span class="it-icon">↹</span>
+      <div class="it-name">Indentation</div>
+      <span class="it-tag">4 spaces</span>
+      <div class="it-desc">Blocks inside <code>if</code>, <code>for</code>, <code>def</code> must be indented. Tabs vs spaces — PEP 8 says use 4 spaces.</div>
     </div>
   </div>
 
-  <!-- TENANCY -->
-  <div class="sec-label">
-    <div class="sec-title">🏢 EC2 Tenancy Models</div>
-    <div class="sec-line"></div>
-  </div>
-
-  <div class="three-grid">
-    <div class="three-card" style="--tc:#0EA5E9">
-      <span class="three-icon">🏘️</span>
-      <div class="three-name">Shared (Default)</div>
-      <div class="three-desc">Multiple AWS customers share the same physical hardware. Your VMs are isolated but hardware is multi-tenant. Cheapest option. Default for all EC2.</div>
-      <div class="three-use">✦ Standard workloads, most FPO Cloud services</div>
-    </div>
-    <div class="three-card" style="--tc:#D97706">
-      <span class="three-icon">🏠</span>
-      <div class="three-name">Dedicated Instance</div>
-      <div class="three-desc">Your instances run on hardware <strong>dedicated to your account</strong>. No other customer shares your physical server. AWS still manages hardware placement. Higher cost.</div>
-      <div class="three-use">✦ Compliance workloads, regulated industries</div>
-    </div>
-    <div class="three-card" style="--tc:#6366F1">
-      <span class="three-icon">🏰</span>
-      <div class="three-name">Dedicated Host</div>
-      <div class="three-desc">You get the <strong>entire physical server</strong>. Full control over instance placement, socket count, core count. Required for BYOL licenses. Most expensive option.</div>
-      <div class="three-use">✦ Oracle DB, Windows Server BYOL, strict compliance</div>
-    </div>
-  </div>
-
-  <!-- COMPARE TABLE EC2 -->
   <div class="card">
-    <div class="card-title">EC2 Purchasing — Quick Compare</div>
-    <table class="compare">
-      <tr>
-        <th>Type</th><th>Commitment</th><th>Discount</th><th>Interruption?</th><th>Use Case</th>
-      </tr>
-      <tr>
-        <td><strong>On-Demand</strong></td>
-        <td>None</td>
-        <td><span class="tag tag-orange">0%</span></td>
-        <td>No</td>
-        <td>Dev/test, unpredictable</td>
-      </tr>
-      <tr>
-        <td><strong>Reserved</strong></td>
-        <td>1 or 3 years</td>
-        <td><span class="tag tag-green">Up to 72%</span></td>
-        <td>No</td>
-        <td>Production, steady-state</td>
-      </tr>
-      <tr>
-        <td><strong>Spot</strong></td>
-        <td>None</td>
-        <td><span class="tag tag-green">Up to 90%</span></td>
-        <td><span class="tag tag-red">Yes — 2 min warning</span></td>
-        <td>Batch, ML, stateless</td>
-      </tr>
-      <tr>
-        <td><strong>Savings Plans</strong></td>
-        <td>1 or 3 years</td>
-        <td><span class="tag tag-blue">Up to 66%</span></td>
-        <td>No</td>
-        <td>Flexible family/region</td>
-      </tr>
-      <tr>
-        <td><strong>Dedicated Host</strong></td>
-        <td>On-demand or 1yr</td>
-        <td><span class="tag tag-orange">Variable</span></td>
-        <td>No</td>
-        <td>BYOL, compliance</td>
-      </tr>
-    </table>
-  </div>
-
-  <!-- STORAGE -->
-  <div class="sec-label">
-    <div class="sec-title">🗄 3 Categories of AWS Storage</div>
-    <div class="sec-line"></div>
-  </div>
-
-  <div class="st-grid">
-    <div class="st-card" style="--sc:#F59E0B">
-      <span class="st-icon">💾</span>
-      <div class="st-name">DAS</div>
-      <div class="st-abbr">Direct Attached Storage</div>
-      <div class="st-desc">Storage physically attached to the EC2 host. Instance Store — temporary, very fast NVMe SSD. Data lost when instance stops. No extra cost.</div>
-      <span class="st-tag">Instance Store</span>
+    <div class="card-title">PEP 8 naming conventions</div>
+    <div class="check-list">
+      <div class="check-item">
+        <div class="check-icon">→</div>
+        <div class="check-text"><code>snake_case</code> for variables and functions — <code>user_name</code>, <code>total_count</code></div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon">→</div>
+        <div class="check-text"><code>UPPER_CASE</code> for constants — <code>MAX_RETRIES = 3</code></div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon">→</div>
+        <div class="check-text"><code>_leading_underscore</code> hints at internal/private use</div>
+      </div>
     </div>
-    <div class="st-card" style="--sc:#0EA5E9">
-      <span class="st-icon">🧱</span>
-      <div class="st-name">Block Storage</div>
-      <div class="st-abbr">Raw Volume — EBS</div>
-      <div class="st-desc">Elastic Block Store. Persistent, network-attached volume. Like a hard drive you plug into EC2. Survives instance stop/terminate. Many types: gp3, io2, st1.</div>
-      <span class="st-tag">EBS</span>
-    </div>
-    <div class="st-card" style="--sc:#16A34A">
-      <span class="st-icon">📂</span>
-      <div class="st-name">File Storage</div>
-      <div class="st-abbr">Shared Access — EFS / FSx</div>
-      <div class="st-desc">Shared file system accessible by multiple EC2s simultaneously via NFS or SMB. EFS (Linux NFS), FSx for Windows, FSx for Lustre (HPC).</div>
-      <span class="st-tag">EFS · FSx</span>
-    </div>
-    <div class="st-card" style="--sc:#9B6DFF">
-      <span class="st-icon">☁️</span>
-      <div class="st-name">Object Storage</div>
-      <div class="st-abbr">Cloud-Only — S3</div>
-      <div class="st-desc">Flat namespace, unlimited scale. Store any file as an object with metadata and unique key. No hierarchy. Only accessible via HTTP API. Powers FPO Cloud archives!</div>
-      <span class="st-tag">S3 · Cloud Only</span>
-    </div>
-  </div>
-
-  <!-- STORAGE COMPARE TABLE -->
-  <div class="card">
-    <div class="card-title">Storage Types — Quick Compare</div>
-    <table class="compare">
-      <tr>
-        <th>Type</th><th>AWS Service</th><th>Access</th><th>Persistence</th><th>FPO Use</th>
-      </tr>
-      <tr>
-        <td><strong>DAS / Instance Store</strong></td>
-        <td>EC2 Instance Store</td>
-        <td>Single EC2 only</td>
-        <td><span class="tag tag-red">Temporary</span></td>
-        <td>Cache, temp files</td>
-      </tr>
-      <tr>
-        <td><strong>Block</strong></td>
-        <td>EBS</td>
-        <td>Single EC2 (usually)</td>
-        <td><span class="tag tag-green">Persistent</span></td>
-        <td>OS disk, DB volumes</td>
-      </tr>
-      <tr>
-        <td><strong>File</strong></td>
-        <td>EFS / FSx</td>
-        <td>Multiple EC2s</td>
-        <td><span class="tag tag-green">Persistent</span></td>
-        <td>Shared config files</td>
-      </tr>
-      <tr>
-        <td><strong>Object</strong></td>
-        <td>S3</td>
-        <td>HTTP API (anywhere)</td>
-        <td><span class="tag tag-green">Persistent</span></td>
-        <td>OFPs, weather data, archive</td>
-      </tr>
-    </table>
   </div>
 
   <!-- CODE SNIPPET -->
   <div class="code-card">
     <div class="code-hdr">
       <div class="dr"></div><div class="dy"></div><div class="dg"></div>
-      <span class="fname">day-002-aws-notes.sh</span>
+      <span class="fname">day-002-python-notes.py</span>
     </div>
     <div class="code-body">
-<span class="cl"># ─── Day 2 AWS Notes · Sumit Rawal · Jun 21, 2026 ────────────────</span><br>
+<span class="cl"># ─── Day 2 Python Notes · Sumit Rawal · Jun 21, 2026 ─────────────</span><br>
 <br>
-<span class="cl"># EC2 Purchasing — Spot request</span><br>
-<span class="cv">aws ec2</span> <span class="cg">request-spot-instances</span> <span class="cw">\</span><br>
-&nbsp;&nbsp;<span class="ck">--spot-price</span> <span class="cs">"0.05"</span> <span class="ck">--instance-count</span> <span class="cw">2</span> <span class="cw">\</span><br>
-&nbsp;&nbsp;<span class="ck">--type</span> <span class="cs">"one-time"</span> <span class="ck">--launch-specification</span> <span class="cs">"..."</span><br>
+<span class="cl"># Variables & assignment</span><br>
+<span class="cv">name</span><br>
+<span class="cw"> = </span><br>
+<span class="cs">"Sumit"</span><br>
+<span class="cv">age</span><br>
+<span class="cw"> = </span><br>
+<span class="cw">30</span><br>
+<span class="cv">pi</span><br>
+<span class="cw"> = </span><br>
+<span class="cw">3.14</span><br>
 <br>
-<span class="cl"># EC2 Placement Group — create all 3 types</span><br>
-<span class="cv">aws ec2</span> <span class="cg">create-placement-group</span> <span class="ck">--group-name</span> <span class="cs">fpo-cluster</span> &nbsp;<span class="ck">--strategy</span> <span class="cm">cluster</span><br>
-<span class="cv">aws ec2</span> <span class="cg">create-placement-group</span> <span class="ck">--group-name</span> <span class="cs">fpo-partition</span> <span class="ck">--strategy</span> <span class="cm">partition</span> <span class="ck">--partition-count</span> <span class="cw">3</span><br>
-<span class="cv">aws ec2</span> <span class="cg">create-placement-group</span> <span class="ck">--group-name</span> <span class="cs">fpo-spread</span> &nbsp;&nbsp;<span class="ck">--strategy</span> <span class="cm">spread</span><br>
+<span class="cl"># Multiple assignment</span><br>
+<span class="cv">x</span><br>
+<span class="cw">, </span><br>
+<span class="cv">y</span><br>
+<span class="cw">, </span><br>
+<span class="cv">z</span><br>
+<span class="cw"> = </span><br>
+<span class="cw">1</span><br>
+<span class="cw">, </span><br>
+<span class="cw">2</span><br>
+<span class="cw">, </span><br>
+<span class="cw">3</span><br>
+<span class="cv">a</span><br>
+<span class="cw">, </span><br>
+<span class="cv">b</span><br>
+<span class="cw"> = </span><br>
+<span class="cv">b</span><br>
+<span class="cw">, </span><br>
+<span class="cv">a</span><br>
+<span class="cl">  # swap without temp variable</span><br>
 <br>
-<span class="cl"># Launch into a placement group</span><br>
-<span class="cv">aws ec2</span> <span class="cg">run-instances</span> <span class="ck">--placement</span> <span class="cs">'GroupName=fpo-cluster,Tenancy=dedicated'</span><br>
-<br>
-<span class="cl"># Storage Types in AWS</span><br>
-<span class="cm">DAS</span>    <span class="cw">=</span> <span class="cs">"EC2 Instance Store — temp NVMe, fast, lost on stop"</span><br>
-<span class="cm">Block</span>  <span class="cw">=</span> <span class="cs">"EBS gp3/io2 — persistent, like a hard drive"</span><br>
-<span class="cm">File</span>   <span class="cw">=</span> <span class="cs">"EFS/FSx — shared NFS/SMB across multiple EC2s"</span><br>
-<span class="cm">Object</span> <span class="cw">=</span> <span class="cs">"S3 — HTTP API, flat namespace, cloud only, unlimited"</span><br>
-<br>
-<span class="cl"># S3 object upload (FPO OFP archive)</span><br>
-<span class="cv">aws s3</span> <span class="cg">cp</span> <span class="cs">./flight-plan-DLH.json</span> <span class="cp">s3://fpo-archive-bucket/ofp/2026/06/21/</span>
+<span class="cl"># Check reserved keywords</span><br>
+<span class="cv">import</span><br>
+<span class="cw"> </span><br>
+<span class="cv">keyword</span><br>
+<span class="cv">print</span><br>
+<span class="cw">(</span><br>
+<span class="cv">keyword</span><br>
+<span class="cw">.</span><br>
+<span class="cv">kwlist</span><br>
+<span class="cw">)</span><br>
     </div>
   </div>
 
@@ -476,14 +334,14 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
       <div class="glf-icon">📚</div>
       <div>
         <div class="glf-label">Learning</div>
-        <div class="glf-val">EC2 Pricing + Placement + Storage Fundamentals</div>
+        <div class="glf-val">Variables + keywords + indentation</div>
       </div>
     </div>
     <div class="glf-card">
       <div class="glf-icon">🎯</div>
       <div>
         <div class="glf-label">Tomorrow</div>
-        <div class="glf-val">EBS deep dive — volume types, snapshots, encryption</div>
+        <div class="glf-val">input(), print() formatting & escape sequences</div>
       </div>
     </div>
     <div class="glf-card">
@@ -500,13 +358,11 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
     <div>
       <span class="qmark">"</span>
       <div class="qtext">
-        Spot instances save 90%.<br>
-        But in FPO Cloud, <em>flights can't<br>
-        be interrupted.</em> Know your workload.
+        In Python, <em>indentation</em><br>is not style —<br>it is syntax.
       </div>
     </div>
     <div class="qvisual">
-      <div class="rocket-big">🚀</div>
+      <div class="rocket-big">🐍</div>
       <div class="code-tag">&lt;/&gt;</div>
     </div>
   </div>
@@ -516,10 +372,10 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
     <span class="hashtag">#100DaysOfCode</span><span class="ht-sep">|</span>
     <span class="hashtag">#365DaysOfCode</span><span class="ht-sep">|</span>
     <span class="hashtag">#1000DaysOfCode</span><span class="ht-sep">|</span>
-    <span class="hashtag">#AWS</span><span class="ht-sep">|</span>
-    <span class="hashtag">#EC2</span><span class="ht-sep">|</span>
-    <span class="hashtag">#CloudStorage</span><span class="ht-sep">|</span>
-    <span class="hashtag">#DevOps</span><span class="ht-sep">|</span>
+    <span class="hashtag">#Python</span><span class="ht-sep">|</span>
+    <span class="hashtag">#Variables</span><span class="ht-sep">|</span>
+    <span class="hashtag">#Identifiers</span><span class="ht-sep">|</span>
+    <span class="hashtag">#Keywords</span><span class="ht-sep">|</span>
     <span class="hashtag">#LearnInPublic</span><span class="ht-sep">|</span>
     <span class="hashtag">#BuildInPublic</span>
   </div>

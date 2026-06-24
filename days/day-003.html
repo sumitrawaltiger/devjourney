@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Day 3 of 1000 — Sumit Rawal learns EC2 purchasing options, EBS volume types, Instance Store vs EBS, and snapshot automation.">
-<title>Day 3 · EC2 Pricing + EBS Deep Dive · Sumit Rawal</title>
+<meta name="description" content="Day 3 of 1000 — Sumit Rawal learns Python input(), print() formatting, and escape sequences.">
+<title>Day 3 · Input & Output · Sumit Rawal</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 body{background:#07071A;color:#fff;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;}
-:root{--c:#D97706;--purple:#9B6DFF;--grey:#B0A8C4;--dim:#6B6480;--bg2:#0D0D25;}
+:root{--c:#16A34A;--purple:#9B6DFF;--grey:#B0A8C4;--dim:#6B6480;--bg2:#0D0D25;}
 
 .glow-tl{position:fixed;width:600px;height:600px;background:radial-gradient(circle,#4C1D9540,transparent 70%);border-radius:50%;top:-150px;left:-150px;pointer-events:none;z-index:0;}
 .glow-br{position:fixed;width:400px;height:400px;background:radial-gradient(circle,#6D28D925,transparent 70%);border-radius:50%;bottom:-80px;right:-80px;pointer-events:none;z-index:0;}
@@ -26,13 +26,13 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
 
 .day-nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;}
 .day-nav a{background:var(--bg2);border:1px solid #ffffff0D;border-radius:10px;padding:10px 18px;font-size:12px;font-weight:500;color:var(--grey);text-decoration:none;transition:all 0.2s;}
-.day-nav a:hover{border-color:#D9770650;color:#fff;}
-.day-nav .next{background:#D9770618;border-color:#D9770640;color:var(--c);}
+.day-nav a:hover{border-color:#16A34A50;color:#fff;}
+.day-nav .next{background:#16A34A18;border-color:#16A34A40;color:var(--c);}
 .day-counter{font-size:11px;color:var(--dim);letter-spacing:0.06em;}
 
 /* HERO */
 .hero-grid{display:grid;grid-template-columns:1fr 240px;gap:32px;align-items:start;margin-bottom:32px;}
-.day-badge{display:inline-flex;align-items:center;gap:8px;background:#D9770618;border:1px solid #D9770640;border-radius:100px;padding:5px 14px;font-size:11px;font-weight:600;color:var(--c);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:16px;width:fit-content;}
+.day-badge{display:inline-flex;align-items:center;gap:8px;background:#16A34A18;border:1px solid #16A34A40;border-radius:100px;padding:5px 14px;font-size:11px;font-weight:600;color:var(--c);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:16px;width:fit-content;}
 .pulse{width:7px;height:7px;background:var(--c);border-radius:50%;animation:pulse 2s infinite;}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(1.4);}}
 .day-num{font-family:'Syne',sans-serif;font-weight:800;font-size:88px;line-height:0.85;letter-spacing:-0.05em;margin-bottom:4px;}
@@ -45,7 +45,7 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
 .rule::after{content:'';position:absolute;right:55%;top:-2px;width:8px;height:8px;background:var(--c);border-radius:50%;}
 .summary{font-size:14px;line-height:1.75;color:var(--grey);}
 
-.photo-card{background:#0F0F2A;border:1px solid #D9770630;border-radius:20px;overflow:hidden;position:relative;}
+.photo-card{background:#0F0F2A;border:1px solid #16A34A30;border-radius:20px;overflow:hidden;position:relative;}
 .photo-card img{width:100%;aspect-ratio:1/1.1;object-fit:cover;object-position:center top;display:block;}
 .photo-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(0deg,#07071AF5 0%,transparent 60%);padding:18px 16px;}
 .photo-name{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;color:#fff;margin-bottom:2px;}
@@ -72,13 +72,13 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
 /* INSTANCE TYPE GRID */
 .it-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:20px;}
 .it-card{background:var(--bg2);border:1px solid #ffffff0D;border-radius:14px;padding:18px 16px;position:relative;overflow:hidden;transition:border-color 0.2s;}
-.it-card:hover{border-color:#D9770640;}
-.it-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--bord,#D97706),transparent);}
+.it-card:hover{border-color:#16A34A40;}
+.it-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--bord,#16A34A),transparent);}
 .it-icon{font-size:24px;margin-bottom:10px;display:block;}
-.it-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:var(--bord,#D97706);margin-bottom:6px;}
-.it-tag{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:6px;background:var(--bord,#D97706)18;color:var(--bord,#D97706);border:1px solid var(--bord,#D97706)35;margin-bottom:8px;letter-spacing:0.06em;}
+.it-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:var(--bord,#16A34A);margin-bottom:6px;}
+.it-tag{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:6px;background:var(--bord,#16A34A)18;color:var(--bord,#16A34A);border:1px solid var(--bord,#16A34A)35;margin-bottom:8px;letter-spacing:0.06em;}
 .it-desc{font-size:12px;color:#8A8299;line-height:1.6;}
-.it-use{font-size:11px;color:#D97706;margin-top:6px;font-weight:500;}
+.it-use{font-size:11px;color:#16A34A;margin-top:6px;font-weight:500;}
 
 /* STORAGE GRID */
 .st-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
@@ -93,11 +93,11 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
 /* PLACEMENT / TENANCY 3-col */
 .three-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
 .three-card{background:var(--bg2);border:1px solid #ffffff0D;border-radius:14px;padding:18px 16px;position:relative;overflow:hidden;}
-.three-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--tc,#D97706),transparent);}
+.three-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--tc,#16A34A),transparent);}
 .three-icon{font-size:22px;margin-bottom:9px;display:block;}
-.three-name{font-size:13px;font-weight:700;color:var(--tc,#D97706);margin-bottom:6px;}
+.three-name{font-size:13px;font-weight:700;color:var(--tc,#16A34A);margin-bottom:6px;}
 .three-desc{font-size:11.5px;color:#8A8299;line-height:1.6;}
-.three-use{font-size:10px;color:#D97706;margin-top:6px;font-weight:500;font-style:italic;}
+.three-use{font-size:10px;color:#16A34A;margin-top:6px;font-weight:500;font-style:italic;}
 
 /* CODE */
 .code-card{background:#0A0A1F;border:1px solid #ffffff0D;border-radius:16px;overflow:hidden;margin-bottom:20px;}
@@ -107,7 +107,7 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
 .dg{width:10px;height:10px;border-radius:50%;background:#28C840;}
 .fname{font-size:12px;color:#6B6480;margin-left:8px;}
 .code-body{padding:18px 22px;font-family:'Courier New',monospace;font-size:12.5px;line-height:2;overflow-x:auto;}
-.cl{color:#4D4A6E;}.ck{color:#FF79C6;}.cv{color:#8BE9FD;}.cs{color:#F1FA8C;}.cm{color:#D97706;}.cw{color:#fff;}.cg{color:#50FA7B;}.cp{color:#C4A0FF;}
+.cl{color:#4D4A6E;}.ck{color:#FF79C6;}.cv{color:#8BE9FD;}.cs{color:#F1FA8C;}.cm{color:#16A34A;}.cw{color:#fff;}.cg{color:#50FA7B;}.cp{color:#C4A0FF;}
 
 /* COMPARE TABLE */
 .compare{width:100%;border-collapse:separate;border-spacing:0;margin-bottom:20px;font-size:12.5px;}
@@ -119,7 +119,7 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
 .compare .tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:5px;font-weight:600;}
 .tag-green{background:#16A34A18;color:#4ADE80;border:1px solid #16A34A35;}
 .tag-blue{background:#0EA5E918;color:#38BDF8;border:1px solid #0EA5E935;}
-.tag-orange{background:#D9770618;color:#FCD34D;border:1px solid #D9770635;}
+.tag-orange{background:#16A34A18;color:#FCD34D;border:1px solid #16A34A35;}
 .tag-red{background:#E1111818;color:#F87171;border:1px solid #E1111835;}
 
 /* GLF ROW */
@@ -130,14 +130,14 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
 .glf-val{font-size:13px;color:#D4CDE8;font-weight:500;line-height:1.45;}
 
 /* QUOTE */
-.quote{background:linear-gradient(135deg,#13132E,#0F0F26);border:1px solid #D9770630;border-radius:18px;padding:28px;margin-bottom:20px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;position:relative;overflow:hidden;}
-.quote::before{content:'';position:absolute;bottom:-30px;right:-30px;width:160px;height:160px;background:radial-gradient(circle,#D9770630,transparent 70%);border-radius:50%;}
+.quote{background:linear-gradient(135deg,#13132E,#0F0F26);border:1px solid #16A34A30;border-radius:18px;padding:28px;margin-bottom:20px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;position:relative;overflow:hidden;}
+.quote::before{content:'';position:absolute;bottom:-30px;right:-30px;width:160px;height:160px;background:radial-gradient(circle,#16A34A30,transparent 70%);border-radius:50%;}
 .qmark{font-family:'Syne',sans-serif;font-size:72px;line-height:0.6;color:var(--c);margin-bottom:10px;display:block;}
 .qtext{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:#fff;line-height:1.4;}
 .qtext em{font-style:normal;color:var(--c);}
 .qvisual{display:flex;flex-direction:column;align-items:center;gap:10px;}
 .rocket-big{font-size:46px;animation:launch 3s ease-in-out infinite;}
-.code-tag{background:#D9770618;border:1px solid #D9770640;border-radius:10px;padding:10px 14px;font-size:20px;text-align:center;}
+.code-tag{background:#16A34A18;border:1px solid #16A34A40;border-radius:10px;padding:10px 14px;font-size:20px;text-align:center;}
 
 /* HASHTAGS */
 .hashtags{border-top:1px solid #ffffff08;padding-top:20px;display:flex;flex-wrap:wrap;gap:6px 14px;}
@@ -165,7 +165,7 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
 
   <!-- TOP NAV -->
   <div class="day-nav">
-    <a href="day-002.html">← Day 2: EC2 + Storage Intro</a>
+    <a href="day-002.html">← Day 2: Variables</a>
     <div class="day-counter">📅 Jun 22, 2026 · 5:30 AM · Bangkok</div>
     <a href="day-004.html" class="next">Day 4 →</a>
   </div>
@@ -173,17 +173,14 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
   <!-- HERO -->
   <div class="hero-grid">
     <div>
-      <div class="day-badge"><div class="pulse"></div>DevOps with AWS · Month 1</div>
-      <div class="day-num"><span class="d">DAY</span> <span class="n">3</span><span class="rocket">🚀</span></div>
+      <div class="day-badge"><div class="pulse"></div>Python · Month 1</div>
+      <div class="day-num"><span class="d">DAY</span> <span class="n">3</span><span class="rocket">🐍</span></div>
       <div class="of-text">Of Becoming a</div>
       <div class="big-title">SOFTWARE</div>
       <div class="big-title">DEVELOPER</div>
       <div class="rule"></div>
       <p class="summary">
-        Today I locked in EC2 purchasing models — on-demand, reserved, savings plans,
-        and interruption behavior. Then went deep on AWS storage: DAS (instance store
-        vs EBS), file systems (NFS, CIFS, EFS, FSx), object storage with S3, every EBS
-        volume type, Nitro sub-millisecond latency, and snapshot automation with DLM.
+        Interactive Python today — reading user input with input(), controlling print() with sep and end, escape sequences for newline and tab, and a first look at f-strings for readable output.
       </p>
     </div>
     <div class="photo-card">
@@ -194,10 +191,11 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
       </div>
       <div class="photo-overlay">
         <div class="photo-name">Sumit Rawal</div>
-        <div class="photo-role">AWS Engineer · FPO Cloud</div>
+        <div class="photo-role">Python Learner · FPO Cloud</div>
       </div>
     </div>
   </div>
+
 
   <!-- WHAT I LEARNT -->
   <div class="card">
@@ -205,298 +203,64 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
     <div class="check-list">
       <div class="check-item">
         <div class="check-icon">✓</div>
-        <div class="check-text"><strong>EC2 Purchasing Options</strong> — On-Demand (no commitment), Reserved Instances (1–3 yr, up to 72% off), Savings Plans (flexible compute commitment, up to 66% off), Spot (up to 90% off with interruption behavior — 2-minute warning)</div>
+        <div class="check-text"><strong>input() function</strong> — pauses the program and waits for user keyboard input. Always returns a <code>str</code>. Wrap with <code>int()</code> or <code>float()</code> when you need a number</div>
       </div>
       <div class="check-item">
         <div class="check-icon">✓</div>
-        <div class="check-text"><strong>AWS Pricing Calculator</strong> — estimate monthly costs before provisioning. Compare On-Demand vs Reserved vs Savings Plans for FPO Cloud workloads</div>
+        <div class="check-text"><strong>print() parameters</strong> — <code>sep</code> changes the separator between values (default space). <code>end</code> changes what prints after (default newline <code>\n</code>)</div>
       </div>
       <div class="check-item">
         <div class="check-icon">✓</div>
-        <div class="check-text"><strong>Storage Categories</strong> — DAS (Direct Attached: Instance Store + EBS), File Storage (NFS/CIFS via EFS &amp; FSx), Object Storage (S3 — cloud only, HTTP API)</div>
+        <div class="check-text"><strong>Escape sequences</strong> — special characters inside strings: <code>\n</code> newline, <code>\t</code> tab, <code>\\</code> backslash, <code>\'</code> single quote inside single-quoted string</div>
       </div>
       <div class="check-item">
         <div class="check-icon">✓</div>
-        <div class="check-text"><strong>Instance Store vs EBS</strong> — Instance Store: physically attached, ephemeral, ultra-fast. EBS: network-attached, persistent, survives stop. Root vs data volume combos matter for boot and durability</div>
-      </div>
-      <div class="check-item">
-        <div class="check-icon">✓</div>
-        <div class="check-text"><strong>EBS Volume Types</strong> — SSD: gp2, gp3 (general), io1/io2 (provisioned IOPS). HDD: st1 (throughput), sc1 (cold HDD). Legacy magnetic. Nitro instances deliver sub-millisecond EBS latency</div>
-      </div>
-      <div class="check-item">
-        <div class="check-icon">✓</div>
-        <div class="check-text"><strong>Snapshots &amp; Automation</strong> — 3 use cases: backup, AMI creation, cross-region/AZ copy. Fast Snapshot Restore (FSR), Data Lifecycle Manager (DLM) for snapshot automation</div>
+        <div class="check-text"><strong>f-strings</strong> — prefix a string with <code>f</code> to embed variables: <code>f"Hello, {name}"</code>. Cleaner than concatenation with <code>+</code></div>
       </div>
     </div>
   </div>
 
-  <!-- EC2 PURCHASING -->
   <div class="sec-label">
-    <div class="sec-title">💳 EC2 Purchasing Options</div>
-    <div class="sec-line"></div>
-  </div>
-
-  <div class="it-grid">
-    <div class="it-card" style="--bord:#F59E0B">
-      <span class="it-icon">💳</span>
-      <div class="it-name">On-Demand</div>
-      <span class="it-tag">Pay per second</span>
-      <div class="it-desc">No upfront cost, no commitment. Billed per second (Linux) or per hour (Windows). Most flexible — never interrupted by AWS.</div>
-      <div class="it-use">✦ Unpredictable workloads, dev/test, short-term spikes</div>
-    </div>
-    <div class="it-card" style="--bord:#16A34A">
-      <span class="it-icon">📅</span>
-      <div class="it-name">Reserved Instances</div>
-      <span class="it-tag">Up to 72% cheaper</span>
-      <div class="it-desc">1-year or 3-year commitment for a specific instance type, region, and tenancy. Standard or Convertible. No interruption.</div>
-      <div class="it-use">✦ Steady-state production — FPO Cloud DB servers</div>
-    </div>
-    <div class="it-card" style="--bord:#0EA5E9">
-      <span class="it-icon">📊</span>
-      <div class="it-name">Savings Plans</div>
-      <span class="it-tag">Up to 66% cheaper</span>
-      <div class="it-desc">Commit to $/hr spend for 1 or 3 years. Compute SP (EC2, Lambda, Fargate) or EC2 Instance SP. Flexible across instance families and regions.</div>
-      <div class="it-use">✦ Mixed workloads where instance type changes over time</div>
-    </div>
-    <div class="it-card" style="--bord:#E11D48">
-      <span class="it-icon">⚡</span>
-      <div class="it-name">Spot + Interruption</div>
-      <span class="it-tag">Up to 90% cheaper</span>
-      <div class="it-desc"><strong>Interruption behavior:</strong> AWS reclaims capacity with a 2-minute warning. Instance stops or hibernates. Price fluctuates with demand. Not for critical always-on apps.</div>
-      <div class="it-use">✦ Batch jobs, ML training, fault-tolerant stateless work</div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">🧮 AWS Pricing Calculator</div>
-    <div class="check-list">
-      <div class="check-item">
-        <div class="check-icon">→</div>
-        <div class="check-text">Free web tool at <strong>calculator.aws</strong> — model EC2, EBS, S3, and 200+ services before you deploy</div>
-      </div>
-      <div class="check-item">
-        <div class="check-icon">→</div>
-        <div class="check-text">Compare <strong>On-Demand vs Reserved vs Savings Plans</strong> side by side for the same workload</div>
-      </div>
-      <div class="check-item">
-        <div class="check-icon">→</div>
-        <div class="check-text">Export estimates as CSV or share a link with your team — essential for FPO Cloud cost planning</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- STORAGE CATEGORIES -->
-  <div class="sec-label">
-    <div class="sec-title">🗄 Storage — DAS, File &amp; Object</div>
-    <div class="sec-line"></div>
-  </div>
-
-  <div class="st-grid">
-    <div class="st-card" style="--sc:#F59E0B">
-      <span class="st-icon">💾</span>
-      <div class="st-name">DAS</div>
-      <div class="st-abbr">Direct Attached Storage</div>
-      <div class="st-desc">Storage on the EC2 host. <strong>Two types:</strong> Instance Store (ephemeral NVMe) and EBS (persistent block volume). Both attach directly to one instance.</div>
-      <span class="st-tag">Instance Store · EBS</span>
-    </div>
-    <div class="st-card" style="--sc:#16A34A">
-      <span class="st-icon">📂</span>
-      <div class="st-name">File Storage</div>
-      <div class="st-abbr">Shared File Systems</div>
-      <div class="st-desc"><strong>NFS</strong> (Linux) → EFS. <strong>CIFS/SMB</strong> (Windows) → FSx for Windows. <strong>FSx for Lustre</strong> for HPC. Multiple EC2s mount the same files.</div>
-      <span class="st-tag">EFS · FSx · NFS · SMB</span>
-    </div>
-    <div class="st-card" style="--sc:#9B6DFF">
-      <span class="st-icon">☁️</span>
-      <div class="st-name">Object Storage</div>
-      <div class="st-abbr">Cloud Only — S3</div>
-      <div class="st-desc">Flat namespace, unlimited scale. Objects accessed via HTTP API — not a mounted drive. <strong>Only exists in the cloud.</strong> Powers FPO archives.</div>
-      <span class="st-tag">S3</span>
-    </div>
-    <div class="st-card" style="--sc:#0EA5E9">
-      <span class="st-icon">🧱</span>
-      <div class="st-name">Block (EBS)</div>
-      <div class="st-abbr">Network Block Volume</div>
-      <div class="st-desc">Raw block device — like plugging a hard drive into EC2. Persistent, snapshot-able, encryptable. One volume → usually one instance.</div>
-      <span class="st-tag">gp3 · io2 · st1</span>
-    </div>
-  </div>
-
-  <!-- INSTANCE STORE VS EBS -->
-  <div class="sec-label">
-    <div class="sec-title">⚔ Instance Store vs EBS</div>
-    <div class="sec-line"></div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">Key Differences</div>
-    <table class="compare">
-      <tr>
-        <th>Feature</th><th>Instance Store</th><th>EBS Volume</th>
-      </tr>
-      <tr>
-        <td><strong>Attachment</strong></td>
-        <td>Physically on host (DAS)</td>
-        <td>Network-attached block storage</td>
-      </tr>
-      <tr>
-        <td><strong>Persistence</strong></td>
-        <td><span class="tag tag-red">Ephemeral — lost on stop/terminate</span></td>
-        <td><span class="tag tag-green">Persistent — survives stop</span></td>
-      </tr>
-      <tr>
-        <td><strong>Performance</strong></td>
-        <td>Ultra-low latency NVMe SSD</td>
-        <td>Sub-ms on Nitro; depends on type</td>
-      </tr>
-      <tr>
-        <td><strong>Resize</strong></td>
-        <td>Fixed at launch — tied to instance type</td>
-        <td>Resize, change type, detach/reattach</td>
-      </tr>
-      <tr>
-        <td><strong>Snapshots</strong></td>
-        <td>Cannot snapshot</td>
-        <td><span class="tag tag-green">Full snapshot + DLM support</span></td>
-      </tr>
-      <tr>
-        <td><strong>Cost</strong></td>
-        <td>Included with instance</td>
-        <td>Pay per GB/month + IOPS (io types)</td>
-      </tr>
-    </table>
-  </div>
-
-  <!-- ROOT VS DATA COMBOS -->
-  <div class="sec-label">
-    <div class="sec-title">🔀 Root vs Data Volume Combinations</div>
+    <div class="sec-title">⌨️ input() vs print()</div>
     <div class="sec-line"></div>
   </div>
 
   <div class="three-grid">
     <div class="three-card" style="--tc:#16A34A">
-      <span class="three-icon">✅</span>
-      <div class="three-name">EBS Root + EBS Data</div>
-      <div class="three-desc"><strong>Most common.</strong> OS on gp3 EBS root. Additional EBS data volumes for DB, logs, app data. Everything persistent and snapshot-able.</div>
-      <div class="three-use">✦ Production FPO Cloud servers</div>
-    </div>
-    <div class="three-card" style="--tc:#F59E0B">
-      <span class="three-icon">⚡</span>
-      <div class="three-name">EBS Root + Instance Store Data</div>
-      <div class="three-desc">OS on persistent EBS. <strong>Instance store as data volume</strong> for temp cache, scratch, or high-IOPS workloads. Data lost on stop — by design.</div>
-      <div class="three-use">✦ Caching layer, temp processing, analytics</div>
-    </div>
-    <div class="three-card" style="--tc:#E11D48">
-      <span class="three-icon">⚠️</span>
-      <div class="three-name">Instance Store Root</div>
-      <div class="three-desc"><strong>Instance store as root volume</strong> — OS lives on ephemeral disk. Entire instance lost on hardware failure or stop. Rare — only for disposable workloads.</div>
-      <div class="three-use">✦ Stateless fleet nodes, auto-scaling scratch</div>
-    </div>
-  </div>
-
-  <div class="card" style="margin-bottom:20px;">
-    <div class="check-item" style="padding:4px 0;">
-      <div class="check-icon">→</div>
-      <div class="check-text"><strong>Instance Store root + EBS data</strong> — risky combo: OS is ephemeral but data persists on EBS. Rebuild OS from AMI; data volume reattaches. Use only when you understand the trade-off.</div>
-    </div>
-  </div>
-
-  <!-- EBS VOLUME TYPES -->
-  <div class="sec-label">
-    <div class="sec-title">📀 EBS Volume Types</div>
-    <div class="sec-line"></div>
-  </div>
-
-  <div class="it-grid">
-    <div class="it-card" style="--bord:#16A34A">
-      <span class="it-icon">💚</span>
-      <div class="it-name">gp3 / gp2</div>
-      <span class="it-tag">General Purpose SSD</span>
-      <div class="it-desc"><strong>gp3</strong> — baseline 3,000 IOPS, 125 MB/s (independent scaling). <strong>gp2</strong> — older, IOPS tied to size. Default for most workloads.</div>
-      <div class="it-use">✦ Boot volumes, dev, small DBs</div>
-    </div>
-    <div class="it-card" style="--bord:#6366F1">
-      <span class="it-icon">🚀</span>
-      <div class="it-name">io1 / io2</div>
-      <span class="it-tag">Provisioned IOPS SSD</span>
-      <div class="it-desc">Guaranteed IOPS up to 64,000 (io1) or 256,000 (io2 Block Express). <strong>io2</strong> has 99.999% durability. Highest performance SSD.</div>
-      <div class="it-use">✦ Mission-critical DBs, SAP, Oracle</div>
-    </div>
-    <div class="it-card" style="--bord:#F59E0B">
-      <span class="it-icon">📼</span>
-      <div class="it-name">st1</div>
-      <span class="it-tag">Throughput Optimized HDD</span>
-      <div class="it-desc">Low-cost HDD optimized for <strong>sequential reads/writes</strong>. Cannot be boot volume. Max 500 MB/s throughput.</div>
-      <div class="it-use">✦ Big data, log processing, data warehouses</div>
-    </div>
-    <div class="it-card" style="--bord:#6B6480">
-      <span class="it-icon">🧊</span>
-      <div class="it-name">sc1 / Magnetic</div>
-      <span class="it-tag">Cold HDD · Legacy</span>
-      <div class="it-desc"><strong>sc1</strong> — lowest cost HDD for infrequent access (cold data). <strong>Magnetic (standard)</strong> — legacy, previous generation. Avoid for new workloads.</div>
-      <div class="it-use">✦ Infrequent access archives on block storage</div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">⚡ Nitro Instances — Sub-Millisecond Latency</div>
-    <div class="check-list">
-      <div class="check-item">
-        <div class="check-icon">→</div>
-        <div class="check-text"><strong>AWS Nitro System</strong> offloads virtualization to dedicated hardware — EBS volumes get <strong>sub-millisecond latency</strong> on Nitro-based instance types (M5, C5, R5, T3, etc.)</div>
-      </div>
-      <div class="check-item">
-        <div class="check-icon">→</div>
-        <div class="check-text">Nitro enables higher network bandwidth, more EBS bandwidth per instance, and enhanced security with bare-metal-like isolation</div>
-      </div>
-      <div class="check-item">
-        <div class="check-icon">→</div>
-        <div class="check-text">Always choose Nitro instances for production — older Xen-based types are being phased out</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SNAPSHOTS -->
-  <div class="sec-label">
-    <div class="sec-title">📸 EBS Snapshots &amp; Automation</div>
-    <div class="sec-line"></div>
-  </div>
-
-  <div class="three-grid">
-    <div class="three-card" style="--tc:#16A34A">
-      <span class="three-icon">💾</span>
-      <div class="three-name">Use Case 1 — Backup</div>
-      <div class="three-desc">Point-in-time copy of an EBS volume stored incrementally in S3. Restore to a new volume in any AZ. Foundation of disaster recovery.</div>
-      <div class="three-use">✦ Daily DB backups for FPO Cloud</div>
+      <span class="three-icon">📥</span>
+      <div class="three-name">input()</div>
+      <div class="three-desc">Reads from keyboard. Optional prompt string shown to user. Return type is always <code>str</code>.</div>
+      <div class="three-use">✦ name = input("Name: ")</div>
     </div>
     <div class="three-card" style="--tc:#0EA5E9">
-      <span class="three-icon">🖼️</span>
-      <div class="three-name">Use Case 2 — AMI Creation</div>
-      <div class="three-desc">Snapshot the root EBS volume → register as an <strong>AMI</strong>. Launch identical instances from that golden image across regions.</div>
-      <div class="three-use">✦ Golden images for auto-scaling fleets</div>
+      <span class="three-icon">📤</span>
+      <div class="three-name">print()</div>
+      <div class="three-desc"><code>sep</code> controls delimiter. <code>end</code> controls trailing character. Default end is newline.</div>
+      <div class="three-use">✦ print("Hi", end=" → ")</div>
     </div>
     <div class="three-card" style="--tc:#9B6DFF">
-      <span class="three-icon">🌍</span>
-      <div class="three-name">Use Case 3 — Cross-Region Copy</div>
-      <div class="three-desc">Copy snapshot to another region or AZ for <strong>DR and migration</strong>. Launch volumes in the target region from the copied snapshot.</div>
-      <div class="three-use">✦ Multi-region FPO Cloud resilience</div>
+      <span class="three-icon">\n</span>
+      <div class="three-name">Escape sequences</div>
+      <div class="three-desc"><code>\n</code> new line · <code>\t</code> tab · <code>\\</code> literal backslash · <code>\"</code> quote inside string</div>
+      <div class="three-use">✦ print("A\nB\tC")</div>
     </div>
   </div>
 
-  <div class="it-grid">
-    <div class="it-card" style="--bord:#F59E0B">
-      <span class="it-icon">⚡</span>
-      <div class="it-name">Fast Snapshot Restore (FSR)</div>
-      <span class="it-tag">Instant restore</span>
-      <div class="it-desc">Pre-warms a snapshot in an AZ so first volume creation is <strong>instant</strong> — no lazy-loading delay. Costs per snapshot per AZ per hour.</div>
-      <div class="it-use">✦ Critical DR — restore DB in seconds</div>
-    </div>
-    <div class="it-card" style="--bord:#6366F1">
-      <span class="it-icon">🔄</span>
-      <div class="it-name">Data Lifecycle Manager (DLM)</div>
-      <span class="it-tag">Snapshot automation</span>
-      <div class="it-desc">Automate snapshot creation, retention, and deletion on a schedule. Tag-based policies — no Lambda needed. <strong>Snapshot automation</strong> built into AWS.</div>
-      <div class="it-use">✦ Daily snapshots, 7-day retention, auto-cleanup</div>
+  <div class="card">
+    <div class="card-title">Common pattern — ask, convert, display</div>
+    <div class="check-list">
+      <div class="check-item">
+        <div class="check-icon">1</div>
+        <div class="check-text"><code>raw = input("Enter a number: ")</code> — get string from user</div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon">2</div>
+        <div class="check-text"><code>num = int(raw)</code> — convert to integer for math</div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon">3</div>
+        <div class="check-text"><code>print(f"Double is {num * 2}")</code> — show result with f-string</div>
+      </div>
     </div>
   </div>
 
@@ -504,40 +268,57 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
   <div class="code-card">
     <div class="code-hdr">
       <div class="dr"></div><div class="dy"></div><div class="dg"></div>
-      <span class="fname">day-003-aws-notes.sh</span>
+      <span class="fname">day-003-python-notes.py</span>
     </div>
     <div class="code-body">
-<span class="cl"># ─── Day 3 AWS Notes · Sumit Rawal · Jun 22, 2026 ────────────────</span><br>
+<span class="cl"># ─── Day 3 Python Notes · Sumit Rawal · Jun 22, 2026 ─────────────</span><br>
 <br>
-<span class="cl"># EC2 Purchasing — compare options</span><br>
-<span class="cm">On-Demand</span>     <span class="cw">=</span> <span class="cs">"pay per second, no interruption, most flexible"</span><br>
-<span class="cm">Reserved</span>      <span class="cw">=</span> <span class="cs">"1-3yr commit, up to 72% off, fixed instance type"</span><br>
-<span class="cm">Savings Plans</span> <span class="cw">=</span> <span class="cs">"$/hr commit, up to 66% off, flexible family/region"</span><br>
-<span class="cm">Spot</span>          <span class="cw">=</span> <span class="cs">"up to 90% off — INTERRUPTION: 2-min warning then reclaim"</span><br>
+<span class="cl"># input() — always returns a string</span><br>
+<span class="cv">name</span><br>
+<span class="cw"> = </span><br>
+<span class="cv">input</span><br>
+<span class="cw">(</span><br>
+<span class="cs">"Enter your name: "</span><br>
+<span class="cw">)</span><br>
+<span class="cv">age</span><br>
+<span class="cw"> = </span><br>
+<span class="cv">int</span><br>
+<span class="cw">(</span><br>
+<span class="cv">input</span><br>
+<span class="cw">(</span><br>
+<span class="cs">"Enter age: "</span><br>
+<span class="cw">))</span><br>
 <br>
-<span class="cl"># AWS Pricing Calculator → calculator.aws</span><br>
+<span class="cl"># print() — sep and end</span><br>
+<span class="cv">print</span><br>
+<span class="cw">(</span><br>
+<span class="cs">"A"</span><br>
+<span class="cw">, </span><br>
+<span class="cs">"B"</span><br>
+<span class="cw">, </span><br>
+<span class="cs">"C"</span><br>
+<span class="cw">, sep=</span><br>
+<span class="cs">"-"</span><br>
+<span class="cw">)  </span><br>
+<span class="cl"># A-B-C</span><br>
+<span class="cv">print</span><br>
+<span class="cw">(</span><br>
+<span class="cs">"loading"</span><br>
+<span class="cw">, end=</span><br>
+<span class="cs">"..."</span><br>
+<span class="cw">)  </span><br>
+<span class="cl"># no newline</span><br>
 <br>
-<span class="cl"># DAS — two types</span><br>
-<span class="cm">Instance Store</span> <span class="cw">=</span> <span class="cs">"ephemeral NVMe on host — lost on stop"</span><br>
-<span class="cm">EBS</span>            <span class="cw">=</span> <span class="cs">"persistent network block — survives stop"</span><br>
-<br>
-<span class="cl"># Root / Data volume combos</span><br>
-<span class="cm">EBS root + EBS data</span>           <span class="cw">=</span> <span class="cs">"production default"</span><br>
-<span class="cm">EBS root + Instance Store data</span> <span class="cw">=</span> <span class="cs">"persistent OS + fast temp cache"</span><br>
-<span class="cm">Instance Store root + EBS data</span>  <span class="cw">=</span> <span class="cs">"disposable OS, persistent data — risky"</span><br>
-<br>
-<span class="cl"># EBS volume types</span><br>
-<span class="cv">aws ec2</span> <span class="cg">create-volume</span> <span class="ck">--volume-type</span> <span class="cm">gp3</span>  <span class="ck">--size</span> <span class="cw">100</span>  <span class="cl"># general SSD</span><br>
-<span class="cv">aws ec2</span> <span class="cg">create-volume</span> <span class="ck">--volume-type</span> <span class="cm">io2</span>  <span class="ck">--iops</span> <span class="cw">10000</span> <span class="cl"># provisioned IOPS</span><br>
-<span class="cv">aws ec2</span> <span class="cg">create-volume</span> <span class="ck">--volume-type</span> <span class="cm">st1</span>  <span class="ck">--size</span> <span class="cw">500</span>  <span class="cl"># throughput HDD</span><br>
-<span class="cv">aws ec2</span> <span class="cg">create-volume</span> <span class="ck">--volume-type</span> <span class="cm">sc1</span>  <span class="ck">--size</span> <span class="cw">500</span>  <span class="cl"># cold HDD</span><br>
-<br>
-<span class="cl"># Snapshots — backup, AMI, cross-region DR</span><br>
-<span class="cv">aws ec2</span> <span class="cg">create-snapshot</span> <span class="ck">--volume-id</span> <span class="cp">vol-0abc</span> <span class="ck">--description</span> <span class="cs">"daily backup"</span><br>
-<span class="cv">aws ec2</span> <span class="cg">enable-fast-snapshot-restore</span> <span class="ck">--snapshot-id</span> <span class="cp">snap-0abc</span> <span class="ck">--availability-zone</span> <span class="cp">ap-southeast-1a</span><br>
-<br>
-<span class="cl"># DLM — snapshot automation (no Lambda needed)</span><br>
-<span class="cv">aws dlm</span> <span class="cg">create-lifecycle-policy</span> <span class="ck">--execution-role-arn</span> <span class="cp">arn:aws:iam::...</span> <span class="ck">--policy-details</span> <span class="cs">'...'</span>
+<span class="cl"># Escape sequences</span><br>
+<span class="cv">print</span><br>
+<span class="cw">(</span><br>
+<span class="cs">"Line1
+Line2	Tabbed"</span><br>
+<span class="cw">)</span><br>
+<span class="cv">print</span><br>
+<span class="cw">(</span><br>
+<span class="cs">f"Hello, {name}! You are {age}."</span><br>
+<span class="cw">)</span><br>
     </div>
   </div>
 
@@ -547,14 +328,14 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
       <div class="glf-icon">📚</div>
       <div>
         <div class="glf-label">Learning</div>
-        <div class="glf-val">EC2 Pricing + EBS Types + Snapshots + DLM</div>
+        <div class="glf-val">input() + print() + escape sequences</div>
       </div>
     </div>
     <div class="glf-card">
       <div class="glf-icon">🎯</div>
       <div>
         <div class="glf-label">Tomorrow</div>
-        <div class="glf-val">S3 deep dive — buckets, versioning, lifecycle policies</div>
+        <div class="glf-val">Operators — arithmetic, comparison, logical</div>
       </div>
     </div>
     <div class="glf-card">
@@ -571,13 +352,11 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
     <div>
       <span class="qmark">"</span>
       <div class="qtext">
-        Instance Store is fast but ephemeral.<br>
-        <em>EBS snapshots are how<br>
-        FPO Cloud survives failures.</em>
+        input() listens.<br><em>print()</em> speaks.<br>Together they make programs interactive.
       </div>
     </div>
     <div class="qvisual">
-      <div class="rocket-big">🚀</div>
+      <div class="rocket-big">🐍</div>
       <div class="code-tag">&lt;/&gt;</div>
     </div>
   </div>
@@ -587,11 +366,10 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
     <span class="hashtag">#100DaysOfCode</span><span class="ht-sep">|</span>
     <span class="hashtag">#365DaysOfCode</span><span class="ht-sep">|</span>
     <span class="hashtag">#1000DaysOfCode</span><span class="ht-sep">|</span>
-    <span class="hashtag">#AWS</span><span class="ht-sep">|</span>
-    <span class="hashtag">#EBS</span><span class="ht-sep">|</span>
-    <span class="hashtag">#Snapshots</span><span class="ht-sep">|</span>
-    <span class="hashtag">#InstanceStore</span><span class="ht-sep">|</span>
-    <span class="hashtag">#DevOps</span><span class="ht-sep">|</span>
+    <span class="hashtag">#Python</span><span class="ht-sep">|</span>
+    <span class="hashtag">#Input</span><span class="ht-sep">|</span>
+    <span class="hashtag">#FStrings</span><span class="ht-sep">|</span>
+    <span class="hashtag">#EscapeSequences</span><span class="ht-sep">|</span>
     <span class="hashtag">#LearnInPublic</span><span class="ht-sep">|</span>
     <span class="hashtag">#BuildInPublic</span>
   </div>

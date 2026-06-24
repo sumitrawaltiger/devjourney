@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Day 4 of 1000 — Sumit Rawal learns EFS, Amazon FSx (ONTAP, OpenZFS, Windows), NAS vs SAN, SMB, and Active Directory.">
-<title>Day 4 · EFS + Amazon FSx · Sumit Rawal</title>
+<meta name="description" content="Day 4 of 1000 — Sumit Rawal learns Python operators: arithmetic, assignment, comparison, logical, identity, and membership.">
+<title>Day 4 · Operators · Sumit Rawal</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 body{background:#07071A;color:#fff;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;}
-:root{--c:#D97706;--purple:#9B6DFF;--grey:#B0A8C4;--dim:#6B6480;--bg2:#0D0D25;}
+:root{--c:#16A34A;--purple:#9B6DFF;--grey:#B0A8C4;--dim:#6B6480;--bg2:#0D0D25;}
 
 .glow-tl{position:fixed;width:600px;height:600px;background:radial-gradient(circle,#4C1D9540,transparent 70%);border-radius:50%;top:-150px;left:-150px;pointer-events:none;z-index:0;}
 .glow-br{position:fixed;width:400px;height:400px;background:radial-gradient(circle,#6D28D925,transparent 70%);border-radius:50%;bottom:-80px;right:-80px;pointer-events:none;z-index:0;}
@@ -26,13 +26,13 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
 
 .day-nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;}
 .day-nav a{background:var(--bg2);border:1px solid #ffffff0D;border-radius:10px;padding:10px 18px;font-size:12px;font-weight:500;color:var(--grey);text-decoration:none;transition:all 0.2s;}
-.day-nav a:hover{border-color:#D9770650;color:#fff;}
-.day-nav .next{background:#D9770618;border-color:#D9770640;color:var(--c);}
+.day-nav a:hover{border-color:#16A34A50;color:#fff;}
+.day-nav .next{background:#16A34A18;border-color:#16A34A40;color:var(--c);}
 .day-counter{font-size:11px;color:var(--dim);letter-spacing:0.06em;}
 
 /* HERO */
 .hero-grid{display:grid;grid-template-columns:1fr 240px;gap:32px;align-items:start;margin-bottom:32px;}
-.day-badge{display:inline-flex;align-items:center;gap:8px;background:#D9770618;border:1px solid #D9770640;border-radius:100px;padding:5px 14px;font-size:11px;font-weight:600;color:var(--c);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:16px;width:fit-content;}
+.day-badge{display:inline-flex;align-items:center;gap:8px;background:#16A34A18;border:1px solid #16A34A40;border-radius:100px;padding:5px 14px;font-size:11px;font-weight:600;color:var(--c);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:16px;width:fit-content;}
 .pulse{width:7px;height:7px;background:var(--c);border-radius:50%;animation:pulse 2s infinite;}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(1.4);}}
 .day-num{font-family:'Syne',sans-serif;font-weight:800;font-size:88px;line-height:0.85;letter-spacing:-0.05em;margin-bottom:4px;}
@@ -45,7 +45,7 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
 .rule::after{content:'';position:absolute;right:55%;top:-2px;width:8px;height:8px;background:var(--c);border-radius:50%;}
 .summary{font-size:14px;line-height:1.75;color:var(--grey);}
 
-.photo-card{background:#0F0F2A;border:1px solid #D9770630;border-radius:20px;overflow:hidden;position:relative;}
+.photo-card{background:#0F0F2A;border:1px solid #16A34A30;border-radius:20px;overflow:hidden;position:relative;}
 .photo-card img{width:100%;aspect-ratio:1/1.1;object-fit:cover;object-position:center top;display:block;}
 .photo-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(0deg,#07071AF5 0%,transparent 60%);padding:18px 16px;}
 .photo-name{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;color:#fff;margin-bottom:2px;}
@@ -72,13 +72,13 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
 /* INSTANCE TYPE GRID */
 .it-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:20px;}
 .it-card{background:var(--bg2);border:1px solid #ffffff0D;border-radius:14px;padding:18px 16px;position:relative;overflow:hidden;transition:border-color 0.2s;}
-.it-card:hover{border-color:#D9770640;}
-.it-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--bord,#D97706),transparent);}
+.it-card:hover{border-color:#16A34A40;}
+.it-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--bord,#16A34A),transparent);}
 .it-icon{font-size:24px;margin-bottom:10px;display:block;}
-.it-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:var(--bord,#D97706);margin-bottom:6px;}
-.it-tag{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:6px;background:var(--bord,#D97706)18;color:var(--bord,#D97706);border:1px solid var(--bord,#D97706)35;margin-bottom:8px;letter-spacing:0.06em;}
+.it-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:var(--bord,#16A34A);margin-bottom:6px;}
+.it-tag{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:6px;background:var(--bord,#16A34A)18;color:var(--bord,#16A34A);border:1px solid var(--bord,#16A34A)35;margin-bottom:8px;letter-spacing:0.06em;}
 .it-desc{font-size:12px;color:#8A8299;line-height:1.6;}
-.it-use{font-size:11px;color:#D97706;margin-top:6px;font-weight:500;}
+.it-use{font-size:11px;color:#16A34A;margin-top:6px;font-weight:500;}
 
 /* STORAGE GRID */
 .st-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
@@ -93,11 +93,11 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
 /* PLACEMENT / TENANCY 3-col */
 .three-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
 .three-card{background:var(--bg2);border:1px solid #ffffff0D;border-radius:14px;padding:18px 16px;position:relative;overflow:hidden;}
-.three-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--tc,#D97706),transparent);}
+.three-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--tc,#16A34A),transparent);}
 .three-icon{font-size:22px;margin-bottom:9px;display:block;}
-.three-name{font-size:13px;font-weight:700;color:var(--tc,#D97706);margin-bottom:6px;}
+.three-name{font-size:13px;font-weight:700;color:var(--tc,#16A34A);margin-bottom:6px;}
 .three-desc{font-size:11.5px;color:#8A8299;line-height:1.6;}
-.three-use{font-size:10px;color:#D97706;margin-top:6px;font-weight:500;font-style:italic;}
+.three-use{font-size:10px;color:#16A34A;margin-top:6px;font-weight:500;font-style:italic;}
 
 /* CODE */
 .code-card{background:#0A0A1F;border:1px solid #ffffff0D;border-radius:16px;overflow:hidden;margin-bottom:20px;}
@@ -107,7 +107,7 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
 .dg{width:10px;height:10px;border-radius:50%;background:#28C840;}
 .fname{font-size:12px;color:#6B6480;margin-left:8px;}
 .code-body{padding:18px 22px;font-family:'Courier New',monospace;font-size:12.5px;line-height:2;overflow-x:auto;}
-.cl{color:#4D4A6E;}.ck{color:#FF79C6;}.cv{color:#8BE9FD;}.cs{color:#F1FA8C;}.cm{color:#D97706;}.cw{color:#fff;}.cg{color:#50FA7B;}.cp{color:#C4A0FF;}
+.cl{color:#4D4A6E;}.ck{color:#FF79C6;}.cv{color:#8BE9FD;}.cs{color:#F1FA8C;}.cm{color:#16A34A;}.cw{color:#fff;}.cg{color:#50FA7B;}.cp{color:#C4A0FF;}
 
 /* COMPARE TABLE */
 .compare{width:100%;border-collapse:separate;border-spacing:0;margin-bottom:20px;font-size:12.5px;}
@@ -119,7 +119,7 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
 .compare .tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:5px;font-weight:600;}
 .tag-green{background:#16A34A18;color:#4ADE80;border:1px solid #16A34A35;}
 .tag-blue{background:#0EA5E918;color:#38BDF8;border:1px solid #0EA5E935;}
-.tag-orange{background:#D9770618;color:#FCD34D;border:1px solid #D9770635;}
+.tag-orange{background:#16A34A18;color:#FCD34D;border:1px solid #16A34A35;}
 .tag-red{background:#E1111818;color:#F87171;border:1px solid #E1111835;}
 
 /* GLF ROW */
@@ -130,14 +130,14 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
 .glf-val{font-size:13px;color:#D4CDE8;font-weight:500;line-height:1.45;}
 
 /* QUOTE */
-.quote{background:linear-gradient(135deg,#13132E,#0F0F26);border:1px solid #D9770630;border-radius:18px;padding:28px;margin-bottom:20px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;position:relative;overflow:hidden;}
-.quote::before{content:'';position:absolute;bottom:-30px;right:-30px;width:160px;height:160px;background:radial-gradient(circle,#D9770630,transparent 70%);border-radius:50%;}
+.quote{background:linear-gradient(135deg,#13132E,#0F0F26);border:1px solid #16A34A30;border-radius:18px;padding:28px;margin-bottom:20px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;position:relative;overflow:hidden;}
+.quote::before{content:'';position:absolute;bottom:-30px;right:-30px;width:160px;height:160px;background:radial-gradient(circle,#16A34A30,transparent 70%);border-radius:50%;}
 .qmark{font-family:'Syne',sans-serif;font-size:72px;line-height:0.6;color:var(--c);margin-bottom:10px;display:block;}
 .qtext{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:#fff;line-height:1.4;}
 .qtext em{font-style:normal;color:var(--c);}
 .qvisual{display:flex;flex-direction:column;align-items:center;gap:10px;}
 .rocket-big{font-size:46px;animation:launch 3s ease-in-out infinite;}
-.code-tag{background:#D9770618;border:1px solid #D9770640;border-radius:10px;padding:10px 14px;font-size:20px;text-align:center;}
+.code-tag{background:#16A34A18;border:1px solid #16A34A40;border-radius:10px;padding:10px 14px;font-size:20px;text-align:center;}
 
 /* HASHTAGS */
 .hashtags{border-top:1px solid #ffffff08;padding-top:20px;display:flex;flex-wrap:wrap;gap:6px 14px;}
@@ -165,7 +165,7 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
 
   <!-- TOP NAV -->
   <div class="day-nav">
-    <a href="day-003.html">← Day 3: EBS + Snapshots</a>
+    <a href="day-003.html">← Day 3: Input & Output</a>
     <div class="day-counter">📅 Jun 23, 2026 · 5:30 AM · Bangkok</div>
     <a href="day-005.html" class="next">Day 5 → <span style="opacity:0.6;font-size:10px;">Python</span></a>
   </div>
@@ -173,17 +173,14 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
   <!-- HERO -->
   <div class="hero-grid">
     <div>
-      <div class="day-badge"><div class="pulse"></div>DevOps with AWS · Month 1</div>
-      <div class="day-num"><span class="d">DAY</span> <span class="n">4</span><span class="rocket">🚀</span></div>
+      <div class="day-badge"><div class="pulse"></div>Python · Month 1</div>
+      <div class="day-num"><span class="d">DAY</span> <span class="n">4</span><span class="rocket">🐍</span></div>
       <div class="of-text">Of Becoming a</div>
       <div class="big-title">SOFTWARE</div>
       <div class="big-title">DEVELOPER</div>
       <div class="rule"></div>
       <p class="summary">
-        Today I went deep on shared file storage — EFS as the managed NFS alternative
-        for Linux, the full Amazon FSx family (NetApp ONTAP, OpenZFS, Windows Server),
-        NAS vs SAN fundamentals, and how SMB plus Active Directory power Windows file
-        shares in the cloud.
+        Operators day — arithmetic (+, -, *, /, //, %, **), assignment shortcuts (+=, -=), comparison (==, !=, <), logical (and, or, not), plus identity (is) and membership (in) operators.
       </p>
     </div>
     <div class="photo-card">
@@ -194,10 +191,11 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
       </div>
       <div class="photo-overlay">
         <div class="photo-name">Sumit Rawal</div>
-        <div class="photo-role">AWS Engineer · FPO Cloud</div>
+        <div class="photo-role">Python Learner · FPO Cloud</div>
       </div>
     </div>
   </div>
+
 
   <!-- WHAT I LEARNT -->
   <div class="card">
@@ -205,339 +203,84 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
     <div class="check-list">
       <div class="check-item">
         <div class="check-icon">✓</div>
-        <div class="check-text"><strong>Elastic Block Storage (EBS)</strong> — network-attached block volumes for a single EC2 instance. Persistent, snapshot-able. Foundation before moving to shared file systems</div>
+        <div class="check-text"><strong>Arithmetic operators</strong> — <code>+</code> <code>-</code> <code>*</code> <code>/</code> (float division), <code>//</code> (floor division), <code>%</code> (modulo/remainder), <code>**</code> (exponent/power)</div>
       </div>
       <div class="check-item">
         <div class="check-icon">✓</div>
-        <div class="check-text"><strong>Elastic File System (EFS)</strong> — fully managed NFS alternative. <strong>Linux only</strong>. Multiple EC2s mount the same directory tree. Performance mode + throughput mode control cost and speed</div>
+        <div class="check-text"><strong>Assignment operators</strong> — <code>+=</code> <code>-=</code> <code>*=</code> <code>/=</code> shorthand: <code>x += 5</code> means <code>x = x + 5</code></div>
       </div>
       <div class="check-item">
         <div class="check-icon">✓</div>
-        <div class="check-text"><strong>NAS vs SAN</strong> — NAS (Network Attached Storage) shares files over NFS/SMB. SAN (Storage Area Network) delivers raw block storage over Fibre Channel/iSCSI. EFS/FSx = NAS. EBS = block (SAN-like)</div>
+        <div class="check-text"><strong>Comparison operators</strong> — return <code>True</code> or <code>False</code>: <code>==</code> <code>!=</code> <code>&lt;</code> <code>&gt;</code> <code>&lt;=</code> <code>&gt;=</code></div>
       </div>
       <div class="check-item">
         <div class="check-icon">✓</div>
-        <div class="check-text"><strong>Amazon FSx</strong> — managed third-party file systems: NetApp ONTAP, OpenZFS, Windows Server, Lustre. Enterprise features without managing hardware</div>
+        <div class="check-text"><strong>Logical operators</strong> — <code>and</code> (both true), <code>or</code> (either true), <code>not</code> (reverse boolean)</div>
       </div>
       <div class="check-item">
         <div class="check-icon">✓</div>
-        <div class="check-text"><strong>FSx for Windows Server</strong> — native SMB (Server Message Block) file shares. Integrates with Microsoft Active Directory, NTDS, and Domain Controllers for enterprise auth</div>
-      </div>
-      <div class="check-item">
-        <div class="check-icon">✓</div>
-        <div class="check-text"><strong>OpenZFS vs NetApp ONTAP</strong> — OpenZFS: open-source, data health checks, corruption prevention, portability. ONTAP: enterprise NetApp features, Cloud Volumes ONTAP, multi-protocol, dedup/compression</div>
+        <div class="check-text"><strong>Identity &amp; membership</strong> — <code>is</code> / <code>is not</code> check same object in memory. <code>in</code> / <code>not in</code> check if value exists in a sequence</div>
       </div>
     </div>
   </div>
 
-  <!-- NAS VS SAN -->
   <div class="sec-label">
-    <div class="sec-title">🌐 NAS vs SAN — Storage Architectures</div>
+    <div class="sec-title">🔢 Operator families</div>
     <div class="sec-line"></div>
   </div>
 
-  <div class="three-grid">
-    <div class="three-card" style="--tc:#16A34A">
-      <span class="three-icon">📂</span>
-      <div class="three-name">NAS</div>
-      <div class="three-desc"><strong>Network Attached Storage</strong> — file-level access over the network. Clients mount a shared folder via <strong>NFS</strong> (Linux) or <strong>SMB/CIFS</strong> (Windows). AWS: <strong>EFS</strong>, <strong>FSx</strong>.</div>
-      <div class="three-use">✦ Shared configs, content repos, home directories</div>
-    </div>
-    <div class="three-card" style="--tc:#0EA5E9">
-      <span class="three-icon">🧱</span>
-      <div class="three-name">SAN</div>
-      <div class="three-desc"><strong>Storage Area Network</strong> — block-level access. Raw volumes presented to one host at a time (usually). Low-level disk operations. AWS equivalent: <strong>EBS</strong> over the network.</div>
-      <div class="three-use">✦ Databases, OS boot disks, single-host apps</div>
-    </div>
-    <div class="three-card" style="--tc:#9B6DFF">
-      <span class="three-icon">☁️</span>
-      <div class="three-name">AWS Mapping</div>
-      <div class="three-desc">Block → <strong>EBS</strong>. File/NAS → <strong>EFS</strong> (NFS), <strong>FSx</strong> (ONTAP/OpenZFS/Windows/Lustre). Object → <strong>S3</strong>. Pick by access pattern, not brand names.</div>
-      <div class="three-use">✦ FPO Cloud: EBS for DB, EFS for shared OFP configs</div>
-    </div>
-  </div>
-
-  <!-- EFS -->
-  <div class="sec-label">
-    <div class="sec-title">📁 Amazon EFS — Managed NFS for Linux</div>
-    <div class="sec-line"></div>
-  </div>
+  <table class="compare">
+    <tr>
+      <th>Family</th>
+      <th>Operators</th>
+      <th>Example</th>
+    </tr>
+    <tr>
+      <td>Arithmetic</td>
+      <td><code>+ - * / // % **</code></td>
+      <td><code>10 // 3</code> → 3 · <code>2 ** 8</code> → 256</td>
+    </tr>
+    <tr>
+      <td>Assignment</td>
+      <td><code>= += -= *= /=</code></td>
+      <td><code>count += 1</code> same as <code>count = count + 1</code></td>
+    </tr>
+    <tr>
+      <td>Comparison</td>
+      <td><code>== != &lt; &gt; &lt;= &gt;=</code></td>
+      <td><code>age &gt;= 18</code> → True or False</td>
+    </tr>
+    <tr>
+      <td>Logical</td>
+      <td><code>and or not</code></td>
+      <td><code>x &gt; 0 and x &lt; 100</code></td>
+    </tr>
+    <tr>
+      <td>Identity</td>
+      <td><code>is is not</code></td>
+      <td><code>a is None</code> — check for None</td>
+    </tr>
+    <tr>
+      <td>Membership</td>
+      <td><code>in not in</code></td>
+      <td><code>"py" in "python"</code> → True</td>
+    </tr>
+  </table>
 
   <div class="card">
-    <div class="card-title">EFS — Elastic File System</div>
+    <div class="card-title">Gotchas to remember</div>
     <div class="check-list">
       <div class="check-item">
-        <div class="check-icon">→</div>
-        <div class="check-text"><strong>NFS alternative</strong> — fully managed, elastic file system. Mount with standard NFSv4.1. Scales automatically — no capacity planning</div>
+        <div class="check-icon">!</div>
+        <div class="check-text"><code>/</code> always returns float — <code>10 / 2</code> is <code>5.0</code>, not <code>5</code>. Use <code>//</code> for integer division</div>
       </div>
       <div class="check-item">
-        <div class="check-icon">→</div>
-        <div class="check-text"><strong>Linux only</strong> — supported clients: Amazon Linux, Ubuntu, RHEL, etc. Not for Windows (use FSx for Windows Server + SMB instead)</div>
+        <div class="check-icon">!</div>
+        <div class="check-text"><code>==</code> compares values, <code>is</code> compares identity (same object). Use <code>==</code> for values, <code>is</code> mainly for <code>None</code></div>
       </div>
       <div class="check-item">
-        <div class="check-icon">→</div>
-        <div class="check-text"><strong>Real-world scenario:</strong> 10 EC2 instances in an auto-scaling group all read/write the same <code>/shared/config</code> mount — no sync scripts, no duplication</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="it-grid">
-    <div class="it-card" style="--bord:#16A34A">
-      <span class="it-icon">⚡</span>
-      <div class="it-name">Performance Mode</div>
-      <span class="it-tag">Latency vs throughput</span>
-      <div class="it-desc"><strong>General Purpose</strong> — low latency, default for most apps. <strong>Max I/O</strong> — higher throughput + IOPS for parallel workloads (big data, media processing).</div>
-      <div class="it-use">✦ General Purpose for FPO app configs</div>
-    </div>
-    <div class="it-card" style="--bord:#0EA5E9">
-      <span class="it-icon">📊</span>
-      <div class="it-name">Throughput Mode</div>
-      <span class="it-tag">Billing + speed</span>
-      <div class="it-desc"><strong>Bursting</strong> — scales with storage size, free baseline. <strong>Provisioned</strong> — set throughput independent of size. <strong>Elastic</strong> — auto scales up/down with usage.</div>
-      <div class="it-use">✦ Bursting for dev; Provisioned for steady heavy I/O</div>
-    </div>
-  </div>
-
-  <!-- FSx INTRO -->
-  <div class="sec-label">
-    <div class="sec-title">🏢 Amazon FSx — Introduction</div>
-    <div class="sec-line"></div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">Amazon FSx Benefits</div>
-    <div class="check-list">
-      <div class="check-item">
-        <div class="check-icon">✓</div>
-        <div class="check-text"><strong>Fully managed</strong> — AWS handles patching, backups, hardware, and failover. You get enterprise file system features without racks of storage</div>
-      </div>
-      <div class="check-item">
-        <div class="check-icon">✓</div>
-        <div class="check-text"><strong>Native compatibility</strong> — run NetApp ONTAP, OpenZFS, Windows Server, or Lustre as if on-premises — lift-and-shift friendly</div>
-      </div>
-      <div class="check-item">
-        <div class="check-icon">✓</div>
-        <div class="check-text"><strong>High performance</strong> — sub-millisecond latency options, SSD tiers, multi-AZ durability, integration with VPC, KMS encryption, and AWS Backup</div>
-      </div>
-      <div class="check-item">
-        <div class="check-icon">✓</div>
-        <div class="check-text"><strong>Multi-protocol</strong> — NFS, SMB, iSCSI depending on FSx type — one platform for mixed Linux + Windows estates</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="st-grid">
-    <div class="st-card" style="--sc:#0067C5">
-      <span class="st-icon">🔷</span>
-      <div class="st-name">FSx for ONTAP</div>
-      <div class="st-abbr">NetApp ONTAP on AWS</div>
-      <div class="st-desc">Full NetApp ONTAP feature set. NFS, SMB, iSCSI. Snapshots, cloning, dedup, compression. <strong>Cloud Volumes ONTAP</strong> is the NetApp-branded equivalent.</div>
-      <span class="st-tag">Enterprise NAS/SAN</span>
-    </div>
-    <div class="st-card" style="--sc:#16A34A">
-      <span class="st-icon">🐧</span>
-      <div class="st-name">FSx for OpenZFS</div>
-      <div class="st-abbr">Open-source ZFS</div>
-      <div class="st-desc">Managed OpenZFS. Data health, checksums, corruption prevention, large dataset management, portability across ZFS systems.</div>
-      <span class="st-tag">Linux · ZFS</span>
-    </div>
-    <div class="st-card" style="--sc:#0078D4">
-      <span class="st-icon">🪟</span>
-      <div class="st-name">FSx for Windows</div>
-      <div class="st-abbr">SMB + Active Directory</div>
-      <div class="st-desc">Native Windows file server. <strong>SMB</strong> shares. Joins <strong>Active Directory</strong> domain. Supports DFS, quotas, shadow copies.</div>
-      <span class="st-tag">SMB · AD</span>
-    </div>
-    <div class="st-card" style="--sc:#F59E0B">
-      <span class="st-icon">🔥</span>
-      <div class="st-name">FSx for Lustre</div>
-      <div class="st-abbr">High-performance computing</div>
-      <div class="st-desc">Parallel file system for ML, HPC, and financial modelling. Integrates with S3 as backing store.</div>
-      <span class="st-tag">HPC · ML</span>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">Amazon FSx — Use Cases</div>
-    <table class="compare">
-      <tr>
-        <th>FSx Type</th><th>Best For</th><th>Protocol</th><th>FPO Cloud Example</th>
-      </tr>
-      <tr>
-        <td><strong>ONTAP</strong></td>
-        <td>Enterprise migration, multi-protocol, NetApp shops</td>
-        <td>NFS, SMB, iSCSI</td>
-        <td>Lift on-prem NetApp filer to AWS</td>
-      </tr>
-      <tr>
-        <td><strong>OpenZFS</strong></td>
-        <td>Linux workloads needing ZFS data integrity</td>
-        <td>NFS</td>
-        <td>Large dataset with checksum validation</td>
-      </tr>
-      <tr>
-        <td><strong>Windows Server</strong></td>
-        <td>Windows apps, .NET, legacy SMB shares</td>
-        <td>SMB</td>
-        <td>Shared drive for Windows-based ops tools</td>
-      </tr>
-      <tr>
-        <td><strong>Lustre</strong></td>
-        <td>ML training, seismic processing, HPC</td>
-        <td>Lustre client</td>
-        <td>Weather model batch processing</td>
-      </tr>
-    </table>
-  </div>
-
-  <!-- ONTAP -->
-  <div class="sec-label">
-    <div class="sec-title">🔷 FSx for NetApp ONTAP &amp; Cloud Volumes ONTAP</div>
-    <div class="sec-line"></div>
-  </div>
-
-  <div class="card">
-    <div class="check-list">
-      <div class="check-item">
-        <div class="check-icon">→</div>
-        <div class="check-text"><strong>NetApp ONTAP on AWS</strong> — industry-standard enterprise storage OS. SnapMirror replication, FlexClone instant copies, storage efficiency (dedup + compression)</div>
-      </div>
-      <div class="check-item">
-        <div class="check-icon">→</div>
-        <div class="check-text"><strong>Cloud Volumes ONTAP</strong> — NetApp's own cloud deployment of ONTAP (can run on EC2 or as FSx). Same ONTAP features, NetApp-managed option alongside AWS FSx for ONTAP</div>
-      </div>
-      <div class="check-item">
-        <div class="check-icon">→</div>
-        <div class="check-text">Supports block (iSCSI) + file (NFS/SMB) on the same platform — bridges NAS and SAN in one appliance</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- OpenZFS -->
-  <div class="sec-label">
-    <div class="sec-title">🐧 FSx for OpenZFS — Features</div>
-    <div class="sec-line"></div>
-  </div>
-
-  <div class="three-grid">
-    <div class="three-card" style="--tc:#16A34A">
-      <span class="three-icon">🩺</span>
-      <div class="three-name">Data Health</div>
-      <div class="three-desc">Continuous <strong>checksums</strong> on every read/write. Detects silent bit rot and hardware errors automatically — not just on backup day.</div>
-      <div class="three-use">✦ Aviation data integrity requirements</div>
-    </div>
-    <div class="three-card" style="--tc:#0EA5E9">
-      <span class="three-icon">📦</span>
-      <div class="three-name">Large Data Capacity</div>
-      <div class="three-desc">Manages <strong>petabyte-scale datasets</strong> with copy-on-write snapshots, thin provisioning, and efficient clones — no full copy for every snapshot.</div>
-      <div class="three-use">✦ Historical flight data archives</div>
-    </div>
-    <div class="three-card" style="--tc:#6366F1">
-      <span class="three-icon">🛡️</span>
-      <div class="three-name">Corruption Prevention</div>
-      <div class="three-desc">End-to-end data integrity via checksums + self-healing RAID-Z. <strong>Prevents data corruption</strong> from propagating silently through the stack.</div>
-      <div class="three-use">✦ Mission-critical log storage</div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">Compatibility &amp; Portability</div>
-    <div class="check-item" style="padding:4px 0;">
-      <div class="check-icon">→</div>
-      <div class="check-text">OpenZFS datasets can be <strong>exported and imported</strong> across any ZFS-compatible system — on-prem Linux server, another cloud, or FSx. No vendor lock-in on the file system format.</div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">OpenZFS vs NetApp ONTAP in FSx</div>
-    <table class="compare">
-      <tr>
-        <th>Feature</th><th>FSx for OpenZFS</th><th>FSx for NetApp ONTAP</th>
-      </tr>
-      <tr>
-        <td><strong>License</strong></td>
-        <td>Open-source ZFS</td>
-        <td>Proprietary NetApp ONTAP</td>
-      </tr>
-      <tr>
-        <td><strong>Protocols</strong></td>
-        <td>NFS</td>
-        <td>NFS, SMB, iSCSI</td>
-      </tr>
-      <tr>
-        <td><strong>Data integrity</strong></td>
-        <td><span class="tag tag-green">Checksums + self-healing</span></td>
-        <td><span class="tag tag-green">SnapMirror + WAFL</span></td>
-      </tr>
-      <tr>
-        <td><strong>Enterprise features</strong></td>
-        <td>Snapshots, clones, compression</td>
-        <td>Dedup, FlexClone, SnapMirror, multi-protocol</td>
-      </tr>
-      <tr>
-        <td><strong>Portability</strong></td>
-        <td><span class="tag tag-blue">High — standard ZFS</span></td>
-        <td><span class="tag tag-orange">ONTAP ecosystem</span></td>
-      </tr>
-      <tr>
-        <td><strong>Best for</strong></td>
-        <td>Linux ZFS shops, data integrity focus</td>
-        <td>Enterprise NetApp migrations, mixed OS</td>
-      </tr>
-    </table>
-  </div>
-
-  <!-- WINDOWS FSx + AD -->
-  <div class="sec-label">
-    <div class="sec-title">🪟 FSx for Windows Server — SMB &amp; Active Directory</div>
-    <div class="sec-line"></div>
-  </div>
-
-  <div class="it-grid">
-    <div class="it-card" style="--bord:#0078D4">
-      <span class="it-icon">📁</span>
-      <div class="it-name">SMB (Server Message Block)</div>
-      <span class="it-tag">Windows file sharing</span>
-      <div class="it-desc">Protocol Windows uses to share files and printers over a network. FSx for Windows Server is a <strong>fully managed SMB file server</strong> in AWS — map drives like <code>\\fsx\share</code>.</div>
-      <div class="it-use">✦ Shared drives for Windows-based airline ops tools</div>
-    </div>
-    <div class="it-card" style="--bord:#6366F1">
-      <span class="it-icon">🏛️</span>
-      <div class="it-name">Active Directory Service</div>
-      <span class="it-tag">Identity &amp; access</span>
-      <div class="it-desc">Microsoft's directory service for users, groups, computers, and policies. FSx for Windows joins your AD domain so SMB shares respect <strong>NTFS permissions and group policies</strong>.</div>
-      <div class="it-use">✦ Single sign-on for file access across the org</div>
-    </div>
-    <div class="it-card" style="--bord:#16A34A">
-      <span class="it-icon">🗄️</span>
-      <div class="it-name">NTDS (NT Directory Service)</div>
-      <span class="it-tag">AD database engine</span>
-      <div class="it-desc"><strong>New Technology Directory Service</strong> — the database engine behind Active Directory. Stores all directory objects. Runs on every <strong>Domain Controller</strong>.</div>
-      <div class="it-use">✦ Foundation of AD — users, OUs, GPOs live here</div>
-    </div>
-    <div class="it-card" style="--bord:#F59E0B">
-      <span class="it-icon">🎛️</span>
-      <div class="it-name">Domain Controller</div>
-      <span class="it-tag">AD server role</span>
-      <div class="it-desc">Windows Server running AD DS. Authenticates users, enforces policies, replicates NTDS database to other DCs. FSx for Windows integrates with <strong>AWS Managed Microsoft AD</strong> or on-prem DCs.</div>
-      <div class="it-use">✦ Central auth for SMB shares in the cloud</div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">Real-World: FSx for Windows + Active Directory</div>
-    <div class="check-list">
-      <div class="check-item">
-        <div class="check-icon">1</div>
-        <div class="check-text">Deploy <strong>AWS Managed Microsoft AD</strong> (or extend on-prem AD via VPN/Direct Connect)</div>
-      </div>
-      <div class="check-item">
-        <div class="check-icon">2</div>
-        <div class="check-text">Create <strong>FSx for Windows Server</strong> file system and join it to the AD domain</div>
-      </div>
-      <div class="check-item">
-        <div class="check-icon">3</div>
-        <div class="check-text">EC2 Windows instances map SMB shares — users authenticate via AD credentials, permissions enforced by NTFS + AD groups</div>
+        <div class="check-icon">!</div>
+        <div class="check-text"><code>and</code> / <code>or</code> short-circuit — Python stops evaluating once the answer is known</div>
       </div>
     </div>
   </div>
@@ -546,32 +289,63 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
   <div class="code-card">
     <div class="code-hdr">
       <div class="dr"></div><div class="dy"></div><div class="dg"></div>
-      <span class="fname">day-004-aws-notes.sh</span>
+      <span class="fname">day-004-python-notes.py</span>
     </div>
     <div class="code-body">
-<span class="cl"># ─── Day 4 AWS Notes · Sumit Rawal · Jun 23, 2026 ────────────────</span><br>
+<span class="cl"># ─── Day 4 Python Notes · Sumit Rawal · Jun 23, 2026 ─────────────</span><br>
 <br>
-<span class="cl"># Storage architectures</span><br>
-<span class="cm">NAS</span> <span class="cw">=</span> <span class="cs">"file-level — NFS/SMB — EFS, FSx"</span><br>
-<span class="cm">SAN</span> <span class="cw">=</span> <span class="cs">"block-level — raw volumes — EBS"</span><br>
+<span class="cl"># Arithmetic</span><br>
+<span class="cv">print</span><br>
+<span class="cw">(</span><br>
+<span class="cw">10</span><br>
+<span class="cw"> + </span><br>
+<span class="cw">3</span><br>
+<span class="cw">)   </span><br>
+<span class="cl"># 13</span><br>
+<span class="cv">print</span><br>
+<span class="cw">(</span><br>
+<span class="cw">10</span><br>
+<span class="cw"> // </span><br>
+<span class="cw">3</span><br>
+<span class="cw">)  </span><br>
+<span class="cl"># 3  (floor division)</span><br>
+<span class="cv">print</span><br>
+<span class="cw">(</span><br>
+<span class="cw">10</span><br>
+<span class="cw"> % </span><br>
+<span class="cw">3</span><br>
+<span class="cw">)   </span><br>
+<span class="cl"># 1  (modulo)</span><br>
+<span class="cv">print</span><br>
+<span class="cw">(</span><br>
+<span class="cw">2</span><br>
+<span class="cw"> ** </span><br>
+<span class="cw">10</span><br>
+<span class="cw">)  </span><br>
+<span class="cl"># 1024 (power)</span><br>
 <br>
-<span class="cl"># EFS — managed NFS (Linux only)</span><br>
-<span class="cv">sudo mount</span> <span class="cp">-t nfs4</span> <span class="cp">-o nfsvers=4.1</span> <span class="cp">fs-0abc.efs.ap-southeast-1.amazonaws.com:/</span> <span class="cp">/mnt/efs</span><br>
-<span class="cm">Performance Mode</span> <span class="cw">=</span> <span class="cs">"General Purpose (low latency) | Max I/O (high throughput)"</span><br>
-<span class="cm">Throughput Mode</span>  <span class="cw">=</span> <span class="cs">"Bursting | Provisioned | Elastic"</span><br>
-<br>
-<span class="cl"># FSx types</span><br>
-<span class="cm">FSx ONTAP</span>   <span class="cw">=</span> <span class="cs">"NetApp ONTAP — NFS/SMB/iSCSI — Cloud Volumes ONTAP"</span><br>
-<span class="cm">FSx OpenZFS</span> <span class="cw">=</span> <span class="cs">"checksums, corruption prevention, large data, portability"</span><br>
-<span class="cm">FSx Windows</span> <span class="cw">=</span> <span class="cs">"SMB shares + Active Directory + Domain Controller"</span><br>
-<br>
-<span class="cl"># Active Directory stack</span><br>
-<span class="cm">SMB</span>  <span class="cw">=</span> <span class="cs">"Server Message Block — Windows file sharing protocol"</span><br>
-<span class="cm">AD</span>   <span class="cw">=</span> <span class="cs">"Active Directory — users, groups, policies"</span><br>
-<span class="cm">NTDS</span> <span class="cw">=</span> <span class="cs">"NT Directory Service — AD database on Domain Controller"</span><br>
-<br>
-<span class="cl"># Create FSx for Windows (joins AD domain)</span><br>
-<span class="cv">aws fsx</span> <span class="cg">create-file-system</span> <span class="ck">--file-system-type</span> <span class="cm">WINDOWS</span> <span class="ck">--storage-capacity</span> <span class="cw">300</span> <span class="ck">--subnet-ids</span> <span class="cp">subnet-0abc</span>
+<span class="cl"># Comparison & logical</span><br>
+<span class="cv">print</span><br>
+<span class="cw">(</span><br>
+<span class="cw">5</span><br>
+<span class="cw"> > </span><br>
+<span class="cw">3</span><br>
+<span class="cw">)        </span><br>
+<span class="cl"># True</span><br>
+<span class="cv">print</span><br>
+<span class="cw">(</span><br>
+<span class="cw">True</span><br>
+<span class="cw"> and </span><br>
+<span class="cw">False</span><br>
+<span class="cw">) </span><br>
+<span class="cl"># False</span><br>
+<span class="cv">print</span><br>
+<span class="cw">(</span><br>
+<span class="cs">"a"</span><br>
+<span class="cw"> in </span><br>
+<span class="cs">"cat"</span><br>
+<span class="cw">)   </span><br>
+<span class="cl"># True</span><br>
     </div>
   </div>
 
@@ -581,14 +355,14 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
       <div class="glf-icon">📚</div>
       <div>
         <div class="glf-label">Learning</div>
-        <div class="glf-val">EFS + FSx (ONTAP, OpenZFS, Windows) + NAS/SAN</div>
+        <div class="glf-val">Arithmetic + comparison + logical operators</div>
       </div>
     </div>
     <div class="glf-card">
       <div class="glf-icon">🎯</div>
       <div>
         <div class="glf-label">Tomorrow</div>
-        <div class="glf-val">S3 deep dive — buckets, versioning, lifecycle policies</div>
+        <div class="glf-val">Datatypes deep dive — int, float, complex, bool, str</div>
       </div>
     </div>
     <div class="glf-card">
@@ -605,13 +379,11 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
     <div>
       <span class="qmark">"</span>
       <div class="qtext">
-        Linux mounts EFS.<br>
-        Windows needs <em>FSx + SMB +<br>
-        Active Directory.</em> Know your OS.
+        Operators turn <em>data</em> into<br><em>decisions</em> and<br><em>calculations</em>.
       </div>
     </div>
     <div class="qvisual">
-      <div class="rocket-big">🚀</div>
+      <div class="rocket-big">🐍</div>
       <div class="code-tag">&lt;/&gt;</div>
     </div>
   </div>
@@ -621,14 +393,10 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
     <span class="hashtag">#100DaysOfCode</span><span class="ht-sep">|</span>
     <span class="hashtag">#365DaysOfCode</span><span class="ht-sep">|</span>
     <span class="hashtag">#1000DaysOfCode</span><span class="ht-sep">|</span>
-    <span class="hashtag">#AWS</span><span class="ht-sep">|</span>
-    <span class="hashtag">#EFS</span><span class="ht-sep">|</span>
-    <span class="hashtag">#FSx</span><span class="ht-sep">|</span>
-    <span class="hashtag">#OpenZFS</span><span class="ht-sep">|</span>
-    <span class="hashtag">#NetAppONTAP</span><span class="ht-sep">|</span>
-    <span class="hashtag">#ActiveDirectory</span><span class="ht-sep">|</span>
-    <span class="hashtag">#SMB</span><span class="ht-sep">|</span>
-    <span class="hashtag">#DevOps</span><span class="ht-sep">|</span>
+    <span class="hashtag">#Python</span><span class="ht-sep">|</span>
+    <span class="hashtag">#Operators</span><span class="ht-sep">|</span>
+    <span class="hashtag">#Arithmetic</span><span class="ht-sep">|</span>
+    <span class="hashtag">#LogicalOperators</span><span class="ht-sep">|</span>
     <span class="hashtag">#LearnInPublic</span><span class="ht-sep">|</span>
     <span class="hashtag">#BuildInPublic</span>
   </div>
