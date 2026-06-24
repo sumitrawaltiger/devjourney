@@ -1,6 +1,6 @@
-# 🚀 Sumit Rawal — 36 Months of Code
+# 🚀 Sumit Rawal — 1000 Days of Code
 
-**1000 days · 3 years · 96 rest days built in · Jun 20, 2026 → Jun 19, 2029 · Tuesday · 5:30 AM – 8:30 AM daily**
+**1000 days · 96 rest days built in · Jun 20, 2026 → Jun 19, 2029 · Tuesday · 5:30 AM – 8:30 AM daily**
 
 Building in public from Bangkok while architecting FPO Cloud at NextStep.
 
@@ -23,7 +23,7 @@ devjourney/
 └── README.md
 ```
 
-## 🗺 36-Month Roadmap
+## 🗺 1000-Day Roadmap
 
 | Block | Skills | Months | Days |
 |-------|--------|--------|------|
@@ -83,7 +83,7 @@ From then on — every `git push` auto-deploys! 🎉
 ---
 
 ## 🏷 Hashtags to use
-`#36MonthsOfCode` `#3YearsOfCode` `#1000DaysOfCode` `#100DaysOfCode` `#365DaysOfCode`
+`#1000DaysOfCode` `#100DaysOfCode` `#365DaysOfCode`
 `#AWS` `#DevOps` `#LearnInPublic` `#BuildInPublic` `#SumitrawalDev`
 
 ---
