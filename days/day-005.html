@@ -32,7 +32,10 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
 
 /* HERO */
 .hero-grid{display:grid;grid-template-columns:1fr 240px;gap:32px;align-items:start;margin-bottom:32px;}
-.day-badge{display:inline-flex;align-items:center;gap:8px;background:#16A34A18;border:1px solid #16A34A40;border-radius:100px;padding:5px 14px;font-size:11px;font-weight:600;color:var(--c);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:16px;width:fit-content;}
+.day-badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.day-badge{display:inline-flex;align-items:center;gap:8px;background:#16A34A18;border:1px solid #16A34A40;border-radius:100px;padding:5px 14px;font-size:11px;font-weight:600;color:var(--c);letter-spacing:0.12em;text-transform:uppercase;width:fit-content;}
+.day-badge .dot{width:6px;height:6px;background:var(--c);border-radius:50%;}
+.day-badge .dot.pulse{animation:pulse 2s infinite;}
 .pulse{width:7px;height:7px;background:var(--c);border-radius:50%;animation:pulse 2s infinite;}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(1.4);}}
 .day-num{font-family:'Syne',sans-serif;font-weight:800;font-size:88px;line-height:0.85;letter-spacing:-0.05em;margin-bottom:4px;}
@@ -61,8 +64,8 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
 
 /* CARDS */
 .card{background:var(--bg2);border:1px solid #ffffff0D;border-radius:16px;padding:22px;margin-bottom:20px;}
-.card-title{font-size:10px;font-weight:700;color:var(--c);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
-.card-title::before{content:'';flex:0 0 20px;height:2px;background:var(--c);border-radius:2px;}
+.card-title{font-size:10px;font-weight:700;color:var(--c);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+.card-title::before{content:'';flex:0 0 24px;height:2px;background:var(--c);border-radius:2px;}
 .check-list{display:flex;flex-direction:column;gap:11px;}
 .check-item{display:flex;align-items:flex-start;gap:12px;}
 .check-icon{width:24px;height:24px;border-radius:7px;background:var(--c);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;font-size:12px;}
@@ -166,14 +169,18 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
   <!-- TOP NAV -->
   <div class="day-nav">
     <a href="day-004.html">← Day 4: Operators</a>
-    <div class="day-counter">📅 Jun 24, 2026 · 5:30 AM · Bangkok</div>
+    <div class="day-counter">📅 Jun 24, 2026 - 5:30 AM - Bangkok</div>
     <a href="#" class="next">Day 6 → <span style="opacity:0.6;font-size:10px;">(tomorrow)</span></a>
   </div>
 
   <!-- HERO -->
   <div class="hero-grid">
     <div>
-      <div class="day-badge"><div class="pulse"></div>Python · Month 1</div>
+      <div class="day-badges">
+        <div class="day-badge"><div class="dot pulse"></div>Python</div>
+        <div class="day-badge"><div class="dot"></div>Side Quest</div>
+        <div class="day-badge"><div class="dot"></div>Month 1</div>
+      </div>
       <div class="day-num"><span class="d">DAY</span> <span class="n">5</span><span class="rocket">🐍</span></div>
       <div class="of-text">Of Becoming a</div>
       <div class="big-title">SOFTWARE</div>
@@ -183,7 +190,7 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
         Building on four days of Python basics — today I went deep on core
         datatypes (int, float, complex, bool, str), four ways to write integers,
         string slicing and operators, and typecasting rules including what Python
-        refuses to convert.
+        refuses to convert. 
       </p>
     </div>
     <div class="photo-card">
@@ -194,7 +201,7 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
       </div>
       <div class="photo-overlay">
         <div class="photo-name">Sumit Rawal</div>
-        <div class="photo-role">Python Learner · FPO Cloud</div>
+        <div class="photo-role">Python  · FPO Cloud</div>
       </div>
     </div>
   </div>
@@ -266,8 +273,12 @@ nav{position:sticky;top:0;z-index:100;background:#07071Aee;backdrop-filter:blur(
     </div>
   </div>
 
+  <div class="sec-label">
+    <div class="sec-title">Conversion functions</div>
+    <div class="sec-line"></div>
+  </div>
+
   <div class="card">
-    <div class="card-title">Conversion functions</div>
     <div class="check-list">
       <div class="check-item">
         <div class="check-icon">→</div>
