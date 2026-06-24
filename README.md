@@ -1,6 +1,6 @@
 # 🚀 Sumit Rawal — 1000 Days of Code
 
-**1000 days · 96 rest days built in · Jun 20, 2026 → Jun 19, 2029 · Tuesday · 5:30 AM – 8:30 AM daily**
+**1000 days · 96 days buffer in case of unavoidable situations · Jun 20, 2026 → Jun 19, 2029 · Tuesday · 5:30 AM – 8:30 AM daily**
 
 Building in public from Bangkok while architecting FPO Cloud at NextStep.
 
