@@ -185,7 +185,10 @@ html,body{height:100%;overflow:hidden;}
 .arrow-list{gap:6px;}
 .arrow-item{font-size:clamp(10px,1.15vh,12px);}
 .arrow-icon{width:18px;height:18px;font-size:9px;}
-.hashtags{padding-top:clamp(6px,0.8vh,10px);flex-shrink:0;margin-top:auto;font-size:10px;}
+.hashtags{padding-top:clamp(6px,0.8vh,10px);flex-shrink:0;font-size:10px;}
+.glf{margin-bottom:clamp(6px,0.8vh,10px);gap:8px;}
+.glf-card{padding:10px 12px;}
+.glf-val{font-size:clamp(10px,1.1vh,11px);line-height:1.4;}
 #shotScale{flex:1;min-height:0;overflow:hidden;}
 
 </style>
@@ -198,8 +201,8 @@ html,body{height:100%;overflow:hidden;}
 <div class="wrap">
   <div class="day-nav">
     <a href="../index.html">← Home</a>
-    <div class="day-counter">📅 25th June 2026 · 5:30 AM · Bangkok</div>
-    <a href="#" class="next">Day 2 → <span style="opacity:0.6;font-size:10px;">(tomorrow)</span></a>
+    <div class="day-counter">📅 26th June 2026 · 5AM–8AM · BKK</div>
+    <a href="#" class="next">Day 2 → <span style="opacity:0.6;font-size:10px;">27th June 2026, Saturday</span></a>
   </div>
 
   <div id="shotScale">
@@ -321,6 +324,67 @@ html,body{height:100%;overflow:hidden;}
       <span class="it-tag">REC</span>
       <div class="it-desc">Between edge &amp; origin — caches larger, less-frequent objects. Fewer origin fetches.</div>
       <div class="it-use">✦ Extends CDN for infrequent content</div>
+    </div>
+  </div>
+
+  <div class="sec-label">
+    <div class="sec-title">🏗️ Cloud Deployment — Public · Private · Hybrid</div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="three-grid">
+    <div class="three-card" style="--tc:#16A34A">
+      <span class="three-icon">🌐</span>
+      <div class="three-name">Public cloud</div>
+      <div class="three-desc">AWS-owned shared infrastructure. Multi-tenant, scalable, global regions &amp; AZs.</div>
+      <div class="three-use">✦ Default AWS model · EC2, S3, Lambda</div>
+    </div>
+    <div class="three-card" style="--tc:#E11118">
+      <span class="three-icon">🔒</span>
+      <div class="three-name">Private cloud</div>
+      <div class="three-desc">Dedicated to one org — on-prem data center or AWS Outposts / dedicated hosts.</div>
+      <div class="three-use">✦ Compliance, isolation &amp; full control</div>
+    </div>
+    <div class="three-card" style="--tc:#0EA5E9">
+      <span class="three-icon">🔀</span>
+      <div class="three-name">Hybrid cloud</div>
+      <div class="three-desc">Connects on-premises with AWS via VPN or Direct Connect for gradual migration.</div>
+      <div class="three-use">✦ Best of both — lift-and-shift over time</div>
+    </div>
+  </div>
+
+  <div class="sec-label">
+    <div class="sec-title">⚡ Hypervisor &amp; Virtualization</div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="card">
+    <div class="check-list">
+      <div class="check-item"><div class="check-icon">→</div><div class="check-text"><strong>Hypervisor</strong> — software on a physical host that runs multiple isolated VMs on shared hardware</div></div>
+      <div class="check-item"><div class="check-icon">→</div><div class="check-text"><strong>Type 1 (bare metal)</strong> — runs directly on hardware (e.g. Xen on EC2). <strong>Type 2</strong> — runs on an OS</div></div>
+      <div class="check-item"><div class="check-icon">→</div><div class="check-text"><strong>HVM vs PV</strong> — HVM = full hardware virtualization (default). PV = paravirtualization (legacy)</div></div>
+    </div>
+  </div>
+
+  <div class="glf">
+    <div class="glf-card">
+      <span class="glf-icon">🌏</span>
+      <div>
+        <div class="glf-label">Regions &amp; AZs</div>
+        <div class="glf-val">Region = geographic area. AZ = isolated data center within a region for high availability.</div>
+      </div>
+    </div>
+    <div class="glf-card">
+      <span class="glf-icon">💳</span>
+      <div>
+        <div class="glf-label">Pay-as-you-go</div>
+        <div class="glf-val">No upfront cost — pay only for compute, storage &amp; networking you actually consume.</div>
+      </div>
+    </div>
+    <div class="glf-card">
+      <span class="glf-icon">🛡️</span>
+      <div>
+        <div class="glf-label">Shared responsibility</div>
+        <div class="glf-val">AWS secures the cloud. You secure what&apos;s in the cloud — OS, data, apps &amp; access.</div>
+      </div>
     </div>
   </div>
 
