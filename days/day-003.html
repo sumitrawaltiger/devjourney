@@ -8,8 +8,8 @@
   Pattern matches day-005.html (hero, badges, sections, cards, code, GLF, quote, hashtags).
   Color: set --c in :root per block (Python #16A34A, DevOps #D97706, Frontend #0EA5E9).
 -->
-<meta name="description" content="Day 1 of 100 — AWS cloud fundamentals: IaaS/PaaS/SaaS, edge locations, key pairs, Windows AMI, EBS root, and HVM virtualization.">
-<title>Day 1 · AWS Cloud Fundamentals · Sumit Rawal</title>
+<meta name="description" content="Day 3 of 100 — EBS volume types, snapshots, AMIs, encryption, and instance store vs EBS root.">
+<title>Day 3 · EBS Storage & Snapshots · Sumit Rawal</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -201,9 +201,9 @@ html,body{height:100%;overflow:hidden;}
 
 <div class="wrap">
   <div class="day-nav">
-    <a href="../index.html">← Home</a>
-    <div class="day-counter">📅 23rd June 2026 · 5:30AM–8:30AM · BKK</div>
-    <a href="day-002.html" class="next">Day 2 → <span style="opacity:0.6;font-size:10px;">24th June 2026, Wednesday</span></a>
+    <a href="day-002.html">← Day 2</a>
+    <div class="day-counter">📅 25th June 2026 · 5:30AM–8:30AM · BKK</div>
+    <a href="day-004.html" class="next">Day 4 → <span style="opacity:0.6;font-size:10px;">26th June 2026, Friday</span></a>
   </div>
 
   <div class="hero-grid">
@@ -213,13 +213,13 @@ html,body{height:100%;overflow:hidden;}
         <div class="day-badge"><div class="dot"></div>DevOps</div>
         <div class="day-badge"><div class="dot"></div>Month 1</div>
       </div>
-      <div class="day-num"><span class="d">DAY</span> <span class="n">1</span><span class="rocket">☁️</span></div>
+      <div class="day-num"><span class="d">DAY</span> <span class="n">3</span><span class="rocket">💾</span></div>
       <div class="of-text">Of Becoming a</div>
       <div class="big-title">SOFTWARE</div>
       <div class="big-title">DEVELOPER</div>
       <div class="rule"></div>
       <p class="summary">
-        Day one of my 100-day AWS journey — cloud foundations, IaaS/PaaS/SaaS, public/private/hybrid cloud, edge locations &amp; regional edge cache, plus hands-on: key pairs, Windows Server 2019 AMI, EBS root &amp; HVM.
+        Day three — EBS volume types (gp3, io2, st1, sc1), snapshots &amp; AMIs, encryption at rest, instance store vs EBS root volumes, and Data Lifecycle Manager for automated backups.
       </p>
     </div>
     <div class="photo-card">
@@ -240,126 +240,109 @@ html,body{height:100%;overflow:hidden;}
   <div class="card">
     <div class="card-title">What I learnt today</div>
     <div class="check-list">
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Cloud computing</strong> — on-demand compute, storage &amp; networking. Pay for what you use.</div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>IaaS · PaaS · SaaS</strong> — IaaS: you manage OS (EC2). PaaS: deploy code. SaaS: use apps in browser.</div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Public · Private · Hybrid</strong> — shared AWS, dedicated org infra, or mix of on-prem + cloud.</div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Hypervisor &amp; HVM</strong> — hypervisor runs VMs on one host; HVM = full hardware virtualization.</div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Edge locations &amp; REC</strong> — CloudFront caches near users; regional edge cache for larger objects.</div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Key pairs · AMI · EBS · HVM</strong> — .pem key, Windows Server 2019 AMI, persistent EBS root, HVM launch.</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>EBS volumes</strong> — Network-attached block storage. Persists independently of instance lifecycle. AZ-bound.</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>gp3 general purpose</strong> — SSD baseline 3,000 IOPS &amp; 125 MB/s. Scale IOPS &amp; throughput independently. Default for most workloads.</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>io2 provisioned IOPS</strong> — Highest-performance SSD. Up to 64,000 IOPS. Mission-critical databases (Oracle, SQL Server).</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>st1 &amp; sc1 HDD</strong> — st1 = throughput-optimised for big data. sc1 = cold storage, lowest cost per GB.</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Snapshots</strong> — Point-in-time backup stored in S3 (managed by AWS). Incremental — only changed blocks saved.</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>AMI from snapshot</strong> — Create custom AMI from a running instance snapshot — golden image for fleet deployment.</div></div>
     </div>
   </div>
 
   <div class="sec-label">
-    <div class="sec-title">🪟 EC2 Launch — Key Pair · Windows AMI · EBS · HVM</div>
+    <div class="sec-title">💾 EBS Volume Types — gp3 · io2 · st1 · sc1</div>
     <div class="sec-line"></div>
   </div>
   <div class="st-grid">
     <div class="st-card" style="--sc:#16A34A">
-      <span class="st-icon">🔑</span>
-      <div class="st-name">Key pair</div>
-      <div class="st-abbr">EC2 → Key Pairs</div>
-      <div class="st-desc">Created key pair. <code>.pem</code> downloads once — decrypts Windows admin password.</div>
+      <span class="st-icon">💚</span>
+      <div class="st-name">gp3</div>
+      <div class="st-abbr">General SSD</div>
+      <div class="st-desc">Default SSD. 3,000 IOPS &amp; 125 MB/s baseline. Boot volumes &amp; most apps.</div>
     </div>
     <div class="st-card" style="--sc:#0EA5E9">
-      <span class="st-icon">🪟</span>
-      <div class="st-name">Windows AMI</div>
-      <div class="st-abbr">Server 2019</div>
-      <div class="st-desc">Launched from Windows AMI — blueprint with OS &amp; optional software.</div>
-      <span class="st-tag">Amazon Machine Image</span>
+      <span class="st-icon">⚡</span>
+      <div class="st-name">io2</div>
+      <div class="st-abbr">Provisioned IOPS</div>
+      <div class="st-desc">Up to 64,000 IOPS &amp; 1,000 MB/s. Low-latency databases.</div>
+      <span class="st-tag">Mission critical</span>
     </div>
     <div class="st-card" style="--sc:#9B6DFF">
-      <span class="st-icon">💾</span>
-      <div class="st-name">EBS root</div>
-      <div class="st-abbr">Root device</div>
-      <div class="st-desc">Root volume on EBS — persists across stop/start. Snapshot &amp; restore.</div>
-      <span class="st-tag">vs instance store</span>
+      <span class="st-icon">📀</span>
+      <div class="st-name">st1</div>
+      <div class="st-abbr">Throughput HDD</div>
+      <div class="st-desc">Low-cost HDD optimised for throughput. Big data, log processing, data warehouses.</div>
     </div>
     <div class="st-card" style="--sc:#E11118">
-      <span class="st-icon">⚡</span>
-      <div class="st-name">HVM</div>
-      <div class="st-abbr">Virtualization</div>
-      <div class="st-desc">Hardware Virtual Machine — full hardware virtualization via hypervisor.</div>
+      <span class="st-icon">🧊</span>
+      <div class="st-name">sc1</div>
+      <div class="st-abbr">Cold HDD</div>
+      <div class="st-desc">Lowest cost per GB. Infrequently accessed data. Cannot be boot volume.</div>
     </div>
   </div>
 
   <div class="sec-label">
-    <div class="sec-title">☁️ Cloud Service Models — IaaS · PaaS · SaaS</div>
+    <div class="sec-title">📸 Snapshots & AMIs — Backup · Restore · Deploy</div>
     <div class="sec-line"></div>
   </div>
   <div class="three-grid">
     <div class="three-card" style="--tc:#16A34A">
-      <span class="three-icon">🖥️</span>
-      <div class="three-name">IaaS</div>
-      <div class="three-desc">AWS manages hardware; you manage OS, middleware &amp; apps. EC2, EBS, VPC.</div>
-      <div class="three-use">✦ Most control · EC2 instances</div>
+      <span class="three-icon">📷</span>
+      <div class="three-name">EBS snapshot</div>
+      <div class="three-desc">Incremental backup to S3. Create from volume or automate with Data Lifecycle Manager.</div>
+      <div class="three-use">✦ Cross-region copy for DR</div>
     </div>
     <div class="three-card" style="--tc:#0EA5E9">
-      <span class="three-icon">⚙️</span>
-      <div class="three-name">PaaS</div>
-      <div class="three-desc">AWS manages runtime &amp; OS; you deploy code. Elastic Beanstalk, Lambda.</div>
-      <div class="three-use">✦ Focus on code, not servers</div>
+      <span class="three-icon">🖼️</span>
+      <div class="three-name">AMI</div>
+      <div class="three-desc">Template = snapshot + permissions. Launch identical instances across regions &amp; accounts.</div>
+      <div class="three-use">✦ Public, private or shared AMIs</div>
     </div>
     <div class="three-card" style="--tc:#9B6DFF">
-      <span class="three-icon">📦</span>
-      <div class="three-name">SaaS</div>
-      <div class="three-desc">Fully managed app over the browser. Gmail, Office 365, Salesforce.</div>
-      <div class="three-use">✦ Zero infrastructure management</div>
+      <span class="three-icon">🔄</span>
+      <div class="three-name">Restore</div>
+      <div class="three-desc">Create new volume from snapshot in any AZ (copy first if different AZ). Attach to instance.</div>
+      <div class="three-use">✦ Volume size can grow on restore</div>
     </div>
   </div>
 
   <div class="sec-label">
-    <div class="sec-title">🌍 Edge Locations &amp; Regional Edge Cache</div>
+    <div class="sec-title">🔐 Encryption & Instance Store vs EBS</div>
     <div class="sec-line"></div>
   </div>
   <div class="it-grid">
     <div class="it-card" style="--bord:#16A34A">
-      <span class="it-icon">📍</span>
-      <div class="it-name">Edge locations</div>
-      <span class="it-tag">CloudFront</span>
-      <div class="it-desc">400+ global PoPs cache content close to users — lower latency via CloudFront CDN.</div>
-      <div class="it-use">✦ Static &amp; dynamic content delivery</div>
+      <span class="it-icon">🔒</span>
+      <div class="it-name">EBS encryption</div>
+      <span class="it-tag">AES-256</span>
+      <div class="it-desc">Encrypt at rest using AWS KMS keys. Enabled by default on new volumes. No performance penalty.</div>
+      <div class="it-use">✦ Snapshots of encrypted volumes stay encrypted</div>
     </div>
     <div class="it-card" style="--bord:#0EA5E9">
-      <span class="it-icon">🗄️</span>
-      <div class="it-name">Regional edge cache</div>
-      <span class="it-tag">REC</span>
-      <div class="it-desc">Between edge &amp; origin — caches larger, less-frequent objects. Fewer origin fetches.</div>
-      <div class="it-use">✦ Extends CDN for infrequent content</div>
+      <span class="it-icon">💨</span>
+      <div class="it-name">Instance store</div>
+      <span class="it-tag">EPHEMERAL</span>
+      <div class="it-desc">Physically attached disk on host. Very fast I/O but data lost on stop/terminate. Good for caches &amp; temp data.</div>
+      <div class="it-use">✦ Not for persistent data</div>
     </div>
   </div>
 
   <div class="glf">
     <div class="glf-card">
-      <span class="glf-icon">🌏</span>
+      <span class="glf-icon">🌍</span>
       <div>
-        <div class="glf-label">Regions &amp; AZs</div>
-        <div class="glf-val">Region = geographic area. AZ = isolated data center within a region for high availability.</div>
+        <div class="glf-label">AZ bound</div>
+        <div class="glf-val">EBS volume lives in one AZ. Snapshot lets you recreate in another AZ or region.</div>
       </div>
-    </div>
-    <div class="glf-card">
-      <span class="glf-icon">💳</span>
-      <div>
-        <div class="glf-label">Pay-as-you-go</div>
-        <div class="glf-val">No upfront cost — pay only for compute, storage &amp; networking you actually consume.</div>
-      </div>
-    </div>
-    <div class="glf-card">
-      <span class="glf-icon">🛡️</span>
-      <div>
-        <div class="glf-label">Shared responsibility</div>
-        <div class="glf-val">AWS secures the cloud. You secure what&apos;s in the cloud — OS, data, apps &amp; access.</div>
-      </div>
-    </div>
-  </div>
 
   </div><!-- /shotScale -->
   <div class="hashtags">
     <span class="hashtag">#100DaysOfAWS</span><span class="ht-sep">|</span>
     <span class="hashtag">#100DaysOfCode</span><span class="ht-sep">|</span>
     <span class="hashtag">#AWS</span><span class="ht-sep">|</span>
-    <span class="hashtag">#CloudComputing</span><span class="ht-sep">|</span>
-    <span class="hashtag">#DevOps</span><span class="ht-sep">|</span>
-    <span class="hashtag">#EC2</span><span class="ht-sep">|</span>
+    <span class="hashtag">#EBS</span><span class="ht-sep">|</span>
+    <span class="hashtag">#Storage</span><span class="ht-sep">|</span>
+    <span class="hashtag">#Snapshots</span><span class="ht-sep">|</span>
     <span class="hashtag">#LearnInPublic</span><span class="ht-sep">|</span>
     <span class="hashtag">#BuildInPublic</span>
   </div>

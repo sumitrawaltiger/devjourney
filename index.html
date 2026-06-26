@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Sumit Rawal's 1000-Day coding journey — 10 skills, 100 days per skill. AWS, JavaScript, React, Python, Agentic AI, Java, Microservices, DevOps, DSA & System Design. Building in public from Bangkok."
+      content="Sumit Rawal's 100 Days of AWS — daily study journal from Bangkok. EC2, VPC, S3, IAM, DevOps & cloud architecture. 5:30AM–8:30AM BKK."
     />
-    <title>Sumit Rawal · 1000 Days of Code</title>
+    <title>Sumit Rawal · 100 Days of AWS</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap"
       rel="stylesheet"
@@ -132,6 +132,38 @@
       }
       .nav-badge:hover {
         background: #8b5cf6;
+        color: #fff;
+      }
+      .nav-days {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+      .nav-day {
+        background: #ffffff08;
+        border: 1px solid #ffffff12;
+        color: var(--dim);
+        border-radius: 100px;
+        padding: 5px 12px;
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-decoration: none;
+        transition:
+          background 0.2s,
+          border-color 0.2s,
+          color 0.2s;
+      }
+      .nav-day:hover {
+        background: #d9770618;
+        border-color: #d9770640;
+        color: #fbbf24;
+      }
+      .nav-day.active {
+        background: #d97706;
+        border-color: #d97706;
         color: #fff;
       }
 
@@ -574,202 +606,85 @@
         </div>
       </div>
       <div class="nav-links">
-        <a href="index.html" class="active">Journal</a>
-        <a href="#roadmap">Roadmap</a>
+        <a href="index.html" class="active">Home</a>
+        <a href="#roadmap">Days</a>
         <a href="#aws">AWS</a>
       </div>
-      <a
-        href="days/day-001.html"
-        class="nav-badge"
-        style="background: #d97706"
-        >Day 1 →</a
-      >
+      <div class="nav-days">
+        <a href="days/day-001.html" class="nav-day">Day 1</a>
+        <a href="days/day-002.html" class="nav-day">Day 2</a>
+        <a href="days/day-003.html" class="nav-day">Day 3</a>
+        <a href="days/day-004.html" class="nav-day active">Day 4 →</a>
+      </div>
     </nav>
 
     <!-- HERO -->
     <div class="hero">
       <div class="hero-eyebrow">
         <div class="pulse"></div>
-        Live from Bangkok · Started 26th June 2026
+        Live from Bangkok · Started 23rd June 2026
       </div>
       <h1>
-        1000 Days<br />
-        <span class="outline">of Code</span>
+        100 Days<br />
+        <span class="outline">of AWS</span>
       </h1>
       <p class="hero-sub">
-        1000 study days. 10 skills — 100 days per skill. One commitment: 5:30AM to 8:30AM daily (BKK time).
+        100 days of AWS — one skill, one focus. Daily study 5:30AM to 8:30AM (BKK time).
         Building in public from Bangkok while architecting FPO Cloud at NextStep.
       </p>
 
       <div class="progress-wrap">
         <div class="progress-label">
-          <span>DAY 1</span>
-          <span>1 / 1000 days completed</span>
-          <span>DAY 1000</span>
+          <span>DAY 4</span>
+          <span>4 / 100 days completed</span>
+          <span>DAY 100</span>
         </div>
         <div class="progress-track">
-          <div class="progress-fill" style="width: 0.1%"></div>
+          <div class="progress-fill" style="width: 4%; background: linear-gradient(90deg, #b45309, #fbbf24)"></div>
         </div>
         <div class="progress-nums">
           <div class="pnum">
-            <div class="pnum-val">1</div>
+            <div class="pnum-val" style="color: #fbbf24">4</div>
             <div class="pnum-lbl">Days Done</div>
           </div>
           <div class="pnum">
-            <div class="pnum-val">999</div>
+            <div class="pnum-val" style="color: #fbbf24">96</div>
             <div class="pnum-lbl">Days Left</div>
           </div>
           <div class="pnum">
-            <div class="pnum-val">10</div>
-            <div class="pnum-lbl">Skills · 100 days each</div>
+            <div class="pnum-val" style="color: #fbbf24">100</div>
+            <div class="pnum-lbl">100-Day Goal</div>
           </div>
           <div class="pnum">
-            <div class="pnum-val">0.1<sup>%</sup></div>
+            <div class="pnum-val" style="color: #fbbf24">4<sup>%</sup></div>
             <div class="pnum-lbl">Complete</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- SKILLS ROADMAP -->
+    <!-- AWS JOURNAL -->
     <div class="section" id="roadmap">
       <div class="section-header">
         <div class="section-line"></div>
-        <div class="section-title">🏆 10 Skills · 100 Days Each</div>
+        <div class="section-title">☁️ 100 Days of AWS · Study Journal</div>
         <div
           class="section-line"
-          style="background: linear-gradient(90deg, transparent, #9b6dff40)"
+          style="background: linear-gradient(90deg, transparent, #d9770640)"
         ></div>
       </div>
 
       <p class="roadmap-note">
-        Fri 26 Jun 2026 → Wed 21 Mar 2029 · 5:30AM–8:30AM BKK · 3h daily · 1000 study days · 10 blocks of 100 days
+        Tue 23 Jun 2026 → Tue 30 Sep 2026 · 5:30AM–8:30AM BKK · 3h daily · 100 AWS study days · Day 4 live
       </p>
-
-      <div class="skills-roadmap">
-        <div class="skill-block live" style="--skill: #d97706">
-          <div class="skill-block-head">
-            <span class="skill-block-icon">☁️</span>
-            <div class="skill-block-title" style="color: #d97706">100 Days of AWS</div>
-          </div>
-          <div class="skill-block-meta">D1–D100 · 26 Jun – 3 Oct 2026 · 100 days</div>
-          <div class="skill-block-sub">AWS — block 1 of 10</div>
-          <span class="skill-block-badge">5:30AM–8:30AM BKK · 3h daily · Live now</span>
-        </div>
-
-        <div class="skill-block">
-          <div class="skill-block-head">
-            <span class="skill-block-icon">📜</span>
-            <div class="skill-block-title" style="color: #0ea5e9">100 Days of JavaScript / TypeScript</div>
-          </div>
-          <div class="skill-block-meta">D101–D200 · 4 Oct 2026 – 11 Jan 2027 · 100 days</div>
-          <div class="skill-block-sub">JavaScript / TypeScript — block 2 of 10</div>
-          <span class="skill-block-badge">5:30AM–8:30AM BKK · 3h daily</span>
-        </div>
-
-        <div class="skill-block">
-          <div class="skill-block-head">
-            <span class="skill-block-icon">⚛️</span>
-            <div class="skill-block-title" style="color: #9b6dff">100 Days of React / React Native</div>
-          </div>
-          <div class="skill-block-meta">D201–D300 · 12 Jan – 21 Apr 2027 · 100 days</div>
-          <div class="skill-block-sub">React / React Native — block 3 of 10</div>
-          <span class="skill-block-badge">5:30AM–8:30AM BKK · 3h daily</span>
-        </div>
-
-        <div class="skill-block">
-          <div class="skill-block-head">
-            <span class="skill-block-icon">🐍</span>
-            <div class="skill-block-title" style="color: #16a34a">100 Days of Python</div>
-          </div>
-          <div class="skill-block-meta">D301–D400 · 22 Apr – 30 Jul 2027 · 100 days</div>
-          <div class="skill-block-sub">Python — block 4 of 10</div>
-          <span class="skill-block-badge">5:30AM–8:30AM BKK · 3h daily</span>
-        </div>
-
-        <div class="skill-block">
-          <div class="skill-block-head">
-            <span class="skill-block-icon">🤖</span>
-            <div class="skill-block-title" style="color: #a855f7">100 Days of Agentic AI</div>
-          </div>
-          <div class="skill-block-meta">D401–D500 · 31 Jul – 7 Nov 2027 · 100 days</div>
-          <div class="skill-block-sub">Agentic AI — block 5 of 10</div>
-          <span class="skill-block-badge">5:30AM–8:30AM BKK · 3h daily</span>
-        </div>
-
-        <div class="skill-block">
-          <div class="skill-block-head">
-            <span class="skill-block-icon">☕</span>
-            <div class="skill-block-title" style="color: #d97706">100 Days of Java</div>
-          </div>
-          <div class="skill-block-meta">D501–D600 · 8 Nov 2027 – 15 Feb 2028 · 100 days</div>
-          <div class="skill-block-sub">Java — block 6 of 10</div>
-          <span class="skill-block-badge">5:30AM–8:30AM BKK · 3h daily</span>
-        </div>
-
-        <div class="skill-block">
-          <div class="skill-block-head">
-            <span class="skill-block-icon">🏛️</span>
-            <div class="skill-block-title" style="color: #0ea5e9">100 Days of Microservices</div>
-          </div>
-          <div class="skill-block-meta">D601–D700 · 16 Feb – 25 May 2028 · 100 days</div>
-          <div class="skill-block-sub">Microservices — block 7 of 10</div>
-          <span class="skill-block-badge">5:30AM–8:30AM BKK · 3h daily</span>
-        </div>
-
-        <div class="skill-block">
-          <div class="skill-block-head">
-            <span class="skill-block-icon">🔧</span>
-            <div class="skill-block-title" style="color: #e11d48">100 Days of DevOps</div>
-          </div>
-          <div class="skill-block-meta">D701–D800 · 26 May – 2 Sep 2028 · 100 days</div>
-          <div class="skill-block-sub">DevOps — block 8 of 10</div>
-          <span class="skill-block-badge">5:30AM–8:30AM BKK · 3h daily</span>
-        </div>
-
-        <div class="skill-block">
-          <div class="skill-block-head">
-            <span class="skill-block-icon">🧩</span>
-            <div class="skill-block-title" style="color: #16a34a">100 Days of Data Structures</div>
-          </div>
-          <div class="skill-block-meta">D801–D900 · 3 Sep – 11 Dec 2028 · 100 days</div>
-          <div class="skill-block-sub">Data Structures — block 9 of 10</div>
-          <span class="skill-block-badge">5:30AM–8:30AM BKK · 3h daily</span>
-        </div>
-
-        <div class="skill-block">
-          <div class="skill-block-head">
-            <span class="skill-block-icon">🏗️</span>
-            <div class="skill-block-title" style="color: #f59e0b">100 Days of System Design</div>
-          </div>
-          <div class="skill-block-meta">D901–D1000 · 12 Dec 2028 – 21 Mar 2029 · 100 days</div>
-          <div class="skill-block-sub">System Design — block 10 of 10</div>
-          <span class="skill-block-badge">5:30AM–8:30AM BKK · 3h daily</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- AWS BLOCK -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-line"></div>
-        <div class="section-title">
-          ☁️ Block 1 · 100 Days of AWS · Days 1–100
-        </div>
-        <div
-          class="section-line"
-          style="background: linear-gradient(90deg, transparent, #9b6dff40)"
-        ></div>
-      </div>
 
       <div id="aws">
         <div class="block-label">
           <div class="block-dot" style="background: #d97706"></div>
-          <div class="block-name" style="color: #d97706">100 Days of AWS</div>
-          <div class="block-range">26 Jun – 3 Oct 2026 · D1–D100 · Day 1 live</div>
+          <div class="block-name" style="color: #d97706">Published Days</div>
+          <div class="block-range">D1–D4 live · D5 coming 27 Jun 2026</div>
         </div>
         <div class="days-grid">
-          <!-- DAY 1 — LIVE -->
           <a href="days/day-001.html" class="day-card" style="--c: #d97706">
             <div class="day-card-top">
               <div class="day-num-badge">01</div>
@@ -779,7 +694,7 @@
               </div>
             </div>
             <div class="day-card-body">
-              <div class="day-date">26th June 2026 · 5:30AM–8:30AM BKK</div>
+              <div class="day-date">23rd June 2026 · 5:30AM–8:30AM BKK</div>
               <div class="day-topics">
                 <span class="day-topic hot">cloud computing</span>
                 <span class="day-topic hot">IaaS · PaaS · SaaS</span>
@@ -796,12 +711,86 @@
             </div>
           </a>
 
-          <!-- DAY 2 — COMING SOON -->
-          <div class="day-card soon" style="--c: #d97706">
+          <a href="days/day-002.html" class="day-card" style="--c: #d97706">
             <div class="day-card-top">
               <div class="day-num-badge">02</div>
               <div class="day-tag">AWS</div>
-              <div class="day-title">Day 2 — Coming tomorrow</div>
+              <div class="day-title">
+                EC2 Instance Types — t3, m5, c5, r5, Security Groups &amp; Purchasing
+              </div>
+            </div>
+            <div class="day-card-body">
+              <div class="day-date">24th June 2026 · 5:30AM–8:30AM BKK</div>
+              <div class="day-topics">
+                <span class="day-topic hot">instance families</span>
+                <span class="day-topic hot">security groups</span>
+                <span class="day-topic">On-Demand</span>
+                <span class="day-topic">Reserved</span>
+                <span class="day-topic">Spot</span>
+                <span class="day-topic">user data</span>
+              </div>
+            </div>
+            <div class="day-card-footer">
+              <div class="day-status">Published</div>
+              <div class="day-arrow">→</div>
+            </div>
+          </a>
+
+          <a href="days/day-003.html" class="day-card" style="--c: #d97706">
+            <div class="day-card-top">
+              <div class="day-num-badge">03</div>
+              <div class="day-tag">AWS</div>
+              <div class="day-title">
+                EBS Storage — gp3, io2, Snapshots, AMIs &amp; Encryption
+              </div>
+            </div>
+            <div class="day-card-body">
+              <div class="day-date">25th June 2026 · 5:30AM–8:30AM BKK</div>
+              <div class="day-topics">
+                <span class="day-topic hot">gp3 · io2</span>
+                <span class="day-topic hot">snapshots</span>
+                <span class="day-topic">AMIs</span>
+                <span class="day-topic">encryption</span>
+                <span class="day-topic">instance store</span>
+                <span class="day-topic">DLM</span>
+              </div>
+            </div>
+            <div class="day-card-footer">
+              <div class="day-status">Published</div>
+              <div class="day-arrow">→</div>
+            </div>
+          </a>
+
+          <a href="days/day-004.html" class="day-card" style="--c: #d97706">
+            <div class="day-card-top">
+              <div class="day-num-badge">04</div>
+              <div class="day-tag">AWS</div>
+              <div class="day-title">
+                VPC Networking — Subnets, Route Tables, IGW, NAT &amp; NACLs
+              </div>
+            </div>
+            <div class="day-card-body">
+              <div class="day-date">26th June 2026, Friday · 5:30AM–8:30AM BKK</div>
+              <div class="day-topics">
+                <span class="day-topic hot">VPC · CIDR</span>
+                <span class="day-topic hot">public · private subnets</span>
+                <span class="day-topic">internet gateway</span>
+                <span class="day-topic">NAT gateway</span>
+                <span class="day-topic">NACLs</span>
+                <span class="day-topic">VPC endpoints</span>
+              </div>
+            </div>
+            <div class="day-card-footer">
+              <div class="day-status">Today</div>
+              <div class="day-arrow">→</div>
+            </div>
+          </a>
+
+          <div class="day-card soon" style="--c: #d97706">
+            <div class="day-card-top">
+              <div class="day-num-badge">05</div>
+              <div class="day-tag">AWS</div>
+              <div class="day-title">Day 5 — Coming tomorrow</div>
             </div>
             <div class="day-card-body">
               <div class="day-date">27th June 2026, Saturday · 5:30AM–8:30AM BKK</div>
@@ -816,11 +805,10 @@
 
     <!-- FOOTER -->
     <footer>
-      <strong>Sumit Rawal</strong> · 1000 Days of Code · 26 Jun 2026
-      – 21 Mar 2029 · 10 skills · 100 days each · Daily 5:30AM–8:30AM BKK<br />
+      <strong>Sumit Rawal</strong> · 100 Days of AWS · 23 Jun – 30 Sep 2026 · Daily 5:30AM–8:30AM BKK<br />
       Senior Associate L2 @ NextStep · FPO Cloud · Bangkok, Thailand<br />
       <div class="hashtags">
-        <span class="hashtag">#1000DaysOfCode</span>
+        <span class="hashtag">#100DaysOfAWS</span>
         <span class="hashtag">#100DaysOfCode</span>
         <span class="hashtag">#AWS</span>
         <span class="hashtag">#DevOps</span>

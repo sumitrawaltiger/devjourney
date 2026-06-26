@@ -8,8 +8,8 @@
   Pattern matches day-005.html (hero, badges, sections, cards, code, GLF, quote, hashtags).
   Color: set --c in :root per block (Python #16A34A, DevOps #D97706, Frontend #0EA5E9).
 -->
-<meta name="description" content="Day 1 of 100 — AWS cloud fundamentals: IaaS/PaaS/SaaS, edge locations, key pairs, Windows AMI, EBS root, and HVM virtualization.">
-<title>Day 1 · AWS Cloud Fundamentals · Sumit Rawal</title>
+<meta name="description" content="Day 4 of 100 — VPC fundamentals: CIDR blocks, subnets, route tables, internet gateway, and security groups vs NACLs.">
+<title>Day 4 · VPC Networking Fundamentals · Sumit Rawal</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -201,9 +201,9 @@ html,body{height:100%;overflow:hidden;}
 
 <div class="wrap">
   <div class="day-nav">
-    <a href="../index.html">← Home</a>
-    <div class="day-counter">📅 23rd June 2026 · 5:30AM–8:30AM · BKK</div>
-    <a href="day-002.html" class="next">Day 2 → <span style="opacity:0.6;font-size:10px;">24th June 2026, Wednesday</span></a>
+    <a href="day-003.html">← Day 3</a>
+    <div class="day-counter">📅 26th June 2026 · 5:30AM–8:30AM · BKK</div>
+    <a href="#" class="next">Day 5 → <span style="opacity:0.6;font-size:10px;">27th June 2026, Saturday</span></a>
   </div>
 
   <div class="hero-grid">
@@ -213,13 +213,13 @@ html,body{height:100%;overflow:hidden;}
         <div class="day-badge"><div class="dot"></div>DevOps</div>
         <div class="day-badge"><div class="dot"></div>Month 1</div>
       </div>
-      <div class="day-num"><span class="d">DAY</span> <span class="n">1</span><span class="rocket">☁️</span></div>
+      <div class="day-num"><span class="d">DAY</span> <span class="n">4</span><span class="rocket">🌐</span></div>
       <div class="of-text">Of Becoming a</div>
       <div class="big-title">SOFTWARE</div>
       <div class="big-title">DEVELOPER</div>
       <div class="rule"></div>
       <p class="summary">
-        Day one of my 100-day AWS journey — cloud foundations, IaaS/PaaS/SaaS, public/private/hybrid cloud, edge locations &amp; regional edge cache, plus hands-on: key pairs, Windows Server 2019 AMI, EBS root &amp; HVM.
+        Day four — VPC networking: CIDR blocks, public &amp; private subnets, internet gateway, NAT gateway, route tables, and the difference between security groups and NACLs.
       </p>
     </div>
     <div class="photo-card">
@@ -240,91 +240,91 @@ html,body{height:100%;overflow:hidden;}
   <div class="card">
     <div class="card-title">What I learnt today</div>
     <div class="check-list">
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Cloud computing</strong> — on-demand compute, storage &amp; networking. Pay for what you use.</div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>IaaS · PaaS · SaaS</strong> — IaaS: you manage OS (EC2). PaaS: deploy code. SaaS: use apps in browser.</div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Public · Private · Hybrid</strong> — shared AWS, dedicated org infra, or mix of on-prem + cloud.</div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Hypervisor &amp; HVM</strong> — hypervisor runs VMs on one host; HVM = full hardware virtualization.</div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Edge locations &amp; REC</strong> — CloudFront caches near users; regional edge cache for larger objects.</div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Key pairs · AMI · EBS · HVM</strong> — .pem key, Windows Server 2019 AMI, persistent EBS root, HVM launch.</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>VPC</strong> — Virtual Private Cloud — your isolated network in AWS. Default VPC created per region with /16 CIDR.</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Subnets</strong> — Segment VPC into AZ-specific ranges. Public subnet = route to IGW. Private = no direct internet.</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Route tables</strong> — Control where traffic goes. 0.0.0.0/0 → IGW for public internet. Local route for VPC CIDR.</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Internet Gateway</strong> — Horizontally scaled, redundant gateway for VPC ↔ internet. One IGW per VPC.</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>NAT Gateway</strong> — Lets private subnet instances reach internet (updates, APIs) without inbound exposure.</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>SG vs NACL</strong> — Security group = stateful, instance level. NACL = stateless, subnet level, allow &amp; deny rules.</div></div>
     </div>
   </div>
 
   <div class="sec-label">
-    <div class="sec-title">🪟 EC2 Launch — Key Pair · Windows AMI · EBS · HVM</div>
+    <div class="sec-title">🌐 VPC Building Blocks — CIDR · Subnet · AZ</div>
     <div class="sec-line"></div>
   </div>
   <div class="st-grid">
     <div class="st-card" style="--sc:#16A34A">
-      <span class="st-icon">🔑</span>
-      <div class="st-name">Key pair</div>
-      <div class="st-abbr">EC2 → Key Pairs</div>
-      <div class="st-desc">Created key pair. <code>.pem</code> downloads once — decrypts Windows admin password.</div>
+      <span class="st-icon">🏠</span>
+      <div class="st-name">VPC</div>
+      <div class="st-abbr">/16 CIDR</div>
+      <div class="st-desc">e.g. 10.0.0.0/16 = 65,536 IPs. Isolated network boundary in one AWS region.</div>
     </div>
     <div class="st-card" style="--sc:#0EA5E9">
-      <span class="st-icon">🪟</span>
-      <div class="st-name">Windows AMI</div>
-      <div class="st-abbr">Server 2019</div>
-      <div class="st-desc">Launched from Windows AMI — blueprint with OS &amp; optional software.</div>
-      <span class="st-tag">Amazon Machine Image</span>
+      <span class="st-icon">📍</span>
+      <div class="st-name">Public subnet</div>
+      <div class="st-abbr">10.0.1.0/24</div>
+      <div class="st-desc">Route table points 0.0.0.0/0 to Internet Gateway. Web servers, bastion hosts.</div>
+      <span class="st-tag">Auto-assign public IP</span>
     </div>
     <div class="st-card" style="--sc:#9B6DFF">
-      <span class="st-icon">💾</span>
-      <div class="st-name">EBS root</div>
-      <div class="st-abbr">Root device</div>
-      <div class="st-desc">Root volume on EBS — persists across stop/start. Snapshot &amp; restore.</div>
-      <span class="st-tag">vs instance store</span>
+      <span class="st-icon">🔒</span>
+      <div class="st-name">Private subnet</div>
+      <div class="st-abbr">10.0.2.0/24</div>
+      <div class="st-desc">No direct internet route. App servers, databases. Outbound via NAT Gateway.</div>
+      <span class="st-tag">More secure</span>
     </div>
     <div class="st-card" style="--sc:#E11118">
-      <span class="st-icon">⚡</span>
-      <div class="st-name">HVM</div>
-      <div class="st-abbr">Virtualization</div>
-      <div class="st-desc">Hardware Virtual Machine — full hardware virtualization via hypervisor.</div>
+      <span class="st-icon">🗺️</span>
+      <div class="st-name">AZ mapping</div>
+      <div class="st-abbr">High availability</div>
+      <div class="st-desc">Each subnet maps to exactly one AZ. Span 2+ AZs for fault tolerance.</div>
     </div>
   </div>
 
   <div class="sec-label">
-    <div class="sec-title">☁️ Cloud Service Models — IaaS · PaaS · SaaS</div>
+    <div class="sec-title">🛣️ Routing — IGW · NAT Gateway · Route Tables</div>
     <div class="sec-line"></div>
   </div>
   <div class="three-grid">
     <div class="three-card" style="--tc:#16A34A">
-      <span class="three-icon">🖥️</span>
-      <div class="three-name">IaaS</div>
-      <div class="three-desc">AWS manages hardware; you manage OS, middleware &amp; apps. EC2, EBS, VPC.</div>
-      <div class="three-use">✦ Most control · EC2 instances</div>
+      <span class="three-icon">🌍</span>
+      <div class="three-name">Internet Gateway</div>
+      <div class="three-desc">Attach to VPC. Enables bidirectional internet access for public subnets.</div>
+      <div class="three-use">✦ Required for public-facing resources</div>
     </div>
     <div class="three-card" style="--tc:#0EA5E9">
-      <span class="three-icon">⚙️</span>
-      <div class="three-name">PaaS</div>
-      <div class="three-desc">AWS manages runtime &amp; OS; you deploy code. Elastic Beanstalk, Lambda.</div>
-      <div class="three-use">✦ Focus on code, not servers</div>
+      <span class="three-icon">🚪</span>
+      <div class="three-name">NAT Gateway</div>
+      <div class="three-desc">Managed service in public subnet. Private instances initiate outbound connections only.</div>
+      <div class="three-use">✦ Per-AZ NAT for HA</div>
     </div>
     <div class="three-card" style="--tc:#9B6DFF">
-      <span class="three-icon">📦</span>
-      <div class="three-name">SaaS</div>
-      <div class="three-desc">Fully managed app over the browser. Gmail, Office 365, Salesforce.</div>
-      <div class="three-use">✦ Zero infrastructure management</div>
+      <span class="three-icon">📋</span>
+      <div class="three-name">Route table</div>
+      <div class="three-desc">Associates with subnets. Local route always present. Custom routes for IGW, NAT, peering.</div>
+      <div class="three-use">✦ One subnet → one route table</div>
     </div>
   </div>
 
   <div class="sec-label">
-    <div class="sec-title">🌍 Edge Locations &amp; Regional Edge Cache</div>
+    <div class="sec-title">🛡️ Security Groups vs Network ACLs</div>
     <div class="sec-line"></div>
   </div>
   <div class="it-grid">
     <div class="it-card" style="--bord:#16A34A">
-      <span class="it-icon">📍</span>
-      <div class="it-name">Edge locations</div>
-      <span class="it-tag">CloudFront</span>
-      <div class="it-desc">400+ global PoPs cache content close to users — lower latency via CloudFront CDN.</div>
-      <div class="it-use">✦ Static &amp; dynamic content delivery</div>
+      <span class="it-icon">🔐</span>
+      <div class="it-name">Security Group</div>
+      <span class="it-tag">STATEFUL</span>
+      <div class="it-desc">Instance-level firewall. Allow rules only. Return traffic automatically permitted.</div>
+      <div class="it-use">✦ Default deny inbound</div>
     </div>
     <div class="it-card" style="--bord:#0EA5E9">
-      <span class="it-icon">🗄️</span>
-      <div class="it-name">Regional edge cache</div>
-      <span class="it-tag">REC</span>
-      <div class="it-desc">Between edge &amp; origin — caches larger, less-frequent objects. Fewer origin fetches.</div>
-      <div class="it-use">✦ Extends CDN for infrequent content</div>
+      <span class="it-icon">📜</span>
+      <div class="it-name">Network ACL</div>
+      <span class="it-tag">STATELESS</span>
+      <div class="it-desc">Subnet-level. Allow AND deny rules by rule number. Evaluated in order.</div>
+      <div class="it-use">✦ Default allow all — tighten for compliance</div>
     </div>
   </div>
 
@@ -332,22 +332,22 @@ html,body{height:100%;overflow:hidden;}
     <div class="glf-card">
       <span class="glf-icon">🌏</span>
       <div>
-        <div class="glf-label">Regions &amp; AZs</div>
-        <div class="glf-val">Region = geographic area. AZ = isolated data center within a region for high availability.</div>
+        <div class="glf-label">Regional</div>
+        <div class="glf-val">VPC is regional. Subnets are AZ-specific. Design multi-AZ from day one.</div>
       </div>
     </div>
     <div class="glf-card">
       <span class="glf-icon">💳</span>
       <div>
-        <div class="glf-label">Pay-as-you-go</div>
-        <div class="glf-val">No upfront cost — pay only for compute, storage &amp; networking you actually consume.</div>
+        <div class="glf-label">NAT cost</div>
+        <div class="glf-val">NAT Gateway charges per hour + per GB processed. Consider NAT instances for dev.</div>
       </div>
     </div>
     <div class="glf-card">
       <span class="glf-icon">🛡️</span>
       <div>
-        <div class="glf-label">Shared responsibility</div>
-        <div class="glf-val">AWS secures the cloud. You secure what&apos;s in the cloud — OS, data, apps &amp; access.</div>
+        <div class="glf-label">Defence in depth</div>
+        <div class="glf-val">SG + NACL layers. VPC endpoints keep S3/DynamoDB traffic off the public internet.</div>
       </div>
     </div>
   </div>
@@ -357,9 +357,9 @@ html,body{height:100%;overflow:hidden;}
     <span class="hashtag">#100DaysOfAWS</span><span class="ht-sep">|</span>
     <span class="hashtag">#100DaysOfCode</span><span class="ht-sep">|</span>
     <span class="hashtag">#AWS</span><span class="ht-sep">|</span>
+    <span class="hashtag">#VPC</span><span class="ht-sep">|</span>
+    <span class="hashtag">#Networking</span><span class="ht-sep">|</span>
     <span class="hashtag">#CloudComputing</span><span class="ht-sep">|</span>
-    <span class="hashtag">#DevOps</span><span class="ht-sep">|</span>
-    <span class="hashtag">#EC2</span><span class="ht-sep">|</span>
     <span class="hashtag">#LearnInPublic</span><span class="ht-sep">|</span>
     <span class="hashtag">#BuildInPublic</span>
   </div>

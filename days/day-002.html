@@ -8,8 +8,8 @@
   Pattern matches day-005.html (hero, badges, sections, cards, code, GLF, quote, hashtags).
   Color: set --c in :root per block (Python #16A34A, DevOps #D97706, Frontend #0EA5E9).
 -->
-<meta name="description" content="Day 1 of 100 — AWS cloud fundamentals: IaaS/PaaS/SaaS, edge locations, key pairs, Windows AMI, EBS root, and HVM virtualization.">
-<title>Day 1 · AWS Cloud Fundamentals · Sumit Rawal</title>
+<meta name="description" content="Day 2 of 100 — EC2 instance families, purchasing options, security groups, and user data scripts.">
+<title>Day 2 · EC2 Instance Types & Security Groups · Sumit Rawal</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -201,9 +201,9 @@ html,body{height:100%;overflow:hidden;}
 
 <div class="wrap">
   <div class="day-nav">
-    <a href="../index.html">← Home</a>
-    <div class="day-counter">📅 23rd June 2026 · 5:30AM–8:30AM · BKK</div>
-    <a href="day-002.html" class="next">Day 2 → <span style="opacity:0.6;font-size:10px;">24th June 2026, Wednesday</span></a>
+    <a href="day-001.html">← Day 1</a>
+    <div class="day-counter">📅 24th June 2026 · 5:30AM–8:30AM · BKK</div>
+    <a href="day-003.html" class="next">Day 3 → <span style="opacity:0.6;font-size:10px;">25th June 2026, Thursday</span></a>
   </div>
 
   <div class="hero-grid">
@@ -213,13 +213,13 @@ html,body{height:100%;overflow:hidden;}
         <div class="day-badge"><div class="dot"></div>DevOps</div>
         <div class="day-badge"><div class="dot"></div>Month 1</div>
       </div>
-      <div class="day-num"><span class="d">DAY</span> <span class="n">1</span><span class="rocket">☁️</span></div>
+      <div class="day-num"><span class="d">DAY</span> <span class="n">2</span><span class="rocket">🖥️</span></div>
       <div class="of-text">Of Becoming a</div>
       <div class="big-title">SOFTWARE</div>
       <div class="big-title">DEVELOPER</div>
       <div class="rule"></div>
       <p class="summary">
-        Day one of my 100-day AWS journey — cloud foundations, IaaS/PaaS/SaaS, public/private/hybrid cloud, edge locations &amp; regional edge cache, plus hands-on: key pairs, Windows Server 2019 AMI, EBS root &amp; HVM.
+        Day two — EC2 instance families (t3, m5, c5, r5), burstable CPU credits, On-Demand vs Reserved vs Spot pricing, security groups as stateful firewalls, and user data scripts at first boot.
       </p>
     </div>
     <div class="photo-card">
@@ -237,117 +237,117 @@ html,body{height:100%;overflow:hidden;}
 
 
   <div id="shotScale">
+
   <div class="card">
     <div class="card-title">What I learnt today</div>
     <div class="check-list">
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Cloud computing</strong> — on-demand compute, storage &amp; networking. Pay for what you use.</div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>IaaS · PaaS · SaaS</strong> — IaaS: you manage OS (EC2). PaaS: deploy code. SaaS: use apps in browser.</div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Public · Private · Hybrid</strong> — shared AWS, dedicated org infra, or mix of on-prem + cloud.</div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Hypervisor &amp; HVM</strong> — hypervisor runs VMs on one host; HVM = full hardware virtualization.</div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Edge locations &amp; REC</strong> — CloudFront caches near users; regional edge cache for larger objects.</div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Key pairs · AMI · EBS · HVM</strong> — .pem key, Windows Server 2019 AMI, persistent EBS root, HVM launch.</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Instance families</strong> — t3 = burstable general, m5 = balanced, c5 = compute-optimised, r5 = memory-optimised.</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Burstable credits</strong> — t3 instances earn CPU credits when idle; burst when needed. Good for dev &amp; low-traffic apps.</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Security groups</strong> — Stateful virtual firewall at instance/ENI level. Allow rules only — implicit deny.</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Inbound vs outbound</strong> — Default: no inbound, all outbound allowed. Restrict egress for sensitive workloads.</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Purchasing options</strong> — On-Demand = pay per hour. Reserved = 1–3 yr commit, up to 72% off. Spot = spare capacity, up to 90% off.</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>User data</strong> — Script run once at first boot — install packages, configure apps. Cloud-init on Linux.</div></div>
     </div>
   </div>
 
   <div class="sec-label">
-    <div class="sec-title">🪟 EC2 Launch — Key Pair · Windows AMI · EBS · HVM</div>
+    <div class="sec-title">🖥️ EC2 Instance Families — t3 · m5 · c5 · r5</div>
     <div class="sec-line"></div>
   </div>
   <div class="st-grid">
     <div class="st-card" style="--sc:#16A34A">
-      <span class="st-icon">🔑</span>
-      <div class="st-name">Key pair</div>
-      <div class="st-abbr">EC2 → Key Pairs</div>
-      <div class="st-desc">Created key pair. <code>.pem</code> downloads once — decrypts Windows admin password.</div>
+      <span class="st-icon">⚡</span>
+      <div class="st-name">t3</div>
+      <div class="st-abbr">Burstable</div>
+      <div class="st-desc">General purpose with CPU credits. t3.micro free tier eligible. Dev &amp; variable workloads.</div>
     </div>
     <div class="st-card" style="--sc:#0EA5E9">
-      <span class="st-icon">🪟</span>
-      <div class="st-name">Windows AMI</div>
-      <div class="st-abbr">Server 2019</div>
-      <div class="st-desc">Launched from Windows AMI — blueprint with OS &amp; optional software.</div>
-      <span class="st-tag">Amazon Machine Image</span>
+      <span class="st-icon">⚖️</span>
+      <div class="st-name">m5</div>
+      <div class="st-abbr">Balanced</div>
+      <div class="st-desc">Fixed ratio of vCPU, memory &amp; network. Web servers, app tiers, small DBs.</div>
+      <span class="st-tag">General purpose</span>
     </div>
     <div class="st-card" style="--sc:#9B6DFF">
-      <span class="st-icon">💾</span>
-      <div class="st-name">EBS root</div>
-      <div class="st-abbr">Root device</div>
-      <div class="st-desc">Root volume on EBS — persists across stop/start. Snapshot &amp; restore.</div>
-      <span class="st-tag">vs instance store</span>
+      <span class="st-icon">🔥</span>
+      <div class="st-name">c5</div>
+      <div class="st-abbr">Compute</div>
+      <div class="st-desc">High-performance processors. Batch processing, HPC, gaming servers, encoding.</div>
     </div>
     <div class="st-card" style="--sc:#E11118">
-      <span class="st-icon">⚡</span>
-      <div class="st-name">HVM</div>
-      <div class="st-abbr">Virtualization</div>
-      <div class="st-desc">Hardware Virtual Machine — full hardware virtualization via hypervisor.</div>
+      <span class="st-icon">🧠</span>
+      <div class="st-name">r5</div>
+      <div class="st-abbr">Memory</div>
+      <div class="st-desc">High memory-to-vCPU ratio. In-memory caches, SAP HANA, real-time analytics.</div>
     </div>
   </div>
 
   <div class="sec-label">
-    <div class="sec-title">☁️ Cloud Service Models — IaaS · PaaS · SaaS</div>
+    <div class="sec-title">💳 EC2 Purchasing — On-Demand · Reserved · Spot</div>
     <div class="sec-line"></div>
   </div>
   <div class="three-grid">
     <div class="three-card" style="--tc:#16A34A">
-      <span class="three-icon">🖥️</span>
-      <div class="three-name">IaaS</div>
-      <div class="three-desc">AWS manages hardware; you manage OS, middleware &amp; apps. EC2, EBS, VPC.</div>
-      <div class="three-use">✦ Most control · EC2 instances</div>
+      <span class="three-icon">🕐</span>
+      <div class="three-name">On-Demand</div>
+      <div class="three-desc">Pay per second/hour with no commitment. Launch anytime, stop anytime.</div>
+      <div class="three-use">✦ Dev, test &amp; unpredictable workloads</div>
     </div>
     <div class="three-card" style="--tc:#0EA5E9">
-      <span class="three-icon">⚙️</span>
-      <div class="three-name">PaaS</div>
-      <div class="three-desc">AWS manages runtime &amp; OS; you deploy code. Elastic Beanstalk, Lambda.</div>
-      <div class="three-use">✦ Focus on code, not servers</div>
+      <span class="three-icon">📅</span>
+      <div class="three-name">Reserved</div>
+      <div class="three-desc">1 or 3 year commitment. Standard, Convertible, or Scheduled reservations.</div>
+      <div class="three-use">✦ Up to 72% savings · steady production</div>
     </div>
     <div class="three-card" style="--tc:#9B6DFF">
-      <span class="three-icon">📦</span>
-      <div class="three-name">SaaS</div>
-      <div class="three-desc">Fully managed app over the browser. Gmail, Office 365, Salesforce.</div>
-      <div class="three-use">✦ Zero infrastructure management</div>
+      <span class="three-icon">💰</span>
+      <div class="three-name">Spot</div>
+      <div class="three-desc">Bid on spare EC2 capacity. Can be interrupted with 2-min notice.</div>
+      <div class="three-use">✦ Up to 90% off · fault-tolerant batch jobs</div>
     </div>
   </div>
 
   <div class="sec-label">
-    <div class="sec-title">🌍 Edge Locations &amp; Regional Edge Cache</div>
+    <div class="sec-title">🛡️ Security Groups — Stateful Firewall Rules</div>
     <div class="sec-line"></div>
   </div>
   <div class="it-grid">
     <div class="it-card" style="--bord:#16A34A">
-      <span class="it-icon">📍</span>
-      <div class="it-name">Edge locations</div>
-      <span class="it-tag">CloudFront</span>
-      <div class="it-desc">400+ global PoPs cache content close to users — lower latency via CloudFront CDN.</div>
-      <div class="it-use">✦ Static &amp; dynamic content delivery</div>
+      <span class="it-icon">⬇️</span>
+      <div class="it-name">Inbound rules</div>
+      <span class="it-tag">INGRESS</span>
+      <div class="it-desc">Control traffic coming IN to the instance. e.g. allow TCP 443 from 0.0.0.0/0 for HTTPS.</div>
+      <div class="it-use">✦ Least privilege — restrict source IPs</div>
     </div>
     <div class="it-card" style="--bord:#0EA5E9">
-      <span class="it-icon">🗄️</span>
-      <div class="it-name">Regional edge cache</div>
-      <span class="it-tag">REC</span>
-      <div class="it-desc">Between edge &amp; origin — caches larger, less-frequent objects. Fewer origin fetches.</div>
-      <div class="it-use">✦ Extends CDN for infrequent content</div>
+      <span class="it-icon">⬆️</span>
+      <div class="it-name">Outbound rules</div>
+      <span class="it-tag">EGRESS</span>
+      <div class="it-desc">Control traffic going OUT. Default allows all outbound. Lock down for compliance workloads.</div>
+      <div class="it-use">✦ Return traffic auto-allowed (stateful)</div>
     </div>
   </div>
 
   <div class="glf">
     <div class="glf-card">
-      <span class="glf-icon">🌏</span>
+      <span class="glf-icon">🔒</span>
       <div>
-        <div class="glf-label">Regions &amp; AZs</div>
-        <div class="glf-val">Region = geographic area. AZ = isolated data center within a region for high availability.</div>
+        <div class="glf-label">Stateful SG</div>
+        <div class="glf-val">If inbound is allowed, return traffic is automatically allowed back out.</div>
       </div>
     </div>
     <div class="glf-card">
-      <span class="glf-icon">💳</span>
+      <span class="glf-icon">📊</span>
       <div>
-        <div class="glf-label">Pay-as-you-go</div>
-        <div class="glf-val">No upfront cost — pay only for compute, storage &amp; networking you actually consume.</div>
+        <div class="glf-label">CloudWatch</div>
+        <div class="glf-val">Monitor CPU, network &amp; disk metrics. Set alarms to scale or notify.</div>
       </div>
     </div>
     <div class="glf-card">
-      <span class="glf-icon">🛡️</span>
+      <span class="glf-icon">🚀</span>
       <div>
-        <div class="glf-label">Shared responsibility</div>
-        <div class="glf-val">AWS secures the cloud. You secure what&apos;s in the cloud — OS, data, apps &amp; access.</div>
+        <div class="glf-label">User data &amp; lifecycle</div>
+        <div class="glf-val">Pending → Running → Stopped. User data script runs once at first boot via cloud-init.</div>
       </div>
     </div>
   </div>
@@ -357,9 +357,8 @@ html,body{height:100%;overflow:hidden;}
     <span class="hashtag">#100DaysOfAWS</span><span class="ht-sep">|</span>
     <span class="hashtag">#100DaysOfCode</span><span class="ht-sep">|</span>
     <span class="hashtag">#AWS</span><span class="ht-sep">|</span>
-    <span class="hashtag">#CloudComputing</span><span class="ht-sep">|</span>
-    <span class="hashtag">#DevOps</span><span class="ht-sep">|</span>
     <span class="hashtag">#EC2</span><span class="ht-sep">|</span>
+    <span class="hashtag">#SecurityGroups</span><span class="ht-sep">|</span>
     <span class="hashtag">#LearnInPublic</span><span class="ht-sep">|</span>
     <span class="hashtag">#BuildInPublic</span>
   </div>
