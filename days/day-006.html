@@ -8,8 +8,8 @@
   Pattern matches day-005.html (hero, badges, sections, cards, code, GLF, quote, hashtags).
   Color: set --c in :root per block (Python #16A34A, DevOps #D97706, Frontend #0EA5E9).
 -->
-<meta name="description" content="Day 5 of 100 — IAM fundamentals: users, groups, roles, policies, MFA, and least privilege access control.">
-<title>Day 5 · IAM Fundamentals · Sumit Rawal</title>
+<meta name="description" content="Day 6 of 100 — Amazon S3: buckets, objects, storage classes, bucket policies, versioning, and encryption.">
+<title>Day 6 · Amazon S3 Fundamentals · Sumit Rawal</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -201,9 +201,9 @@ html,body{height:100%;overflow:hidden;}
 
 <div class="wrap">
   <div class="day-nav">
-    <a href="day-004.html">← Day 4</a>
-    <div class="day-counter">📅 27th June 2026 · 5:30AM–8:30AM · BKK</div>
-    <a href="day-006.html" class="next">Day 6 → <span style="opacity:0.6;font-size:10px;">28th June 2026, Sunday</span></a>
+    <a href="day-005.html">← Day 5</a>
+    <div class="day-counter">📅 28th June 2026 · 5:30AM–8:30AM · BKK</div>
+    <a href="#" class="next">Day 7 → <span style="opacity:0.6;font-size:10px;">29th June 2026, Monday</span></a>
   </div>
 
   <div class="hero-grid">
@@ -213,13 +213,13 @@ html,body{height:100%;overflow:hidden;}
         <div class="day-badge"><div class="dot"></div>DevOps</div>
         <div class="day-badge"><div class="dot"></div>Month 1</div>
       </div>
-      <div class="day-num"><span class="d">DAY</span> <span class="n">5</span><span class="rocket">🔐</span></div>
+      <div class="day-num"><span class="d">DAY</span> <span class="n">6</span><span class="rocket">🪣</span></div>
       <div class="of-text">Of Becoming a</div>
       <div class="big-title">SOFTWARE</div>
       <div class="big-title">DEVELOPER</div>
       <div class="rule"></div>
       <p class="summary">
-        Day five — IAM fundamentals: users, groups, roles, and policies. JSON permission documents, least privilege, MFA, instance profiles for EC2, and why explicit deny always wins.
+        Day six — Amazon S3 object storage: buckets, keys, storage classes from Standard to Glacier, bucket policies, versioning, encryption, and why block-public-access is the default.
       </p>
     </div>
     <div class="photo-card">
@@ -241,114 +241,113 @@ html,body{height:100%;overflow:hidden;}
   <div class="card">
     <div class="card-title">What I learnt today</div>
     <div class="check-list">
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>IAM</strong> — Identity and Access Management. Global service (not regional). Controls who can do what in your AWS account.</div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Users &amp; groups</strong> — IAM user = person or app. Groups bundle users; permissions attach to groups, not inherited between users.</div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Roles</strong> — Temporary credentials for EC2, Lambda, cross-account access. No long-lived keys — assume role via STS.</div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Policies</strong> — JSON documents defining Allow/Deny on actions &amp; resources. Managed (AWS) vs customer-managed vs inline.</div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Least privilege</strong> — Grant minimum permissions needed. Start deny-all, add only what the job requires.</div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>MFA &amp; root</strong> — Enable MFA on root and privileged users. Never use root for daily tasks — create admin IAM user instead.</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>S3</strong> — Simple Storage Service. Object storage — not a file system. Bucket + key uniquely identifies every object globally.</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Buckets</strong> — Container in a region. Name must be globally unique. Default private — block all public access unless you explicitly allow.</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Objects</strong> — Data + metadata + optional tags. Max 5 TB per object. Key = full path e.g. <code>logs/2026/app.log</code>.</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Storage classes</strong> — Standard (frequent), Standard-IA, One Zone-IA, Glacier Instant/Flexible/Deep Archive for archival tiers.</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Bucket policy vs ACL</strong> — Prefer bucket policies (JSON, IAM-style). ACLs are legacy — use policies + IAM for access control.</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Versioning &amp; encryption</strong> — Enable versioning to recover from accidental deletes. SSE-S3, SSE-KMS, or SSE-C encrypt objects at rest.</div></div>
     </div>
   </div>
 
   <div class="sec-label">
-    <div class="sec-title">👤 IAM Building Blocks — User · Group · Role</div>
+    <div class="sec-title">🪣 S3 Core — Bucket · Object · Key</div>
     <div class="sec-line"></div>
   </div>
   <div class="st-grid">
     <div class="st-card" style="--sc:#16A34A">
-      <span class="st-icon">👤</span>
-      <div class="st-name">IAM User</div>
-      <div class="st-abbr">Long-term identity</div>
-      <div class="st-desc">Named account with access keys or console password. One human or one application = one user.</div>
+      <span class="st-icon">🪣</span>
+      <div class="st-name">Bucket</div>
+      <div class="st-abbr">Global unique name</div>
+      <div class="st-desc">Created in one AWS region. Data stays in that region unless replicated. URL: <code>bucket.s3.region.amazonaws.com</code>.</div>
     </div>
     <div class="st-card" style="--sc:#0EA5E9">
-      <span class="st-icon">👥</span>
-      <div class="st-name">IAM Group</div>
-      <div class="st-abbr">Permission bundle</div>
-      <div class="st-desc">Collection of users. Attach policies to the group — all members inherit them. Users can belong to multiple groups.</div>
-      <span class="st-tag">No nested groups</span>
+      <span class="st-icon">📄</span>
+      <div class="st-name">Object</div>
+      <div class="st-abbr">Key + value</div>
+      <div class="st-desc">Flat namespace — no real folders. Prefixes like <code>images/</code> simulate directories in the console.</div>
+      <span class="st-tag">Strong read-after-write</span>
     </div>
     <div class="st-card" style="--sc:#9B6DFF">
-      <span class="st-icon">🎭</span>
-      <div class="st-name">IAM Role</div>
-      <div class="st-abbr">Temporary access</div>
-      <div class="st-desc">Assumed by services (EC2 instance profile) or federated users. STS returns short-lived credentials.</div>
-      <span class="st-tag">Preferred for apps</span>
+      <span class="st-icon">🏷️</span>
+      <div class="st-name">Metadata &amp; tags</div>
+      <div class="st-abbr">System + user-defined</div>
+      <div class="st-desc">Content-Type, encryption, custom headers. Tags for cost allocation and lifecycle rules.</div>
     </div>
     <div class="st-card" style="--sc:#E11118">
-      <span class="st-icon">📋</span>
-      <div class="st-name">Policy</div>
-      <div class="st-abbr">JSON document</div>
-      <div class="st-desc">Version, Statement, Effect, Action, Resource, Condition. Evaluated: explicit Deny &gt; Allow &gt; implicit deny.</div>
+      <span class="st-icon">🔗</span>
+      <div class="st-name">Consistent URL</div>
+      <div class="st-abbr">REST API</div>
+      <div class="st-desc">Every object has a unique URL. Pre-signed URLs grant temporary access without making bucket public.</div>
     </div>
   </div>
 
   <div class="sec-label">
-    <div class="sec-title">🔐 Policy Types — Managed · Inline · Permission Boundaries</div>
+    <div class="sec-title">📦 Storage Classes — Standard · IA · Glacier</div>
     <div class="sec-line"></div>
   </div>
   <div class="three-grid">
     <div class="three-card" style="--tc:#16A34A">
-      <span class="three-icon">📦</span>
-      <div class="three-name">AWS managed</div>
-      <div class="three-desc">Pre-built by AWS (e.g. AmazonS3ReadOnlyAccess). Updated by AWS — easy starting point.</div>
-      <div class="three-use">✦ Broad — tighten for production</div>
+      <span class="three-icon">⚡</span>
+      <div class="three-name">S3 Standard</div>
+      <div class="three-desc">Frequently accessed data. 99.999999999% (11 nines) durability across multiple AZs.</div>
+      <div class="three-use">✦ Default for active workloads</div>
     </div>
     <div class="three-card" style="--tc:#0EA5E9">
-      <span class="three-icon">✏️</span>
-      <div class="three-name">Customer managed</div>
-      <div class="three-desc">Your reusable policy. Attach to multiple users, groups, or roles. Version controlled in IaC.</div>
-      <div class="three-use">✦ Best for team standards</div>
+      <span class="three-icon">💤</span>
+      <div class="three-name">Standard-IA</div>
+      <div class="three-desc">Infrequent access — lower storage cost, retrieval fee. Same durability as Standard.</div>
+      <div class="three-use">✦ Backups, disaster recovery</div>
     </div>
     <div class="three-card" style="--tc:#9B6DFF">
-      <span class="three-icon">📎</span>
-      <div class="three-name">Inline policy</div>
-      <div class="three-desc">Embedded directly on one user, group, or role. Deleted when the identity is deleted.</div>
-      <div class="three-use">✦ One-off exceptions only</div>
+      <span class="three-icon">🧊</span>
+      <div class="three-name">Glacier tiers</div>
+      <div class="three-desc">Archive storage. Instant, Flexible, or Deep Archive — trade retrieval speed for lowest cost.</div>
+      <div class="three-use">✦ Compliance &amp; long-term archive</div>
     </div>
   </div>
 
   <div class="sec-label">
-    <div class="sec-title">🛡️ Security Best Practices — MFA · Roles · Least Privilege</div>
+    <div class="sec-title">🔒 Access &amp; Security — Policies · Versioning · Encryption</div>
     <div class="sec-line"></div>
   </div>
   <div class="it-grid">
     <div class="it-card" style="--bord:#16A34A">
-      <span class="it-icon">🔑</span>
-      <div class="it-name">Instance profile</div>
-      <span class="it-tag">EC2 ROLE</span>
-      <div class="it-desc">Attach IAM role to EC2 — app reads credentials from instance metadata. No hard-coded access keys on disk.</div>
-      <div class="it-use">✦ Boto3 picks up role automatically</div>
+      <span class="it-icon">📜</span>
+      <div class="it-name">Bucket policy</div>
+      <span class="it-tag">JSON</span>
+      <div class="it-desc">Resource-based policy on the bucket. Allow cross-account access, CloudFront OAC, or public read for static sites.</div>
+      <div class="it-use">✦ Prefer over ACLs</div>
     </div>
     <div class="it-card" style="--bord:#0EA5E9">
-      <span class="it-icon">📱</span>
-      <div class="it-name">MFA</div>
-      <span class="it-tag">MULTI-FACTOR</span>
-      <div class="it-desc">Virtual or hardware MFA on root and admin users. Required for sensitive API calls in some org policies.</div>
-      <div class="it-use">✦ Blocks password-only breaches</div>
+      <span class="it-icon">🔄</span>
+      <div class="it-name">Versioning</div>
+      <span class="it-tag">RECOVERY</span>
+      <div class="it-desc">Keep all versions of an object. Delete marker hides current version — restore by removing marker.</div>
+      <div class="it-use">✦ Required for replication</div>
     </div>
   </div>
 
   <div class="glf">
     <div class="glf-card">
-      <span class="glf-icon">🌍</span>
+      <span class="glf-icon">🌏</span>
       <div>
-        <div class="glf-label">Global service</div>
-        <div class="glf-val">IAM is global — one set of users/roles across all regions. S3 policy ARNs still reference specific resources.</div>
+        <div class="glf-label">Regional</div>
+        <div class="glf-val">Bucket lives in one region. Choose close to users or EC2. Cross-region replication copies objects automatically.</div>
       </div>
     </div>
     <div class="glf-card">
-      <span class="glf-icon">🚫</span>
+      <span class="glf-icon">💰</span>
       <div>
-        <div class="glf-label">Explicit deny wins</div>
-        <div class="glf-val">If any policy denies an action, it is blocked — even if another policy allows it. Design SCPs carefully in orgs.</div>
+        <div class="glf-label">Pay per use</div>
+        <div class="glf-val">Charged for storage GB-month, requests (PUT/GET), and data transfer out. Lifecycle rules move objects to cheaper tiers.</div>
       </div>
     </div>
     <div class="glf-card">
-      <span class="glf-icon">☁️</span>
+      <span class="glf-icon">🛡️</span>
       <div>
-        <div class="glf-label">Shared responsibility</div>
-        <div class="glf-val">AWS manages IAM infrastructure. You manage users, roles, policies, MFA, and access key rotation.</div>
+        <div class="glf-label">Block public access</div>
+        <div class="glf-val">Account-level setting blocks public buckets by default. Only open when hosting static assets with a deliberate policy.</div>
       </div>
     </div>
   </div>
@@ -358,8 +357,8 @@ html,body{height:100%;overflow:hidden;}
     <span class="hashtag">#100DaysOfAWS</span><span class="ht-sep">|</span>
     <span class="hashtag">#100DaysOfCode</span><span class="ht-sep">|</span>
     <span class="hashtag">#AWS</span><span class="ht-sep">|</span>
-    <span class="hashtag">#IAM</span><span class="ht-sep">|</span>
-    <span class="hashtag">#Security</span><span class="ht-sep">|</span>
+    <span class="hashtag">#S3</span><span class="ht-sep">|</span>
+    <span class="hashtag">#ObjectStorage</span><span class="ht-sep">|</span>
     <span class="hashtag">#CloudComputing</span><span class="ht-sep">|</span>
     <span class="hashtag">#LearnInPublic</span><span class="ht-sep">|</span>
     <span class="hashtag">#BuildInPublic</span>
