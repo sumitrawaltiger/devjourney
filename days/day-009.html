@@ -8,8 +8,8 @@
   Pattern matches day-005.html (hero, badges, sections, cards, code, GLF, quote, hashtags).
   Color: set --c in :root per block (Python #16A34A, DevOps #D97706, Frontend #0EA5E9).
 -->
-<meta name="description" content="Day 8 of 100 — AWS Lambda: serverless compute, triggers, IAM roles, concurrency, cold starts, and FPO Cloud handlers.">
-<title>Day 8 · AWS Lambda Fundamentals · Sumit Rawal</title>
+<meta name="description" content="Day 9 of 100 — API Gateway: HTTP and REST APIs, WebSocket, Lambda integration, authorizers, stages, and FPO Cloud API edge.">
+<title>Day 9 · API Gateway Fundamentals · Sumit Rawal</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -202,9 +202,9 @@ html,body{height:100%;overflow:hidden;}
 
 <div class="wrap">
   <div class="day-nav">
-    <a href="day-007.html">← Day 7</a>
-    <div class="day-counter">📅 30th June 2026 · 5:30AM–8:30AM · BKK</div>
-    <a href="day-009.html" class="next">Day 9 → <span style="opacity:0.6;font-size:10px;">1st July 2026, Wednesday</span></a>
+    <a href="day-008.html">← Day 8</a>
+    <div class="day-counter">📅 1st July 2026 · 5:30AM–8:30AM · BKK</div>
+    <a href="#" class="next">Day 10 → <span style="opacity:0.6;font-size:10px;">2nd July 2026, Thursday</span></a>
   </div>
 
   <div class="hero-grid">
@@ -214,13 +214,13 @@ html,body{height:100%;overflow:hidden;}
         <div class="day-badge"><div class="dot"></div>DevOps</div>
         <div class="day-badge"><div class="dot"></div>Month 1</div>
       </div>
-      <div class="day-num"><span class="d">DAY</span> <span class="n">8</span><span class="rocket">λ</span></div>
+      <div class="day-num"><span class="d">DAY</span> <span class="n">9</span><span class="rocket">🌐</span></div>
       <div class="of-text">Of Becoming a</div>
       <div class="big-title">SOFTWARE</div>
       <div class="big-title">DEVELOPER</div>
       <div class="rule"></div>
       <p class="summary">
-        Day eight — AWS Lambda serverless compute: handlers and runtimes, event triggers from API Gateway to DynamoDB Streams, IAM execution roles, cold starts, concurrency, and how FPO Cloud runs business logic without managing servers.
+        Day nine — API Gateway as the FPO Cloud front door: HTTP vs REST APIs, Lambda proxy integration, WebSocket for real-time, authorizers, stages, throttling, CORS, and custom domains with ACM.
       </p>
     </div>
 <div class="photo-card">
@@ -242,113 +242,113 @@ html,body{height:100%;overflow:hidden;}
   <div class="card">
     <div class="card-title">What I learnt today</div>
     <div class="check-list">
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Lambda</strong> — Serverless compute. Run code without provisioning servers. Pay only for invocations and duration (ms). Core execution layer for FPO Cloud.</div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Function anatomy</strong> — Handler, runtime (Node, Python, etc.), memory (128 MB–10 GB), timeout (up to 15 min). CPU scales with memory.</div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Triggers</strong> — API Gateway, SQS, SNS, EventBridge, DynamoDB Streams, S3 events, scheduled rules. One function, many event sources.</div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>IAM execution role</strong> — Lambda assumes a role at runtime. Attach least-privilege policies for DynamoDB, S3, SQS, Secrets Manager, etc.</div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Concurrency &amp; scaling</strong> — Scales automatically per invocation. Reserved concurrency caps a function; provisioned concurrency reduces cold starts.</div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Layers &amp; env vars</strong> — Layers share dependencies across functions. Env vars for config — use Secrets Manager or SSM for secrets, not plain text.</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>API Gateway</strong> — Managed front door for APIs. Routes HTTP, REST, and WebSocket traffic to Lambda, HTTP backends, or other AWS services. Core edge for FPO Cloud.</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>HTTP API vs REST API</strong> — HTTP API is cheaper and faster (Lambda proxy, JWT authorizers). REST API has more features: API keys, request validation, caching, WAF integration.</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Resources &amp; methods</strong> — REST API maps paths (<code>/orders/{id}</code>) and verbs (GET, POST) to integrations. HTTP API uses routes with simpler config.</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Lambda proxy integration</strong> — Passes full request to Lambda; function returns status, headers, body. No mapping templates needed for most FPO Cloud handlers.</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>WebSocket API</strong> — Persistent connections for real-time push. Routes: <code>$connect</code>, <code>$disconnect</code>, <code>$default</code>, custom routes. Backed by Lambda.</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Auth &amp; stages</strong> — IAM, Cognito, Lambda authorizers, or API keys. Deploy to stages (dev, prod) with custom domains via ACM + Route 53.</div></div>
     </div>
   </div>
 
   <div class="sec-label">
-    <div class="sec-title">λ Lambda Core — Handler · Runtime · Limits</div>
+    <div class="sec-title">🌐 API Types — HTTP · REST · WebSocket</div>
     <div class="sec-line"></div>
   </div>
   <div class="st-grid">
     <div class="st-card" style="--sc:#16A34A">
-      <span class="st-icon">λ</span>
-      <div class="st-name">Handler</div>
-      <div class="st-abbr">Entry point</div>
-      <div class="st-desc"><code>file.function</code> — e.g. <code>index.handler</code>. Receives event JSON + context object with request id, remaining time.</div>
+      <span class="st-icon">⚡</span>
+      <div class="st-name">HTTP API</div>
+      <div class="st-abbr">API Gateway v2</div>
+      <div class="st-desc">Lower latency and cost. Built-in CORS, JWT/Cognito authorizers. Best default for Lambda-backed REST services.</div>
     </div>
     <div class="st-card" style="--sc:#0EA5E9">
-      <span class="st-icon">📦</span>
-      <div class="st-name">Deployment package</div>
-      <div class="st-abbr">Zip or container</div>
-      <div class="st-desc">Zip up to 50 MB direct upload, 250 MB unzipped. Container images up to 10 GB for large dependencies.</div>
-      <span class="st-tag">/tmp up to 512 MB–10 GB</span>
+      <span class="st-icon">📜</span>
+      <div class="st-name">REST API</div>
+      <div class="st-abbr">API Gateway v1</div>
+      <div class="st-desc">Full feature set: usage plans, API keys, request validators, mapping templates, edge-optimised or regional endpoints.</div>
+      <span class="st-tag">WAF attachable</span>
     </div>
     <div class="st-card" style="--sc:#9B6DFF">
-      <span class="st-icon">❄️</span>
-      <div class="st-name">Cold start</div>
-      <div class="st-abbr">Init latency</div>
-      <div class="st-desc">New execution environment spins up on first invoke or after idle. Provisioned concurrency keeps instances warm.</div>
+      <span class="st-icon">🔌</span>
+      <div class="st-name">WebSocket API</div>
+      <div class="st-abbr">Bidirectional</div>
+      <div class="st-desc">Client connects once; server pushes via <code>@connections</code> API. Lambda handles connect, message, disconnect events.</div>
     </div>
     <div class="st-card" style="--sc:#E11118">
-      <span class="st-icon">⏱️</span>
-      <div class="st-name">Timeout</div>
-      <div class="st-abbr">Max 15 minutes</div>
-      <div class="st-desc">Default 3 seconds — raise for batch jobs. API Gateway sync invoke max 29 seconds.</div>
+      <span class="st-icon">🔗</span>
+      <div class="st-name">Integration</div>
+      <div class="st-abbr">Backend target</div>
+      <div class="st-desc">Lambda, HTTP proxy, AWS service (SQS, Step Functions), or mock. Integration request/response transforms optional.</div>
     </div>
   </div>
 
   <div class="sec-label">
-    <div class="sec-title">🔌 Triggers — How FPO Cloud Invokes Lambda</div>
+    <div class="sec-title">🛡️ Security &amp; Deployment — Auth · Stages · Throttling</div>
     <div class="sec-line"></div>
   </div>
   <div class="three-grid">
     <div class="three-card" style="--tc:#16A34A">
-      <span class="three-icon">🌐</span>
-      <div class="three-name">API Gateway</div>
-      <div class="three-desc">REST, HTTP, or WebSocket APIs forward requests to Lambda. Lambda proxy integration passes full request/response.</div>
-      <div class="three-use">✦ FPO Cloud API handlers</div>
+      <span class="three-icon">🔐</span>
+      <div class="three-name">Authorizers</div>
+      <div class="three-desc">Lambda authorizer validates tokens and returns IAM policy. Cognito user pools for JWT. IAM for SigV4 signed requests.</div>
+      <div class="three-use">✦ FPO Cloud auth layer</div>
     </div>
     <div class="three-card" style="--tc:#0EA5E9">
-      <span class="three-icon">📬</span>
-      <div class="three-name">SQS / SNS</div>
-      <div class="three-desc">Poll SQS queues or subscribe to SNS topics. Batch size configurable. Failed records go to DLQ after retries.</div>
-      <div class="three-use">✦ Async workers &amp; fan-out</div>
+      <span class="three-icon">🚀</span>
+      <div class="three-name">Stages &amp; deploy</div>
+      <div class="three-desc">Snapshot of API config. URL: <code>https://{id}.execute-api.{region}.amazonaws.com/{stage}</code>. Canary deployments shift traffic gradually.</div>
+      <div class="three-use">✦ dev → staging → prod</div>
     </div>
     <div class="three-card" style="--tc:#9B6DFF">
-      <span class="three-icon">⚡</span>
-      <div class="three-name">DynamoDB Streams</div>
-      <div class="three-desc">Stream records trigger Lambda on INSERT/MODIFY/REMOVE. Process change data without polling tables.</div>
-      <div class="three-use">✦ Event-driven data pipelines</div>
+      <span class="three-icon">⏳</span>
+      <div class="three-name">Throttling</div>
+      <div class="three-desc">Account limit ~10,000 RPS default. Per-stage and per-method burst/rate limits. 429 when exceeded — use usage plans for clients.</div>
+      <div class="three-use">✦ Protect backend from spikes</div>
     </div>
   </div>
 
   <div class="sec-label">
-    <div class="sec-title">🛡️ Security &amp; Observability</div>
+    <div class="sec-title">🏗️ FPO Cloud Patterns</div>
     <div class="sec-line"></div>
   </div>
   <div class="it-grid">
     <div class="it-card" style="--bord:#16A34A">
-      <span class="it-icon">🔐</span>
-      <div class="it-name">Execution role</div>
-      <span class="it-tag">IAM</span>
-      <div class="it-desc">Trust policy allows <code>lambda.amazonaws.com</code>. Attach managed policy <code>AWSLambdaBasicExecutionRole</code> for CloudWatch Logs.</div>
-      <div class="it-use">✦ One role per function or shared</div>
+      <span class="it-icon">λ</span>
+      <div class="it-name">Lambda proxy</div>
+      <span class="it-tag">SYNC</span>
+      <div class="it-desc">API Gateway invokes Lambda synchronously. Max 29 s timeout. Return API Gateway-compatible JSON from handler.</div>
+      <div class="it-use">✦ CRUD + business APIs</div>
     </div>
     <div class="it-card" style="--bord:#0EA5E9">
-      <span class="it-icon">📊</span>
-      <div class="it-name">CloudWatch Logs</div>
-      <span class="it-tag">LOGS</span>
-      <div class="it-desc">Automatic log group per function. Metrics: invocations, errors, duration, throttles, concurrent executions.</div>
-      <div class="it-use">✦ Debug + alarms in FPO Cloud</div>
+      <span class="it-icon">📡</span>
+      <div class="it-name">WebSocket routes</div>
+      <span class="it-tag">REAL-TIME</span>
+      <div class="it-desc">Store connection IDs in DynamoDB. PostToConnection sends updates to clients. Ideal for live status and notifications.</div>
+      <div class="it-use">✦ FPO Cloud live updates</div>
     </div>
   </div>
 
   <div class="glf">
     <div class="glf-card">
-      <span class="glf-icon">🔄</span>
+      <span class="glf-icon">🌍</span>
       <div>
-        <div class="glf-label">Retry behaviour</div>
-        <div class="glf-val">Async invokes retry twice on failure. Sync invokes return error to caller. SQS event source retries until visibility timeout expires.</div>
+        <div class="glf-label">Custom domain</div>
+        <div class="glf-val">ACM certificate in same region (regional) or us-east-1 (edge). Route 53 alias record points to API Gateway domain name.</div>
       </div>
     </div>
     <div class="glf-card">
-      <span class="glf-icon">🌍</span>
+      <span class="glf-icon">📋</span>
       <div>
-        <div class="glf-label">VPC access</div>
-        <div class="glf-val">Attach Lambda to VPC subnets to reach private RDS or internal services. Adds ENI cold-start latency — only when needed.</div>
+        <div class="glf-label">CORS</div>
+        <div class="glf-val">Enable on HTTP API in one click. REST API needs OPTIONS method or gateway responses. Required for browser clients calling FPO Cloud.</div>
       </div>
     </div>
     <div class="glf-card">
       <span class="glf-icon">💰</span>
       <div>
         <div class="glf-label">Pricing</div>
-        <div class="glf-val">Per million requests + GB-seconds (memory × duration). Free tier: 1M requests and 400,000 GB-seconds per month.</div>
+        <div class="glf-val">Per million requests + data transfer out. HTTP API ~70% cheaper than REST API for equivalent Lambda integrations.</div>
       </div>
     </div>
   </div>
@@ -358,7 +358,7 @@ html,body{height:100%;overflow:hidden;}
     <span class="hashtag">#100DaysOfAWS</span><span class="ht-sep">|</span>
     <span class="hashtag">#100DaysOfCode</span><span class="ht-sep">|</span>
     <span class="hashtag">#AWS</span><span class="ht-sep">|</span>
-    <span class="hashtag">#Lambda</span><span class="ht-sep">|</span>
+    <span class="hashtag">#APIGateway</span><span class="ht-sep">|</span>
     <span class="hashtag">#Serverless</span><span class="ht-sep">|</span>
     <span class="hashtag">#FPOCloud</span><span class="ht-sep">|</span>
     <span class="hashtag">#LearnInPublic</span><span class="ht-sep">|</span>
