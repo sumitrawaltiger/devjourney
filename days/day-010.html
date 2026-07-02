@@ -8,8 +8,8 @@
   Pattern matches day-005.html (hero, badges, sections, cards, code, GLF, quote, hashtags).
   Color: set --c in :root per block (Python #16A34A, DevOps #D97706, Frontend #0EA5E9).
 -->
-<meta name="description" content="Day 9 of 100 — API Gateway: HTTP and REST APIs, WebSocket, Lambda integration, authorizers, stages, and FPO Cloud API edge.">
-<title>Day 9 · API Gateway Fundamentals · Sumit Rawal</title>
+<meta name="description" content="Day 10 of 100 — Amazon SQS and SNS: queues, pub/sub, fan-out, DLQs, visibility timeout, and FPO Cloud async messaging.">
+<title>Day 10 · SQS & SNS Fundamentals · Sumit Rawal</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -202,9 +202,9 @@ html,body{height:100%;overflow:hidden;}
 
 <div class="wrap">
   <div class="day-nav">
-    <a href="day-008.html">← Day 8</a>
-    <div class="day-counter">📅 1st July 2026 · 5:30AM–8:30AM · BKK</div>
-    <a href="day-010.html" class="next">Day 10 → <span style="opacity:0.6;font-size:10px;">2nd July 2026, Thursday</span></a>
+    <a href="day-009.html">← Day 9</a>
+    <div class="day-counter">📅 2nd July 2026 · 5:30AM–8:30AM · BKK</div>
+    <a href="#" class="next">Day 11 → <span style="opacity:0.6;font-size:10px;">3rd July 2026, Friday</span></a>
   </div>
 
   <div class="hero-grid">
@@ -214,13 +214,13 @@ html,body{height:100%;overflow:hidden;}
         <div class="day-badge"><div class="dot"></div>DevOps</div>
         <div class="day-badge"><div class="dot"></div>Month 1</div>
       </div>
-      <div class="day-num"><span class="d">DAY</span> <span class="n">9</span><span class="rocket">🌐</span></div>
+      <div class="day-num"><span class="d">DAY</span> <span class="n">10</span><span class="rocket">📬</span></div>
       <div class="of-text">Of Becoming a</div>
       <div class="big-title">SOFTWARE</div>
       <div class="big-title">DEVELOPER</div>
       <div class="rule"></div>
       <p class="summary">
-        Day nine — API Gateway as the FPO Cloud front door: HTTP vs REST APIs, Lambda proxy integration, WebSocket for real-time, authorizers, stages, throttling, CORS, and custom domains with ACM.
+        Day ten — SQS and SNS for FPO Cloud async messaging: standard vs FIFO queues, visibility timeout, dead-letter queues, SNS fan-out to Lambda and SQS, and decoupling API handlers from background work.
       </p>
     </div>
 <div class="photo-card">
@@ -242,113 +242,113 @@ html,body{height:100%;overflow:hidden;}
   <div class="card">
     <div class="card-title">What I learnt today</div>
     <div class="check-list">
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>API Gateway</strong> — Managed front door for APIs. Routes HTTP, REST, and WebSocket traffic to Lambda, HTTP backends, or other AWS services. Core edge for FPO Cloud.</div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>HTTP API vs REST API</strong> — HTTP API is cheaper and faster (Lambda proxy, JWT authorizers). REST API has more features: API keys, request validation, caching, WAF integration.</div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Resources &amp; methods</strong> — REST API maps paths (<code>/orders/{id}</code>) and verbs (GET, POST) to integrations. HTTP API uses routes with simpler config.</div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Lambda proxy integration</strong> — Passes full request to Lambda; function returns status, headers, body. No mapping templates needed for most FPO Cloud handlers.</div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>WebSocket API</strong> — Persistent connections for real-time push. Routes: <code>$connect</code>, <code>$disconnect</code>, <code>$default</code>, custom routes. Backed by Lambda.</div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Auth &amp; stages</strong> — IAM, Cognito, Lambda authorizers, or API keys. Deploy to stages (dev, prod) with custom domains via ACM + Route 53.</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>SQS</strong> — Simple Queue Service. Managed message queue for decoupling producers and consumers. Pull-based — workers poll for messages. Core async layer in FPO Cloud.</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>SNS</strong> — Simple Notification Service. Pub/sub messaging. Publishers send to a topic; subscribers (SQS, Lambda, email, HTTP) receive copies. Fan-out pattern.</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Standard vs FIFO</strong> — SQS Standard: best-effort ordering, at-least-once delivery, unlimited throughput. FIFO: strict order, exactly-once, 300 msg/s per queue (with batching).</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Visibility timeout</strong> — Message hidden after receive until timeout expires or deleted. If not deleted, message reappears for retry. Tune to match Lambda/processing time.</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Dead-letter queue (DLQ)</strong> — Failed messages after max receives go to DLQ for inspection. Apply to SQS and Lambda async invokes.</div></div>
+      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><strong>Lambda integration</strong> — SQS event source mapping polls queue and invokes Lambda in batches. SNS triggers Lambda on each publish. Decouple API from heavy work.</div></div>
     </div>
   </div>
 
   <div class="sec-label">
-    <div class="sec-title">🌐 API Types — HTTP · REST · WebSocket</div>
+    <div class="sec-title">📬 SQS Core — Queue · Message · Polling</div>
     <div class="sec-line"></div>
   </div>
   <div class="st-grid">
     <div class="st-card" style="--sc:#16A34A">
-      <span class="st-icon">⚡</span>
-      <div class="st-name">HTTP API</div>
-      <div class="st-abbr">API Gateway v2</div>
-      <div class="st-desc">Lower latency and cost. Built-in CORS, JWT/Cognito authorizers. Best default for Lambda-backed REST services.</div>
+      <span class="st-icon">📥</span>
+      <div class="st-name">Standard queue</div>
+      <div class="st-abbr">At-least-once</div>
+      <div class="st-desc">High throughput, horizontal scaling. Messages may arrive out of order or duplicated — design idempotent consumers.</div>
     </div>
     <div class="st-card" style="--sc:#0EA5E9">
-      <span class="st-icon">📜</span>
-      <div class="st-name">REST API</div>
-      <div class="st-abbr">API Gateway v1</div>
-      <div class="st-desc">Full feature set: usage plans, API keys, request validators, mapping templates, edge-optimised or regional endpoints.</div>
-      <span class="st-tag">WAF attachable</span>
+      <span class="st-icon">🔢</span>
+      <div class="st-name">FIFO queue</div>
+      <div class="st-abbr">Exactly-once</div>
+      <div class="st-desc">Name ends in <code>.fifo</code>. Message group ID controls ordering within a group. Deduplication via ID or content hash.</div>
+      <span class="st-tag">Ordered workflows</span>
     </div>
     <div class="st-card" style="--sc:#9B6DFF">
-      <span class="st-icon">🔌</span>
-      <div class="st-name">WebSocket API</div>
-      <div class="st-abbr">Bidirectional</div>
-      <div class="st-desc">Client connects once; server pushes via <code>@connections</code> API. Lambda handles connect, message, disconnect events.</div>
+      <span class="st-icon">👁️</span>
+      <div class="st-name">Visibility timeout</div>
+      <div class="st-abbr">30 s default</div>
+      <div class="st-desc">Consumer has this window to process and <code>DeleteMessage</code>. Extend with <code>ChangeMessageVisibility</code> for long jobs.</div>
     </div>
     <div class="st-card" style="--sc:#E11118">
-      <span class="st-icon">🔗</span>
-      <div class="st-name">Integration</div>
-      <div class="st-abbr">Backend target</div>
-      <div class="st-desc">Lambda, HTTP proxy, AWS service (SQS, Step Functions), or mock. Integration request/response transforms optional.</div>
+      <span class="st-icon">💀</span>
+      <div class="st-name">DLQ</div>
+      <div class="st-abbr">Redrive policy</div>
+      <div class="st-desc">After <code>maxReceiveCount</code> failures, message moves to DLQ. Replay after fixing the bug.</div>
     </div>
   </div>
 
   <div class="sec-label">
-    <div class="sec-title">🛡️ Security &amp; Deployment — Auth · Stages · Throttling</div>
+    <div class="sec-title">📢 SNS — Topics · Subscriptions · Fan-Out</div>
     <div class="sec-line"></div>
   </div>
   <div class="three-grid">
     <div class="three-card" style="--tc:#16A34A">
-      <span class="three-icon">🔐</span>
-      <div class="three-name">Authorizers</div>
-      <div class="three-desc">Lambda authorizer validates tokens and returns IAM policy. Cognito user pools for JWT. IAM for SigV4 signed requests.</div>
-      <div class="three-use">✦ FPO Cloud auth layer</div>
+      <span class="three-icon">📣</span>
+      <div class="three-name">Topic</div>
+      <div class="three-desc">Logical channel. Publishers call <code>Publish</code> with message body and optional attributes. Standard or FIFO topic.</div>
+      <div class="three-use">✦ One event, many listeners</div>
     </div>
     <div class="three-card" style="--tc:#0EA5E9">
-      <span class="three-icon">🚀</span>
-      <div class="three-name">Stages &amp; deploy</div>
-      <div class="three-desc">Snapshot of API config. URL: <code>https://{id}.execute-api.{region}.amazonaws.com/{stage}</code>. Canary deployments shift traffic gradually.</div>
-      <div class="three-use">✦ dev → staging → prod</div>
+      <span class="three-icon">🔗</span>
+      <div class="three-name">Subscriptions</div>
+      <div class="three-desc">SQS, Lambda, HTTP/S, email, SMS. SQS subscription = SNS fan-out to multiple queues reliably.</div>
+      <div class="three-use">✦ FPO Cloud event broadcast</div>
     </div>
     <div class="three-card" style="--tc:#9B6DFF">
-      <span class="three-icon">⏳</span>
-      <div class="three-name">Throttling</div>
-      <div class="three-desc">Account limit ~10,000 RPS default. Per-stage and per-method burst/rate limits. 429 when exceeded — use usage plans for clients.</div>
-      <div class="three-use">✦ Protect backend from spikes</div>
+      <span class="three-icon">🔐</span>
+      <div class="three-name">Message filtering</div>
+      <div class="three-desc">Subscription filter policies route only matching messages. Reduce noise — e.g. <code>eventType: ["order.created"]</code>.</div>
+      <div class="three-use">✦ Targeted downstream work</div>
     </div>
   </div>
 
   <div class="sec-label">
-    <div class="sec-title">🏗️ FPO Cloud Patterns</div>
+    <div class="sec-title">🏗️ FPO Cloud Patterns — Decouple &amp; Scale</div>
     <div class="sec-line"></div>
   </div>
   <div class="it-grid">
     <div class="it-card" style="--bord:#16A34A">
       <span class="it-icon">λ</span>
-      <div class="it-name">Lambda proxy</div>
-      <span class="it-tag">SYNC</span>
-      <div class="it-desc">API Gateway invokes Lambda synchronously. Max 29 s timeout. Return API Gateway-compatible JSON from handler.</div>
-      <div class="it-use">✦ CRUD + business APIs</div>
+      <div class="it-name">API → SQS → Lambda</div>
+      <span class="it-tag">ASYNC</span>
+      <div class="it-desc">API Gateway accepts request, enqueues job, returns 202. Worker Lambda processes at its own pace — absorbs traffic spikes.</div>
+      <div class="it-use">✦ Heavy or slow FPO Cloud tasks</div>
     </div>
     <div class="it-card" style="--bord:#0EA5E9">
       <span class="it-icon">📡</span>
-      <div class="it-name">WebSocket routes</div>
-      <span class="it-tag">REAL-TIME</span>
-      <div class="it-desc">Store connection IDs in DynamoDB. PostToConnection sends updates to clients. Ideal for live status and notifications.</div>
-      <div class="it-use">✦ FPO Cloud live updates</div>
+      <div class="it-name">SNS → SQS fan-out</div>
+      <span class="it-tag">FAN-OUT</span>
+      <div class="it-desc">One SNS topic feeds multiple SQS queues. Each service processes independently. No single queue bottleneck.</div>
+      <div class="it-use">✦ Multi-service notifications</div>
     </div>
   </div>
 
   <div class="glf">
     <div class="glf-card">
-      <span class="glf-icon">🌍</span>
+      <span class="glf-icon">🔁</span>
       <div>
-        <div class="glf-label">Custom domain</div>
-        <div class="glf-val">ACM certificate in same region (regional) or us-east-1 (edge). Route 53 alias record points to API Gateway domain name.</div>
+        <div class="glf-label">Idempotency</div>
+        <div class="glf-val">SQS may deliver twice. Use dedup keys, conditional DynamoDB writes, or idempotency tokens in FPO Cloud handlers.</div>
       </div>
     </div>
     <div class="glf-card">
-      <span class="glf-icon">📋</span>
+      <span class="glf-icon">⏳</span>
       <div>
-        <div class="glf-label">CORS</div>
-        <div class="glf-val">Enable on HTTP API in one click. REST API needs OPTIONS method or gateway responses. Required for browser clients calling FPO Cloud.</div>
+        <div class="glf-label">Long polling</div>
+        <div class="glf-val"><code>WaitTimeSeconds</code> up to 20 s reduces empty receives and cost. Lambda event source uses long polling automatically.</div>
       </div>
     </div>
     <div class="glf-card">
       <span class="glf-icon">💰</span>
       <div>
         <div class="glf-label">Pricing</div>
-        <div class="glf-val">Per million requests + data transfer out. HTTP API ~70% cheaper than REST API for equivalent Lambda integrations.</div>
+        <div class="glf-val">SQS: per million requests. SNS: per million publishes + delivery per endpoint type. Free tier covers modest dev workloads.</div>
       </div>
     </div>
   </div>
@@ -358,8 +358,8 @@ html,body{height:100%;overflow:hidden;}
     <span class="hashtag">#100DaysOfAWS</span><span class="ht-sep">|</span>
     <span class="hashtag">#100DaysOfCode</span><span class="ht-sep">|</span>
     <span class="hashtag">#AWS</span><span class="ht-sep">|</span>
-    <span class="hashtag">#APIGateway</span><span class="ht-sep">|</span>
-    <span class="hashtag">#Serverless</span><span class="ht-sep">|</span>
+    <span class="hashtag">#SQS</span><span class="ht-sep">|</span>
+    <span class="hashtag">#SNS</span><span class="ht-sep">|</span>
     <span class="hashtag">#FPOCloud</span><span class="ht-sep">|</span>
     <span class="hashtag">#LearnInPublic</span><span class="ht-sep">|</span>
     <span class="hashtag">#BuildInPublic</span>
